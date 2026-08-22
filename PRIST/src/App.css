@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+:root {
+  font-family: "Manrope", sans-serif;
+  color: #f8fafc;
+  background: #071a36;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+@media (max-width: 640px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  background: #071a36;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  cursor: pointer;
+}
+
+@keyframes testimonial {
+  0% {
+    opacity: 0;
+    transform: translateX(35px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-testimonial {
+  animation: testimonial 0.45s ease-out;
+}
+
+.premium-section {
+  position: relative;
+  isolation: isolate;
+  animation: premiumReveal 0.9s both cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.premium-section::after {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(105deg,
+      transparent 35%,
+      rgba(0, 153, 204, 0.08) 50%,
+      transparent 65%);
+  content: "";
+  pointer-events: none;
+  transform: translateX(-100%);
+  animation: premiumSheen 1.4s 0.35s both ease-out;
+}
+
+.premium-section:nth-child(2) {
+  animation-delay: 0.08s;
+}
+
+.premium-section:nth-child(3) {
+  animation-delay: 0.16s;
+}
+
+.premium-section:nth-child(4) {
+  animation-delay: 0.24s;
+}
+
+.premium-section:nth-child(5) {
+  animation-delay: 0.32s;
+}
+
+.premium-section:nth-child(6) {
+  animation-delay: 0.4s;
+}
+
+@keyframes premiumReveal {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes premiumSheen {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
