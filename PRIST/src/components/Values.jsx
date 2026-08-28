@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState } from "react";
 import {
   Target,
@@ -5,452 +6,280 @@ import {
   Leaf,
   Award,
   ShieldCheck,
+  Check,
+  ArrowRight,
 } from "lucide-react";
 
 import qualityImage from "../assets/quality-team.png";
 
-const values = [
+const VALUES = [
   {
     icon: Target,
     title: "Our Vision",
+    badge: "Future Ready",
     description:
-      "To be the leading solar energy provider, making clean power accessible to every home and business.",
+      "To be the premier clean energy partner across Kerala, making dependable solar power accessible to every home, business, and institution.",
   },
   {
     icon: Eye,
     title: "Our Mission",
+    badge: "Precision First",
     description:
-      "To deliver reliable, high-quality solar solutions that empower customers and protect the environment.",
+      "To engineer and deploy high-efficiency solar systems backed by rigorous safety protocols and dedicated lifetime maintenance.",
   },
   {
     icon: Leaf,
     title: "Sustainability",
+    badge: "Eco-Conscious",
     description:
-      "We are committed to renewable energy adoption and reducing global carbon emissions.",
+      "We are committed to accelerating renewable power adoption and significantly lowering regional carbon emissions year after year.",
   },
 ];
 
-/**
- * Matches the premium type system used across Hero / OurImpact / WhyPristine:
- * Cormorant Garamond (display) + Manrope (body).
- * Add once to index.html <head> if not already present:
- *
- * <link
- *   href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap"
- *   rel="stylesheet"
- * />
- */
+const QUALITY_POINTS = [
+  "Certified Technicians",
+  "Tier-1 Quality Modules",
+  "Strict Safety Protocols",
+  "Smart Monitoring",
+];
 
 export default function Values() {
   const sectionRef = useRef(null);
-  const bannerRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [bannerVisible, setBannerVisible] = useState(false);
 
   useEffect(() => {
-    const cardsObserver = new IntersectionObserver(
+    const currentSection = sectionRef.current;
+
+    if (!currentSection) return;
+
+    const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
-          cardsObserver.disconnect();
+          observer.disconnect();
         }
       },
-      { threshold: 0.15 }
+      {
+        threshold: 0.15,
+      }
     );
 
-    const bannerObserver = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setBannerVisible(true);
-          bannerObserver.disconnect();
-        }
-      },
-      { threshold: 0.15 }
-    );
-
-    if (sectionRef.current) cardsObserver.observe(sectionRef.current);
-    if (bannerRef.current) bannerObserver.observe(bannerRef.current);
+    observer.observe(currentSection);
 
     return () => {
-      cardsObserver.disconnect();
-      bannerObserver.disconnect();
+      observer.disconnect();
     };
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-slate-50 py-20 font-['Manrope'] lg:py-28">
-
-      {/* Background Grid */}
+    <section
+      ref={sectionRef}
+      id="about"
+      className="relative overflow-hidden bg-[#e6f7ff] py-20 font-['Plus_Jakarta_Sans',sans-serif] text-slate-900 lg:py-28"
+    >
+      {/* =========================================================
+          BACKGROUND AMBIENT EFFECT
+      ========================================================== */}
       <div
-        className="
-          pointer-events-none
-          absolute inset-0
-          opacity-50
-          bg-[linear-gradient(rgba(94, 198, 25, 0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(51,128,0,0.06)_1px,transparent_1px)]
-          bg-[size:60px_60px]
-        "
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-0 h-80 w-[42rem] -translate-x-1/2 rounded-full bg-sky-300/25 blur-3xl"
       />
 
-      {/* Ambient accent glow */}
-      <div className="pointer-events-none absolute -top-20 right-1/4 h-72 w-[36rem] rounded-full bg-[#0099cc]/8 blur-3xl" />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-cyan-200/20 blur-3xl"
+      />
 
-      <div ref={sectionRef} className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
-
-        {/* SECTION HEADER */}
+      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
+        {/* =========================================================
+            SECTION HEADER
+        ========================================================== */}
         <div
-          className={`
-            mx-auto mb-14 max-w-3xl text-center
-            transition-all duration-1000 ease-out
-            ${isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}
-          `}
+          className={`mx-auto mb-14 max-w-2xl text-center transition-all duration-700 ease-out sm:mb-16 ${
+            isVisible
+              ? "translate-y-0 opacity-100"
+              : "translate-y-8 opacity-0"
+          }`}
         >
-
-          <span
-            className="
-              inline-flex
-              items-center
-              gap-2
-              rounded-full
-              border
-              border-[#0099cc]/20
-              bg-[#0099cc]/5
-              px-4
-              py-2
-              font-mono
-              text-xs
-              font-semibold
-              uppercase
-              tracking-[0.2em]
-              text-[#0099cc]
-            "
-          >
-            <span className="h-1.5 w-1.5 rounded-full bg-[#0099cc]" />
-            What Drives Us
+          {/* Badge */}
+          <span className="inline-flex items-center gap-2 rounded-full bg-sky-100 px-3.5 py-1.5 text-xs font-semibold text-sky-700 shadow-sm">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-sky-600" />
+            WHAT DRIVES US
           </span>
 
-          <h2 className="mt-5 font-['Cormorant_Garamond'] text-4xl font-semibold tracking-tight text-slate-900 md:text-5xl">
+          {/* Heading */}
+          <h2 className="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl lg:text-[42px]">
             Built on Purpose.
-            <span className="text-[#0099cc]"> Driven by Impact.</span>
+            <br className="hidden sm:block" /> Driven by Impact.
           </h2>
 
-          <p className="mx-auto mt-5 max-w-2xl text-base font-light leading-7 tracking-wide text-slate-500 md:text-lg">
-            Our values guide every project we build, every customer we serve,
-            and every step we take toward a cleaner energy future.
+          {/* Description */}
+          <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-slate-500 sm:text-base">
+            Our core values shape every installation we build, every client
+            partnership we foster, and our commitment to an independent clean
+            energy grid.
           </p>
-
         </div>
 
-        {/* CORE VALUES */}
+        {/* =========================================================
+            CORE VALUES
+        ========================================================== */}
         <div className="grid gap-6 md:grid-cols-3">
-
-          {values.map((value, index) => {
+          {VALUES.map((value, index) => {
             const Icon = value.icon;
 
             return (
               <div
                 key={value.title}
-                style={{ transitionDelay: isVisible ? `${index * 130}ms` : "0ms" }}
-                className={`
-                  group
-                  relative
-                  overflow-hidden
-                  rounded-tl-[2.5rem]
-                  rounded-br-[2.5rem]
-                  rounded-tr-lg
-                  rounded-bl-lg
-                  border
-                  border-slate-100
-                  bg-white
-                  p-8
-                  shadow-[0_10px_35px_rgba(15,23,42,0.06)]
-                  transition-all
-                  duration-700
-                  ease-out
-                  hover:-translate-y-3
-                  hover:border-[#0099cc]/25
-                  hover:shadow-[0_20px_45px_rgba(51,128,0,0.15)]
-                  ${
-                    isVisible
-                      ? "translate-y-0 opacity-100"
-                      : "translate-y-10 opacity-0"
-                  }
-                `}
+                style={{
+                  transitionDelay: isVisible
+                    ? `${index * 120}ms`
+                    : "0ms",
+                }}
+                className={`group relative flex min-h-[320px] flex-col justify-between overflow-hidden rounded-3xl border border-sky-100 bg-white p-7 shadow-sm transition-all duration-700 ease-out hover:-translate-y-2 hover:border-sky-200 hover:shadow-xl hover:shadow-sky-900/10 ${
+                  isVisible
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-10 opacity-0"
+                }`}
               >
-
-                {/* Number */}
-                <span className="
-                  absolute
-                  right-7
-                  top-6
-                  font-['Cormorant_Garamond']
-                  text-5xl
-                  font-bold
-                  text-slate-100
-                  transition-colors
-                  duration-500
-                  group-hover:text-[#0099cc]/10
-                ">
-                  0{index + 1}
-                </span>
-
-                {/* Icon */}
+                {/* Card Decorative Glow */}
                 <div
-                  className="
-                    relative
-                    flex
-                    h-16
-                    w-16
-                    items-center
-                    justify-center
-                    rounded-tl-2xl
-                    rounded-br-2xl
-                    rounded-tr-md
-                    rounded-bl-md
-                    bg-[#0099cc]
-                    text-white
-                    shadow-lg
-                    shadow-[#0099cc]/20
-                    transition-all
-                    duration-500
-                    group-hover:rotate-3
-                    group-hover:scale-110
-                  "
-                >
-                  <Icon size={30} strokeWidth={1.8} />
-                </div>
-
-                {/* Title */}
-                <h3 className="mt-7 font-['Cormorant_Garamond'] text-2xl font-semibold text-slate-900">
-                  {value.title}
-                </h3>
-
-                {/* Description */}
-                <p className="mt-4 text-sm leading-7 tracking-wide text-slate-500">
-                  {value.description}
-                </p>
-
-                {/* Bottom Accent */}
-                <div
-                  className="
-                    mt-7
-                    h-1
-                    w-10
-                    rounded-full
-                    bg-[#0099cc]
-                    transition-all
-                    duration-500
-                    group-hover:w-20
-                  "
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full bg-sky-100/60 blur-2xl transition-all duration-500 group-hover:bg-sky-200/70"
                 />
 
+                <div className="relative">
+                  {/* Icon + Badge */}
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-sky-50 text-sky-600 transition-all duration-300 group-hover:bg-sky-600 group-hover:text-white group-hover:shadow-lg group-hover:shadow-sky-600/20">
+                      <Icon size={24} strokeWidth={2} />
+                    </div>
+
+                    <span className="rounded-full bg-sky-50 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide text-sky-700">
+                      {value.badge}
+                    </span>
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="mt-7 text-xl font-bold text-slate-900 transition-colors duration-300 group-hover:text-sky-600">
+                    {value.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="mt-3 text-sm leading-6 text-slate-500">
+                    {value.description}
+                  </p>
+                </div>
+
+                {/* Card Footer */}
+                <div className="relative mt-7 flex items-center justify-between border-t border-sky-50 pt-4">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                    Core Principle 0{index + 1}
+                  </span>
+
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-sky-50 text-sky-600 transition-all duration-300 group-hover:bg-sky-600 group-hover:text-white">
+                    <ArrowRight size={14} />
+                  </div>
+                </div>
               </div>
             );
           })}
-
         </div>
 
-        {/* QUALITY BANNER */}
+        {/* =========================================================
+            QUALITY & SAFETY BANNER
+        ========================================================== */}
         <div
-          ref={bannerRef}
-          className={`
-            relative
-            mt-14
-            min-h-[440px]
-            overflow-hidden
-            rounded-tl-[3rem]
-            rounded-br-[3rem]
-            rounded-tr-2xl
-            rounded-bl-2xl
-            bg-[#062B52]
-            shadow-2xl
-            shadow-slate-900/20
-            transition-all
-            duration-1000
-            ease-out
-            ${bannerVisible ? "translate-y-0 opacity-100 scale-100" : "translate-y-10 opacity-0 scale-[0.98]"}
-          `}
+          className={`relative mt-16 min-h-[480px] overflow-hidden rounded-3xl border border-sky-400/20 shadow-xl shadow-sky-950/10 transition-all duration-700 sm:mt-20 lg:min-h-[500px] ${
+            isVisible
+              ? "translate-y-0 opacity-100"
+              : "translate-y-10 opacity-0"
+          }`}
         >
-
           {/* Background Image */}
           <img
             src={qualityImage}
-            alt="Solar installation quality and safety team"
-            className="
-              absolute
-              inset-0
-              h-full
-              w-full
-              object-cover
-            "
+            alt="Solar installation engineering and safety team"
+            className="absolute inset-0 h-full w-full object-cover"
           />
 
-          {/* Dark Overlay */}
-          <div
-            className="
-              absolute
-              inset-0
-              bg-gradient-to-r
-              from-[#04182E]
-              via-[#063D67]/95
-              to-[#0B4F2A]/70
-            "
-          />
+          {/* Main Dark Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#041122] via-[#041122]/95 to-[#07294D]/75" />
 
-          {/* Extra Dark Overlay */}
-          <div className="absolute inset-0 bg-[#04182E]/20" />
+          {/* Additional Bottom Gradient */}
+          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#041122]/60 to-transparent" />
 
-          {/* Soft green glow accent on the image side */}
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-1/2 bg-[radial-gradient(ellipse_at_right,rgba(51,128,0,0.18),transparent_60%)]" />
-
-          {/* Content */}
-          <div className="relative z-10 flex min-h-[440px] items-center">
-
-            <div className="max-w-2xl px-7 py-14 md:px-12 lg:px-16">
-
-              {/* Icon Row */}
-              <div
-                className={`
-                  mb-7 flex items-center gap-4
-                  transition-all duration-700 ease-out delay-150
-                  ${bannerVisible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}
-                `}
-              >
-
-                {/* Award */}
-                <div
-                  className="
-                    flex
-                    h-14
-                    w-14
-                    items-center
-                    justify-center
-                    rounded-tl-xl
-                    rounded-br-xl
-                    rounded-tr-md
-                    rounded-bl-md
-                    bg-[#0099cc]
-                    text-white
-                    shadow-lg
-                    shadow-[#0099cc]/25
-                    transition-transform
-                    duration-500
-                    hover:rotate-6
-                    hover:scale-110
-                  "
-                >
-                  <Award size={27} />
+          {/* Banner Content */}
+          <div className="relative z-10 flex min-h-[480px] items-center">
+            <div className="max-w-2xl p-8 sm:p-12 lg:p-16">
+              {/* =================================================
+                  ICON BADGES
+              ================================================== */}
+              <div className="flex items-center gap-3">
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-sky-500 text-white shadow-lg shadow-sky-500/30">
+                  <Award size={21} />
                 </div>
 
-                {/* Shield */}
-                <div
-                  className="
-                    flex
-                    h-14
-                    w-14
-                    items-center
-                    justify-center
-                    rounded-tl-xl
-                    rounded-br-xl
-                    rounded-tr-md
-                    rounded-bl-md
-                    bg-white/10
-                    text-white
-                    shadow-lg
-                    shadow-black/20
-                    backdrop-blur-sm
-                    transition-transform
-                    duration-500
-                    hover:rotate-6
-                    hover:scale-110
-                  "
-                >
-                  <ShieldCheck size={27} />
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/15 bg-white/10 text-sky-300 backdrop-blur-md">
+                  <ShieldCheck size={21} />
                 </div>
 
+                <span className="ml-1 rounded-full border border-sky-400/20 bg-sky-400/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-sky-300">
+                  Trusted Engineering
+                </span>
               </div>
 
-              {/* Heading */}
-              <h2
-                className={`
-                  font-['Cormorant_Garamond']
-                  text-4xl
-                  font-semibold
-                  leading-tight
-                  text-white
-                  transition-all duration-700 ease-out delay-200
-                  md:text-5xl
-                  ${bannerVisible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}
-                `}
-              >
-                Quality, Safety &
-                <span className="text-[#79FF4D]">
-                  {" "}Customer Satisfaction
+              {/* =================================================
+                  HEADLINE
+              ================================================== */}
+              <h2 className="mt-7 text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
+                Quality, Safety &amp;
+                <br />
+                <span className="bg-gradient-to-r from-sky-400 via-sky-300 to-cyan-300 bg-clip-text text-transparent">
+                  Long-Term Reliability
                 </span>
               </h2>
 
               {/* Description */}
-              <p
-                className={`
-                  mt-6
-                  max-w-xl
-                  text-base
-                  font-light
-                  leading-7
-                  tracking-wide
-                  text-blue-100
-                  transition-all duration-700 ease-out delay-300
-                  md:text-lg
-                  ${bannerVisible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}
-                `}
-              >
-                Every installation meets the highest industry standards.
-                Our certified technicians follow rigorous safety protocols,
-                ensuring your solar system performs flawlessly for decades.
+              <p className="mt-5 max-w-xl text-sm leading-7 text-slate-300 sm:text-base">
+                Every solar array we install adheres to rigorous industry
+                safety codes and standard compliance. Our certified technicians
+                ensure seamless grid synchronization and enduring peak power
+                output.
               </p>
 
-              {/* Quality Points */}
-              <div
-                className={`
-                  mt-8 flex flex-wrap gap-3
-                  transition-all duration-700 ease-out delay-[400ms]
-                  ${bannerVisible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}
-                `}
-              >
-
-                {["Certified Technicians", "Premium Materials", "Safety First"].map((point) => (
-                  <span
+              {/* =================================================
+                  TRUST POINTS
+              ================================================== */}
+              <div className="mt-8 flex flex-wrap gap-2.5">
+                {QUALITY_POINTS.map((point) => (
+                  <div
                     key={point}
-                    className="
-                      rounded-full
-                      border
-                      border-white/15
-                      bg-white/10
-                      px-4
-                      py-2
-                      text-sm
-                      font-medium
-                      tracking-wide
-                      text-white
-                      backdrop-blur-sm
-                      transition-colors
-                      duration-300
-                      hover:border-[#79FF4D]/40
-                      hover:bg-white/15
-                    "
+                    className="flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3.5 py-2 text-xs font-medium tracking-wide text-white backdrop-blur-md transition hover:border-sky-400/40 hover:bg-sky-400/10"
                   >
-                    <span className="text-[#79FF4D]">✓</span> {point}
-                  </span>
-                ))}
+                    <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-sky-500 text-white">
+                      <Check size={10} strokeWidth={3} />
+                    </span>
 
+                    {point}
+                  </div>
+                ))}
               </div>
 
+              {/* =================================================
+                  SMALL TRUST FOOTER
+              ================================================== */}
+              <div className="mt-8 flex items-center gap-3 text-xs text-slate-400">
+                <div className="h-px w-8 bg-sky-500/60" />
+                <span>
+                  Engineered for Kerala • Built for the long term
+                </span>
+              </div>
             </div>
-
           </div>
-
         </div>
-
       </div>
     </section>
   );
 }
+

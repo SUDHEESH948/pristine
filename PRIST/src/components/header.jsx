@@ -1,786 +1,1128 @@
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
-  Phone,
-  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
   TrendingDown,
   ShieldCheck,
   Zap,
   Menu,
   X,
+  Award,
 } from "lucide-react";
 
-import logo from "../assets/logo.png";
+import logo from "../assets/image.png";
 import image1 from "../assets/image1.png";
 import image2 from "../assets/image2.png";
 
-/*
-  Fonts:
-  Add these to index.html <head>:
+const NAV_LINKS = [
+  { label: "Home", href: "#home" },
+  { label: "About", href: "#about" },
+  { label: "Services", href: "#services" },
+  { label: "Projects", href: "#projects" },
+];
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap"
-    rel="stylesheet"
-  />
-*/
+const STATS = [
+  {
+    icon: TrendingDown,
+    value: "70%",
+    title: "Lower Energy Bills",
+    description:
+      "Substantially cut grid consumption and reduce monthly overhead.",
+  },
+  {
+    icon: ShieldCheck,
+    value: "25yr",
+    title: "Panel Warranty",
+    description:
+      "Tier-1 solar modules backed by an industry-leading guarantee.",
+  },
+  {
+    icon: Zap,
+    value: "100%",
+    title: "Clean Energy",
+    description:
+      "Zero-emission rooftop generation tailored for homes and businesses.",
+  },
+  {
+    icon: Award,
+    value: "15+",
+    title: "Years Experience",
+    description:
+      "Kerala's trusted solar engineering and installation experts.",
+  },
+];
+
+const SLIDES = [
+  {
+    image: image1,
+    badge: "Tier-1 Installation",
+    title: "Power Your Future with Clean Solar",
+    subtitle:
+      "High-efficiency rooftop solar systems engineered for homes, businesses, and industries across Kerala.",
+  },
+  {
+    image: image2,
+    badge: "25-Year Reliability",
+    title: "Smart Solar Solutions for Modern Energy",
+    subtitle:
+      "Lock in predictable power costs, gain energy independence, and achieve zero carbon emissions.",
+  },
+];
 
 export default function Hero() {
-  const [open, setOpen] = useState(false);
-  const [currentImage, setCurrentImage] = useState(0);
-  const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
-  const images = [image1, image2];
-
-  const links = [
-    ["Home", "#home"],
-    ["About", "#about"],
-    ["Services", "#services"],
-    ["Projects", "#projects"],
-    ["Contact", "#contact"],
-  ];
-
-  /* =========================================================
-     AUTOMATIC IMAGE SLIDER
-  ========================================================= */
+  // =========================================================
+  // AUTO SLIDER
+  // =========================================================
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImage((prev) => (prev + 1) % images.length);
-    }, 4000);
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % SLIDES.length);
+    }, 6500);
 
-    return () => clearInterval(interval);
+    return () => clearInterval(timer);
   }, []);
 
-  /* =========================================================
-     HEADER SCROLL STATE
-  ========================================================= */
+  // =========================================================
+  // SLIDER CONTROLS
+  // =========================================================
 
-  useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
+  const handleNext = () => {
+    setCurrentSlide((prev) => (prev + 1) % SLIDES.length);
+  };
 
-    window.addEventListener("scroll", onScroll);
+  const handlePrev = () => {
+    setCurrentSlide(
+      (prev) => (prev - 1 + SLIDES.length) % SLIDES.length
+    );
+  };
 
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, []);
+  // =========================================================
+  // SMOOTH NAVIGATION
+  // =========================================================
+
+  const handleNavClick = (event, href) => {
+    event.preventDefault();
+
+    setMobileMenuOpen(false);
+
+    const target = document.querySelector(href);
+
+    if (target) {
+      const navbarOffset = 100;
+
+      const targetPosition =
+        target.getBoundingClientRect().top +
+        window.scrollY -
+        navbarOffset;
+
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
 
   return (
-    <section
-      id="home"
-      className="
-        relative
-        h-screen
-        min-h-screen
-        overflow-hidden
-        bg-[#04182E]
-        text-white
-        font-['Manrope']
-      "
-    >
+    <>
       {/* =====================================================
-          BACKGROUND IMAGE SLIDER
-      ===================================================== */}
+          FIXED NAVIGATION
+      ====================================================== */}
 
-      <div className="absolute inset-0 overflow-hidden">
-        {images.map((image, index) => (
-          <img
-            key={image}
-            src={image}
-            alt={`Solar installation ${index + 1}`}
-            className={`
-              absolute
-              inset-0
-              h-full
-              w-full
-              object-cover
-              transition-all
-              duration-[1800ms]
-              ease-in-out
-              ${
-                currentImage === index
-                  ? "scale-100 opacity-100"
-                  : "scale-105 opacity-0"
-              }
-            `}
-          />
-        ))}
+      <motion.header
+        initial={{ y: -60, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{
+          duration: 0.5,
+          ease: "easeOut",
+        }}
+        className="
+          fixed
+          left-0
+          right-0
+          top-0
+          z-[9999]
+          flex
+          w-full
+          justify-center
+          px-3
+          pt-4
+          sm:px-5
+          sm:pt-5
+          lg:px-8
+          lg:pt-6
+          xl:px-10
+          pointer-events-none
+        "
+      >
+        {/* SAME WIDTH AS HERO */}
 
-        {/* Main Dark Overlay */}
         <div
           className="
-            absolute
-            inset-0
-            bg-gradient-to-br
-            from-[#04182E]/95
-            via-[#07294D]/82
-            to-[#0B4F8A]/60
+            mx-auto
+            w-full
+            max-w-[1900px]
+            pointer-events-auto
           "
-        />
-
-        {/* Bottom Gradient */}
-        <div
-          className="
-            absolute
-            inset-0
-            bg-gradient-to-t
-            from-[#04182E]/90
-            via-transparent
-            to-[#04182E]/50
-          "
-        />
-
-        {/* Blue Premium Glow */}
-        <div
-          className="
-            absolute
-            inset-0
-            bg-[radial-gradient(ellipse_at_top_left,rgba(0,128,255,0.14),transparent_55%)]
-          "
-        />
-
-        {/* Grid */}
-        <div
-          className="
-            absolute
-            inset-0
-            opacity-[0.06]
-            bg-[linear-gradient(rgba(255,255,255,0.2)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.2)_1px,transparent_1px)]
-            bg-[size:60px_60px]
-          "
-        />
-      </div>
-
-      {/* =====================================================
-          CONTENT
-      ===================================================== */}
-
-      <div className="relative z-10 flex h-full flex-col">
-
-        {/* ===================================================
-            NAVBAR
-        =================================================== */}
-
-        <nav
-          className={`
-            sticky
-            top-0
-            z-20
-            border-b
-            transition-all
-            duration-500
-            ${
-              scrolled
-                ? `
-                  border-white/10
-                  bg-[#04182E]/80
-                  py-4
-                  shadow-[0_8px_30px_rgba(0,0,0,0.35)]
-                  backdrop-blur-xl
-                `
-                : `
-                  border-white/0
-                  bg-transparent
-                  py-7
-                `
-            }
-          `}
         >
+          {/* =================================================
+              DESKTOP NAVIGATION
+          ================================================== */}
+
           <div
             className="
-              mx-auto
-              flex
-              max-w-7xl
+              hidden
+              w-full
               items-center
               justify-between
+              rounded-full
+              border
+              border-slate-200/80
+              bg-white/95
               px-6
-              lg:px-8
+              py-2.5
+              shadow-[0_15px_45px_rgba(0,0,0,0.35)]
+              backdrop-blur-xl
+              lg:flex
+              xl:px-8
+              2xl:px-10
             "
           >
+            {/* LOGO */}
 
-            {/* =================================================
-                LOGO
-            ================================================= */}
-
-            <div className="flex items-center gap-3">
+            <a
+              href="#home"
+              onClick={(e) => handleNavClick(e, "#home")}
+              className="
+                flex
+                shrink-0
+                items-center
+                gap-2.5
+              "
+            >
               <img
                 src={logo}
-                alt="Pristine Energy"
+                alt="Pristine Energy Logo"
                 className="
-                  h-11
-                  w-11
+                  h-7
+                  w-auto
                   object-contain
-                  drop-shadow-[0_0_12px_rgba(0,128,255,0.35)]
+                  xl:h-8
                 "
               />
 
-              <div>
-                <h2
+              <div className="flex flex-col leading-none">
+                <span
                   className="
-                    font-['Cormorant_Garamond']
-                    text-xl
-                    font-semibold
-                    leading-none
-                    tracking-wide
+                    whitespace-nowrap
+                    text-xs
+                    font-black
+                    tracking-tight
+                    text-slate-900
+                    xl:text-sm
                   "
                 >
-                  Pristine
-                  <span className="text-[#0080ff]">
-                    Energy
+                  PRISTINE{" "}
+                  <span className="font-extrabold text-[#0284c7]">
+                    ENERGY
                   </span>
-                </h2>
+                </span>
 
-                <p
+                <span
                   className="
-                    mt-1
-                    text-[9px]
-                    font-medium
-                    tracking-[3px]
-                    text-[#0080ff]/80
+                    mt-0.5
+                    text-[7px]
+                    font-bold
+                    tracking-[2px]
+                    text-slate-400
+                    xl:text-[8px]
                   "
                 >
-                  SOLAR&nbsp;SOLUTIONS
-                </p>
+                  SOLAR SOLUTIONS
+                </span>
               </div>
-            </div>
+            </a>
 
-            {/* =================================================
-                DESKTOP MENU
-            ================================================= */}
+            {/* NAVIGATION LINKS */}
 
-            <div className="hidden items-center gap-10 lg:flex">
-              {links.map(([label, href]) => (
+            <nav
+              className="
+                flex
+                items-center
+                gap-7
+                xl:gap-10
+                2xl:gap-12
+              "
+            >
+              {NAV_LINKS.map(({ label, href }) => (
                 <a
                   key={label}
                   href={href}
+                  onClick={(e) =>
+                    handleNavClick(e, href)
+                  }
                   className="
+                    group
                     relative
-                    text-xs
+                    whitespace-nowrap
+                    text-[13px]
                     font-medium
-                    tracking-[1.5px]
-                    text-gray-200
-                    transition
+                    text-slate-600
+                    transition-all
                     duration-300
-                    after:absolute
-                    after:-bottom-1
-                    after:left-0
-                    after:h-px
-                    after:w-0
-                    after:bg-[#0080ff]
-                    after:transition-all
-                    after:duration-300
-                    hover:text-[#0080ff]
-                    hover:after:w-full
+                    hover:text-[#0284c7]
+                    xl:text-sm
                   "
                 >
-                  {label.toUpperCase()}
+                  {label}
+
+                  <span
+                    className="
+                      absolute
+                      -bottom-1
+                      left-1/2
+                      h-[2px]
+                      w-0
+                      -translate-x-1/2
+                      rounded-full
+                      bg-[#0284c7]
+                      transition-all
+                      duration-300
+                      group-hover:w-full
+                    "
+                  />
                 </a>
               ))}
-            </div>
+            </nav>
 
-            {/* =================================================
-                RIGHT SIDE
-            ================================================= */}
+            {/* CONTACT */}
 
-            <div className="hidden items-center gap-6 lg:flex">
-
-              <a
-                href="tel:1234567890"
-                className="
-                  flex
-                  items-center
-                  gap-2
-                  text-xs
-                  font-medium
-                  tracking-wide
-                  text-gray-200
-                  transition
-                  hover:text-[#0080ff]
-                "
-              >
-                <Phone size={16} />
-                (123) 456-7890
-              </a>
-
-              <button
-                className="
-                  group
-                  flex
-                  items-center
-                  gap-2
-                  rounded-full
-                  border
-                  border-[#0080ff]/60
-                  bg-gradient-to-r
-                  from-[#0080ff]
-                  to-[#0066cc]
-                  px-5
-                  py-2.5
-                  text-xs
-                  font-semibold
-                  tracking-wide
-                  text-white
-                  shadow-lg
-                  shadow-[#0080ff]/20
-                  transition
-                  duration-300
-                  hover:scale-105
-                  hover:shadow-[#0080ff]/40
-                "
-              >
-                Free Quote
-
-                <ArrowRight
-                  size={16}
-                  className="
-                    transition-transform
-                    duration-300
-                    group-hover:translate-x-1
-                  "
-                />
-              </button>
-            </div>
-
-            {/* =================================================
-                MOBILE MENU BUTTON
-            ================================================= */}
-
-            <button
-              onClick={() => setOpen(!open)}
+            <a
+              href="#contact"
+              onClick={(e) =>
+                handleNavClick(e, "#contact")
+              }
               className="
-                rounded-md
-                border
-                border-white/10
-                bg-white/5
-                p-2
-                backdrop-blur-md
-                lg:hidden
+                inline-flex
+                shrink-0
+                items-center
+                justify-center
+                rounded-full
+                bg-[#f43f5e]
+                px-7
+                py-2.5
+                text-[13px]
+                font-semibold
+                text-white
+                shadow-[0_4px_14px_rgba(244,63,94,0.45)]
+                transition-all
+                duration-200
+                hover:-translate-y-0.5
+                hover:bg-[#e11d48]
+                hover:shadow-lg
+                active:scale-95
+                xl:px-8
+                xl:py-3
               "
-              aria-label="Toggle menu"
             >
-              {open ? (
-                <X size={26} />
-              ) : (
-                <Menu size={26} />
-              )}
-            </button>
+              Contact
+            </a>
           </div>
 
           {/* =================================================
-              MOBILE MENU
-          ================================================= */}
+              MOBILE NAVIGATION
+          ================================================== */}
 
-          {open && (
+          <div
+            className="
+              flex
+              w-full
+              flex-col
+              rounded-3xl
+              border
+              border-slate-200
+              bg-white/95
+              p-3
+              shadow-[0_15px_45px_rgba(0,0,0,0.35)]
+              backdrop-blur-xl
+              lg:hidden
+            "
+          >
+            {/* MOBILE HEADER */}
+
             <div
               className="
-                mx-6
-                mt-4
-                rounded-2xl
-                border
-                border-white/10
-                bg-[#04182E]/95
-                p-5
-                backdrop-blur-xl
-                lg:hidden
+                flex
+                items-center
+                justify-between
+                px-2
               "
             >
-              {links.map(([label, href]) => (
-                <a
-                  key={label}
-                  href={href}
-                  onClick={() => setOpen(false)}
-                  className="
-                    block
-                    border-b
-                    border-white/10
-                    py-3
-                    text-xs
-                    font-medium
-                    tracking-[1.5px]
-                    text-gray-200
-                    last:border-0
-                    hover:text-[#0080ff]
-                  "
-                >
-                  {label.toUpperCase()}
-                </a>
-              ))}
-
-              <button
+              <a
+                href="#home"
+                onClick={(e) =>
+                  handleNavClick(e, "#home")
+                }
                 className="
-                  mt-5
-                  w-full
-                  rounded-full
-                  bg-gradient-to-r
-                  from-[#0080ff]
-                  to-[#0066cc]
-                  py-3
-                  text-xs
-                  font-semibold
-                  tracking-wide
-                  text-white
+                  flex
+                  items-center
+                  gap-2
                 "
               >
-                Free Quote
+                <img
+                  src={logo}
+                  alt="Pristine Energy Logo"
+                  className="
+                    h-7
+                    w-auto
+                    object-contain
+                  "
+                />
+
+                <div className="flex flex-col leading-none">
+                  <span
+                    className="
+                      text-xs
+                      font-black
+                      tracking-tight
+                      text-slate-900
+                    "
+                  >
+                    PRISTINE{" "}
+                    <span className="text-[#0284c7]">
+                      ENERGY
+                    </span>
+                  </span>
+
+                  <span
+                    className="
+                      mt-0.5
+                      text-[6px]
+                      font-bold
+                      tracking-[1.8px]
+                      text-slate-400
+                    "
+                  >
+                    SOLAR SOLUTIONS
+                  </span>
+                </div>
+              </a>
+
+              <button
+                type="button"
+                onClick={() =>
+                  setMobileMenuOpen((prev) => !prev)
+                }
+                aria-label="Toggle navigation menu"
+                className="
+                  rounded-full
+                  p-2
+                  text-slate-700
+                  transition
+                  hover:bg-slate-100
+                  active:scale-95
+                "
+              >
+                {mobileMenuOpen ? (
+                  <X size={21} />
+                ) : (
+                  <Menu size={21} />
+                )}
               </button>
             </div>
-          )}
-        </nav>
 
-        {/* ===================================================
-            HERO CONTENT
-        =================================================== */}
+            {/* MOBILE MENU */}
+
+            <AnimatePresence>
+              {mobileMenuOpen && (
+                <motion.div
+                  initial={{
+                    opacity: 0,
+                    height: 0,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    height: "auto",
+                  }}
+                  exit={{
+                    opacity: 0,
+                    height: 0,
+                  }}
+                  transition={{
+                    duration: 0.25,
+                  }}
+                  className="overflow-hidden"
+                >
+                  <ul
+                    className="
+                      mt-2
+                      flex
+                      flex-col
+                      gap-1
+                      border-t
+                      border-slate-100
+                      pt-3
+                      text-center
+                    "
+                  >
+                    {NAV_LINKS.map(
+                      ({ label, href }) => (
+                        <li key={label}>
+                          <a
+                            href={href}
+                            onClick={(e) =>
+                              handleNavClick(
+                                e,
+                                href
+                              )
+                            }
+                            className="
+                              block
+                              rounded-xl
+                              py-2.5
+                              text-xs
+                              font-semibold
+                              text-slate-700
+                              transition
+                              hover:bg-sky-50
+                              hover:text-[#0284c7]
+                            "
+                          >
+                            {label}
+                          </a>
+                        </li>
+                      )
+                    )}
+
+                    <li className="pb-1 pt-2">
+                      <a
+                        href="#contact"
+                        onClick={(e) =>
+                          handleNavClick(
+                            e,
+                            "#contact"
+                          )
+                        }
+                        className="
+                          block
+                          rounded-full
+                          bg-[#f43f5e]
+                          py-3
+                          text-xs
+                          font-bold
+                          text-white
+                          shadow-md
+                          shadow-rose-500/25
+                        "
+                      >
+                        Contact
+                      </a>
+                    </li>
+                  </ul>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
+      </motion.header>
+
+      {/* =====================================================
+          HERO
+          EXACT 100VH
+      ====================================================== */}
+
+      <section
+        id="home"
+        className="
+          relative
+          h-screen
+          min-h-[650px]
+          w-full
+          overflow-hidden
+          bg-[#041122]
+          font-['Plus_Jakarta_Sans',sans-serif]
+          text-white
+        "
+      >
+        {/* =================================================
+            SAME WIDTH CONTAINER
+        ================================================== */}
 
         <div
           className="
             mx-auto
             flex
+            h-full
             w-full
-            max-w-7xl
-            flex-1
+            max-w-[1900px]
             items-center
-            px-6
+            px-3
+            pt-24
+            pb-4
+            sm:px-5
+            sm:pt-28
             lg:px-8
+            lg:pt-28
+            xl:px-10
           "
         >
-          <div className="max-w-3xl">
+          {/* =================================================
+              HERO BANNER
+              FITS INSIDE 100VH
+          ================================================== */}
+
+          <div
+            className="
+              relative
+              h-[calc(100vh-120px)]
+              min-h-[520px]
+              max-h-[850px]
+              w-full
+              overflow-hidden
+              rounded-3xl
+              border
+              border-sky-400/20
+              shadow-2xl
+              shadow-sky-950/50
+              sm:h-[calc(100vh-130px)]
+              lg:h-[calc(100vh-140px)]
+              xl:h-[calc(100vh-150px)]
+            "
+          >
+            {/* =================================================
+                BACKGROUND SLIDE
+            ================================================== */}
+
+            <AnimatePresence initial={false}>
+              <motion.img
+                key={currentSlide}
+                src={SLIDES[currentSlide].image}
+                alt="Solar energy project"
+                initial={{
+                  opacity: 0,
+                  scale: 1.06,
+                }}
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                }}
+                exit={{
+                  opacity: 0,
+                }}
+                transition={{
+                  duration: 0.9,
+                  ease: "easeInOut",
+                }}
+                className="
+                  absolute
+                  inset-0
+                  h-full
+                  w-full
+                  object-cover
+                "
+              />
+            </AnimatePresence>
 
             {/* =================================================
-                BADGE
-            ================================================= */}
+                OVERLAYS
+            ================================================== */}
 
             <div
               className="
-                mb-8
-                inline-flex
-                items-center
-                gap-3
-                rounded-full
-                border
-                border-[#0080ff]/30
-                bg-black/30
-                px-5
-                py-2
-                backdrop-blur-md
+                absolute
+                inset-0
+                bg-gradient-to-t
+                from-[#041122]
+                via-[#04182e]/60
+                to-[#04182e]/20
               "
-            >
-              <span
-                className="
-                  h-2
-                  w-2
-                  animate-pulse
-                  rounded-full
-                  bg-[#0080ff]
-                "
-              />
+            />
 
-              <span
-                className="
-                  text-[11px]
-                  font-medium
-                  tracking-[2px]
-                  text-gray-200
-                "
-              >
-                PREMIUM SOLAR INSTALLATION SINCE 2010
-              </span>
-            </div>
-
-            {/* =================================================
-                HEADING
-            ================================================= */}
-
-            <h1
+            <div
               className="
-                font-['Cormorant_Garamond']
-                text-4xl
-                font-semibold
-                leading-[1.1]
-                tracking-wide
-                md:text-6xl
+                absolute
+                inset-0
+                bg-gradient-to-r
+                from-[#041122]/90
+                via-[#04182e]/40
+                to-transparent
               "
-            >
-              Power Your Future
-              <br />
-
-              <span
-                className="
-                  bg-gradient-to-r
-                  from-[#0080ff]
-                  via-[#66b3ff]
-                  to-[#0080ff]
-                  bg-clip-text
-                  text-transparent
-                "
-              >
-                with Clean Solar Energy
-              </span>
-            </h1>
+            />
 
             {/* =================================================
-                DESCRIPTION
-            ================================================= */}
+                HERO CONTENT
+            ================================================== */}
 
-            <p
+            <div
               className="
-                mt-6
-                max-w-2xl
-                text-sm
-                font-light
-                leading-relaxed
-                tracking-wide
-                text-gray-300
+                relative
+                z-10
+                flex
+                h-full
+                flex-col
+                justify-between
+                p-7
+                sm:p-12
+                lg:p-16
+                xl:p-20
+                2xl:p-24
               "
             >
-              Pristine Energy delivers premium solar installation
-              for homes and businesses. Reduce your energy bills,
-              increase your property value, and join the clean
-              energy revolution.
-            </p>
+              {/* TOP CONTENT */}
 
-            {/* =================================================
-                BUTTONS
-            ================================================= */}
-
-            <div className="mt-10 flex flex-wrap gap-5">
-
-              {/* Quote Button */}
-              <button
+              <div
                 className="
-                  group
-                  flex
-                  items-center
-                  gap-3
-                  rounded-full
-                  bg-gradient-to-r
-                  from-[#0080ff]
-                  to-[#0066cc]
-                  px-7
-                  py-3.5
-                  text-xs
-                  font-semibold
-                  tracking-wide
-                  text-white
-                  shadow-xl
-                  shadow-[#0080ff]/25
-                  transition
-                  duration-300
-                  hover:scale-105
-                  hover:shadow-[#0080ff]/40
+                  max-w-2xl
+                  xl:max-w-3xl
+                  2xl:max-w-4xl
                 "
               >
-                GET A FREE QUOTE
+                {/* BADGE */}
 
-                <ArrowRight
-                  size={18}
+                <motion.div
+                  key={`badge-${currentSlide}`}
+                  initial={{
+                    opacity: 0,
+                    y: 10,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  transition={{
+                    duration: 0.4,
+                  }}
                   className="
-                    transition-transform
-                    duration-300
-                    group-hover:translate-x-1
+                    mb-4
+                    inline-flex
+                    items-center
+                    gap-2
+                    rounded-full
+                    border
+                    border-sky-400/30
+                    bg-sky-950/70
+                    px-4
+                    py-1
+                    text-[11px]
+                    font-semibold
+                    uppercase
+                    tracking-wider
+                    text-sky-200
+                    backdrop-blur-md
                   "
-                />
-              </button>
+                >
+                  <span
+                    className="
+                      h-2
+                      w-2
+                      animate-pulse
+                      rounded-full
+                      bg-sky-400
+                    "
+                  />
 
-              {/* Services Button */}
-              <a
-                href="#services"
+                  {SLIDES[currentSlide].badge}
+                </motion.div>
+
+                {/* TITLE */}
+
+                <motion.h1
+                  key={`title-${currentSlide}`}
+                  initial={{
+                    opacity: 0,
+                    y: 20,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  transition={{
+                    duration: 0.5,
+                    delay: 0.1,
+                  }}
+                  className="
+                    text-4xl
+                    font-bold
+                    leading-[1.1]
+                    tracking-tight
+                    text-white
+                    sm:text-5xl
+                    lg:text-6xl
+                    xl:text-7xl
+                    2xl:text-8xl
+                  "
+                >
+                  {SLIDES[currentSlide].title}
+                </motion.h1>
+
+                {/* DESCRIPTION */}
+
+                <motion.p
+                  key={`desc-${currentSlide}`}
+                  initial={{
+                    opacity: 0,
+                    y: 20,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  transition={{
+                    duration: 0.5,
+                    delay: 0.2,
+                  }}
+                  className="
+                    mt-4
+                    max-w-xl
+                    text-sm
+                    leading-relaxed
+                    text-sky-100/90
+                    sm:text-base
+                    lg:text-lg
+                    xl:max-w-2xl
+                    xl:text-xl
+                  "
+                >
+                  {SLIDES[currentSlide].subtitle}
+                </motion.p>
+
+                {/* CTA BUTTONS */}
+
+                <motion.div
+                  key={`cta-${currentSlide}`}
+                  initial={{
+                    opacity: 0,
+                    y: 20,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  transition={{
+                    duration: 0.5,
+                    delay: 0.3,
+                  }}
+                  className="
+                    mt-7
+                    flex
+                    flex-wrap
+                    items-center
+                    gap-4
+                  "
+                >
+                  <a
+                    href="#contact"
+                    onClick={(e) =>
+                      handleNavClick(
+                        e,
+                        "#contact"
+                      )
+                    }
+                    className="
+                      rounded-full
+                      bg-sky-500
+                      px-7
+                      py-3.5
+                      text-xs
+                      font-bold
+                      tracking-wider
+                      text-white
+                      shadow-lg
+                      shadow-sky-500/30
+                      transition
+                      hover:-translate-y-0.5
+                      hover:bg-sky-400
+                      xl:px-8
+                      xl:py-4
+                    "
+                  >
+                    BOOK FREE SURVEY
+                  </a>
+
+                  <a
+                    href="#services"
+                    onClick={(e) =>
+                      handleNavClick(
+                        e,
+                        "#services"
+                      )
+                    }
+                    className="
+                      rounded-full
+                      border
+                      border-white/25
+                      bg-white/10
+                      px-7
+                      py-3.5
+                      text-xs
+                      font-bold
+                      tracking-wider
+                      text-white
+                      backdrop-blur-md
+                      transition
+                      hover:-translate-y-0.5
+                      hover:bg-white/20
+                      xl:px-8
+                      xl:py-4
+                    "
+                  >
+                    EXPLORE SOLUTIONS
+                  </a>
+                </motion.div>
+              </div>
+
+              {/* =================================================
+                  BOTTOM CONTROLS
+              ================================================== */}
+
+              <div
                 className="
-                  rounded-full
-                  border
-                  border-white/20
-                  bg-white/5
-                  px-7
-                  py-3.5
-                  text-xs
-                  font-semibold
-                  tracking-wide
-                  backdrop-blur-md
-                  transition
-                  duration-300
-                  hover:border-[#0080ff]/50
-                  hover:bg-white/10
-                  hover:text-[#0080ff]
+                  flex
+                  items-end
+                  justify-between
+                  pt-6
                 "
               >
-                EXPLORE SERVICES
-              </a>
-            </div>
+                {/* SLIDER BUTTONS */}
 
-            {/* =================================================
-                STATS
-            ================================================= */}
-
-            <div className="mt-16 flex flex-wrap gap-10">
-
-              {/* Stat 1 */}
-              <div className="flex items-center gap-3">
-                <TrendingDown
-                  className="text-[#0080ff]"
-                  size={26}
-                />
-
-                <div>
-                  <h3
+                <div className="flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={handlePrev}
+                    aria-label="Previous Slide"
                     className="
-                      font-['Cormorant_Garamond']
-                      text-2xl
-                      font-semibold
+                      flex
+                      h-10
+                      w-10
+                      items-center
+                      justify-center
+                      rounded-full
+                      border
+                      border-white/15
+                      bg-black/40
+                      text-white
+                      backdrop-blur-md
+                      transition
+                      hover:border-sky-500
+                      hover:bg-sky-500
+                      xl:h-12
+                      xl:w-12
                     "
                   >
-                    70%
-                  </h3>
+                    <ChevronLeft size={18} />
+                  </button>
 
-                  <p
+                  <button
+                    type="button"
+                    onClick={handleNext}
+                    aria-label="Next Slide"
                     className="
-                      text-[10px]
-                      tracking-[1.5px]
-                      text-gray-400
+                      flex
+                      h-10
+                      w-10
+                      items-center
+                      justify-center
+                      rounded-full
+                      bg-white
+                      text-slate-900
+                      transition
+                      hover:bg-sky-400
+                      hover:text-white
+                      xl:h-12
+                      xl:w-12
                     "
                   >
-                    LOWER ENERGY BILLS
-                  </p>
+                    <ChevronRight size={18} />
+                  </button>
                 </div>
-              </div>
 
-              {/* Stat 2 */}
-              <div className="flex items-center gap-3">
-                <ShieldCheck
-                  className="text-[#0080ff]"
-                  size={26}
-                />
+                {/* SCROLL DOWN */}
 
-                <div>
-                  <h3
-                    className="
-                      font-['Cormorant_Garamond']
-                      text-2xl
-                      font-semibold
-                    "
-                  >
-                    25yr
-                  </h3>
-
-                  <p
-                    className="
-                      text-[10px]
-                      tracking-[1.5px]
-                      text-gray-400
-                    "
-                  >
-                    PANEL WARRANTY
-                  </p>
-                </div>
-              </div>
-
-              {/* Stat 3 */}
-              <div className="flex items-center gap-3">
-                <Zap
-                  className="text-[#0080ff]"
-                  size={26}
-                />
-
-                <div>
-                  <h3
-                    className="
-                      font-['Cormorant_Garamond']
-                      text-2xl
-                      font-semibold
-                    "
-                  >
-                    100%
-                  </h3>
-
-                  <p
-                    className="
-                      text-[10px]
-                      tracking-[1.5px]
-                      text-gray-400
-                    "
-                  >
-                    CLEAN ENERGY
-                  </p>
-                </div>
+                <button
+                  type="button"
+                  onClick={(e) =>
+                    handleNavClick(e, "#values")
+                  }
+                  className="
+                    hidden
+                    items-center
+                    gap-2
+                    rounded-full
+                    border
+                    border-white/10
+                    bg-white/10
+                    px-4
+                    py-2
+                    text-xs
+                    font-medium
+                    text-sky-200
+                    backdrop-blur-md
+                    transition
+                    hover:bg-white/20
+                    sm:inline-flex
+                  "
+                >
+                  <span>Scroll down</span>
+                  <span>↓</span>
+                </button>
               </div>
             </div>
           </div>
         </div>
+      </section>
 
-        {/* ===================================================
-            SLIDER INDICATORS
-        =================================================== */}
+      {/* =====================================================
+          VALUES SECTION
+      ====================================================== */}
 
-        <div
-          className="
-            absolute
-            bottom-8
-            left-1/2
-            flex
-            -translate-x-1/2
-            gap-2
-          "
-        >
-          {images.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentImage(index)}
-              aria-label={`Show image ${index + 1}`}
-              className={`
-                h-2
-                rounded-full
-                transition-all
-                duration-500
-                ${
-                  currentImage === index
-                    ? "w-8 bg-[#0080ff]"
-                    : "w-2 bg-white/40"
-                }
-              `}
-            />
-          ))}
-        </div>
-
-        {/* ===================================================
-            FLOATING BADGE
-        =================================================== */}
+      <section
+        id="values"
+        className="
+          mx-auto
+          w-full
+          max-w-7xl
+          scroll-mt-28
+          px-6
+          py-14
+          lg:px-8
+          lg:py-20
+        "
+      >
+        {/* SECTION TITLE */}
 
         <div
           className="
-            absolute
-            bottom-8
-            right-8
-            hidden
-            items-center
-            gap-2
-            rounded-full
-            border
-            border-[#0080ff]/40
-            bg-white
-            px-4
-            py-3
-            text-[#04182E]
-            shadow-xl
-            sm:flex
+            mx-auto
+            mb-12
+            max-w-xl
+            text-center
           "
         >
-          <Zap
-            className="text-[#0080ff]"
-            size={18}
-          />
-
-          <span
+          <h2
             className="
-              text-xs
-              font-semibold
-              tracking-wide
+              text-2xl
+              font-bold
+              tracking-tight
+              text-white
+              sm:text-3xl
             "
           >
-            Clean Energy
-          </span>
+            Top Values for Your Solar Journey
+          </h2>
+
+          <p
+            className="
+              mt-2
+              text-xs
+              text-slate-400
+              sm:text-sm
+            "
+          >
+            Engineered reliability, turnkey
+            installations, and lasting savings for
+            every rooftop.
+          </p>
         </div>
-      </div>
-    </section>
+
+        {/* STATS */}
+
+        <div
+          className="
+            grid
+            grid-cols-1
+            gap-6
+            sm:grid-cols-2
+            lg:grid-cols-4
+          "
+        >
+          {STATS.map(
+            ({
+              icon: Icon,
+              value,
+              title,
+              description,
+            }) => (
+              <motion.div
+                key={title}
+                whileHover={{
+                  y: -5,
+                }}
+                transition={{
+                  duration: 0.25,
+                }}
+                className="
+                  flex
+                  flex-col
+                  items-center
+                  rounded-2xl
+                  border
+                  border-sky-500/10
+                  bg-[#071933]/50
+                  p-6
+                  text-center
+                  backdrop-blur-sm
+                  transition
+                  hover:border-sky-500/30
+                  hover:bg-[#071933]/80
+                "
+              >
+                <div
+                  className="
+                    mb-4
+                    flex
+                    h-14
+                    w-14
+                    items-center
+                    justify-center
+                    rounded-full
+                    bg-sky-500/10
+                    text-sky-400
+                  "
+                >
+                  <Icon size={26} />
+                </div>
+
+                <div
+                  className="
+                    text-xl
+                    font-bold
+                    text-white
+                  "
+                >
+                  {value}
+                </div>
+
+                <h3
+                  className="
+                    mt-1
+                    text-sm
+                    font-semibold
+                    text-slate-200
+                  "
+                >
+                  {title}
+                </h3>
+
+                <p
+                  className="
+                    mt-2
+                    max-w-[210px]
+                    text-xs
+                    leading-relaxed
+                    text-slate-400
+                  "
+                >
+                  {description}
+                </p>
+              </motion.div>
+            )
+          )}
+        </div>
+      </section>
+    </>
   );
 }
+
