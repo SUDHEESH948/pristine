@@ -1,23 +1,40 @@
+
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import Heroe from "./components/header";
-import Benefit from "./components/OurImpact";
-import Aboute from "./components/WhyPristine";
-import Value from "./components/Values";
 
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import WhatsAppButton from "./components/WhatsAppButton";
 
-import ContactFooter from "./components/Footer";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Services from "./pages/Services";
+import Projects from "./pages/Projects";
+import Contact from "./pages/Contact";
+
 function App() {
   return (
-    <div className="min-h-screen overflow-hidden bg-[#071a36] text-white">
-      <div className="premium-section"><Heroe /></div>
-      <div className="premium-section"><Benefit /></div>
-      <div className="premium-section"><Aboute /></div>
-      <div className="premium-section"><Value /></div>
-  
+    <>
+      {/* ================= COMMON NAVBAR ================= */}
+      <Navbar />
 
-      <div className="premium-section"><ContactFooter /></div>
-    </div>
+      {/* ================= PAGE ROUTES ================= */}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/projects" element={<Projects />} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
+
+      {/* ================= COMMON FOOTER ================= */}
+      <Footer />
+
+      {/* ================= WHATSAPP BUTTON ================= */}
+      <WhatsAppButton />
+    </>
   );
 }
 
 export default App;
+
