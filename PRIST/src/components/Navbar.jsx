@@ -198,7 +198,7 @@ export default function Navbar() {
               items-center
               justify-center
               rounded-full
-              bg-[#f43f5e]
+              bg-[#0284c7]
               px-7
               py-2.5
               text-[13px]
@@ -206,6 +206,7 @@ export default function Navbar() {
               text-white
               shadow-[0_4px_14px_rgba(244,63,94,0.45)]
               transition-all
+              
               duration-200
               hover:-translate-y-0.5
               hover:bg-[#e11d48]
@@ -397,7 +398,7 @@ export default function Navbar() {
                       className="
                         block
                         rounded-full
-                        bg-[#f43f5e]
+                        bg-[#0284c7]
                         py-3
                         text-xs
                         font-bold

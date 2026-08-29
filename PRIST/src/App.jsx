@@ -1,10 +1,10 @@
-
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import WhatsAppButton from "./components/WhatsAppButton";
+import ScrollToTop from "./components/ScrollToTop";
 
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -17,6 +17,9 @@ function App() {
     <>
       {/* ================= COMMON NAVBAR ================= */}
       <Navbar />
+
+      {/* ================= SCROLL TO TOP ================= */}
+      <ScrollToTop />
 
       {/* ================= PAGE ROUTES ================= */}
       <Routes>
@@ -37,4 +40,3 @@ function App() {
 }
 
 export default App;
-
