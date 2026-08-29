@@ -28,9 +28,7 @@ function Home() {
         <Value />
       </section>
 
-      <section className="premium-section">
-        <ContactFooter />
-      </section>
+      
 
     </main>
   );
