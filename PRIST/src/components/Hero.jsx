@@ -1,11 +1,7 @@
-
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import image1 from "../assets/image1.png";
 import image2 from "../assets/image2.png";
@@ -31,35 +27,40 @@ const SLIDES = [
   },
 ];
 
+// =========================================================
+// HERO COMPONENT
+// =========================================================
+
 export default function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
+  // =========================================================
   // AUTO SLIDER
+  // =========================================================
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide(
-        (prev) => (prev + 1) % SLIDES.length
-      );
+      setCurrentSlide((prev) => (prev + 1) % SLIDES.length);
     }, 6500);
 
     return () => clearInterval(timer);
   }, []);
 
-  // NEXT
+  // =========================================================
+  // NEXT SLIDE
+  // =========================================================
 
   const handleNext = () => {
-    setCurrentSlide(
-      (prev) => (prev + 1) % SLIDES.length
-    );
+    setCurrentSlide((prev) => (prev + 1) % SLIDES.length);
   };
 
-  // PREVIOUS
+  // =========================================================
+  // PREVIOUS SLIDE
+  // =========================================================
 
   const handlePrev = () => {
     setCurrentSlide(
-      (prev) =>
-        (prev - 1 + SLIDES.length) % SLIDES.length
+      (prev) => (prev - 1 + SLIDES.length) % SLIDES.length
     );
   };
 
@@ -67,8 +68,7 @@ export default function Hero() {
     <section
       className="
         relative
-        h-screen
-        min-h-[650px]
+        min-h-screen
         w-full
         overflow-hidden
         bg-[#041122]
@@ -76,43 +76,61 @@ export default function Hero() {
         text-white
       "
     >
+      {/* =====================================================
+          MAIN HERO WRAPPER
+      ===================================================== */}
+
       <div
         className="
           mx-auto
-          flex
-          h-full
           w-full
           max-w-[1900px]
-          items-center
           px-3
-          pt-24
-          pb-4
+          pt-20
+          pb-3
+
           sm:px-5
-          sm:pt-28
+          sm:pt-24
+          sm:pb-5
+
           lg:px-8
           lg:pt-28
+          lg:pb-8
+
           xl:px-10
+          xl:pt-28
         "
       >
+        {/* =====================================================
+            HERO CARD
+        ===================================================== */}
+
         <div
           className="
             relative
-            h-[calc(100vh-120px)]
-            min-h-[520px]
-            max-h-[850px]
             w-full
             overflow-hidden
-            rounded-3xl
+            rounded-2xl
             border
             border-sky-400/20
             shadow-2xl
             shadow-sky-950/50
-            sm:h-[calc(100vh-130px)]
-            lg:h-[calc(100vh-140px)]
-            xl:h-[calc(100vh-150px)]
+
+            min-h-[calc(100vh-100px)]
+
+            sm:min-h-[calc(100vh-115px)]
+            sm:rounded-3xl
+
+            md:min-h-[calc(100vh-120px)]
+
+            lg:min-h-[calc(100vh-135px)]
+
+            xl:min-h-[calc(100vh-145px)]
           "
         >
-          {/* BACKGROUND IMAGE */}
+          {/* ===================================================
+              BACKGROUND IMAGE
+          =================================================== */}
 
           <AnimatePresence initial={false}>
             <motion.img
@@ -144,7 +162,9 @@ export default function Hero() {
             />
           </AnimatePresence>
 
-          {/* OVERLAY */}
+          {/* ===================================================
+              DARK VERTICAL OVERLAY
+          =================================================== */}
 
           <div
             className="
@@ -157,6 +177,10 @@ export default function Hero() {
             "
           />
 
+          {/* ===================================================
+              DARK HORIZONTAL OVERLAY
+          =================================================== */}
+
           <div
             className="
               absolute
@@ -168,31 +192,53 @@ export default function Hero() {
             "
           />
 
-          {/* CONTENT */}
+          {/* ===================================================
+              CONTENT
+          =================================================== */}
 
           <div
             className="
               relative
               z-10
               flex
-              h-full
+              min-h-[calc(100vh-100px)]
               flex-col
               justify-between
-              p-7
-              sm:p-12
+
+              p-6
+
+              sm:min-h-[calc(100vh-115px)]
+              sm:p-10
+
+              md:min-h-[calc(100vh-120px)]
+              md:p-12
+
+              lg:min-h-[calc(100vh-135px)]
               lg:p-16
+
+              xl:min-h-[calc(100vh-145px)]
               xl:p-20
+
               2xl:p-24
             "
           >
+            {/* =================================================
+                TEXT CONTENT
+            ================================================= */}
+
             <div
               className="
+                w-full
                 max-w-2xl
+
                 xl:max-w-3xl
+
                 2xl:max-w-4xl
               "
             >
-              {/* BADGE */}
+              {/* =================================================
+                  BADGE
+              ================================================= */}
 
               <motion.div
                 key={`badge-${currentSlide}`}
@@ -216,30 +262,39 @@ export default function Hero() {
                   border
                   border-sky-400/30
                   bg-sky-950/70
-                  px-4
-                  py-1
-                  text-[11px]
+                  px-3
+                  py-1.5
+                  text-[10px]
                   font-semibold
                   uppercase
                   tracking-wider
                   text-sky-200
                   backdrop-blur-md
+
+                  sm:px-4
+                  sm:py-1
+                  sm:text-[11px]
                 "
               >
                 <span
                   className="
-                    h-2
-                    w-2
+                    h-1.5
+                    w-1.5
                     animate-pulse
                     rounded-full
                     bg-sky-400
+
+                    sm:h-2
+                    sm:w-2
                   "
                 />
 
                 {SLIDES[currentSlide].badge}
               </motion.div>
 
-              {/* TITLE */}
+              {/* =================================================
+                  TITLE
+              ================================================= */}
 
               <motion.h1
                 key={`title-${currentSlide}`}
@@ -256,21 +311,30 @@ export default function Hero() {
                   delay: 0.1,
                 }}
                 className="
-                  text-4xl
+                  max-w-[95%]
+                  text-3xl
                   font-bold
-                  leading-[1.1]
+                  leading-[1.08]
                   tracking-tight
                   text-white
-                  sm:text-5xl
+
+                  sm:text-4xl
+
+                  md:text-5xl
+
                   lg:text-6xl
+
                   xl:text-7xl
+
                   2xl:text-8xl
                 "
               >
                 {SLIDES[currentSlide].title}
               </motion.h1>
 
-              {/* DESCRIPTION */}
+              {/* =================================================
+                  DESCRIPTION
+              ================================================= */}
 
               <motion.p
                 key={`desc-${currentSlide}`}
@@ -292,8 +356,11 @@ export default function Hero() {
                   text-sm
                   leading-relaxed
                   text-sky-100/90
+
                   sm:text-base
+
                   lg:text-lg
+
                   xl:max-w-2xl
                   xl:text-xl
                 "
@@ -301,7 +368,9 @@ export default function Hero() {
                 {SLIDES[currentSlide].subtitle}
               </motion.p>
 
-              {/* BUTTONS */}
+              {/* =================================================
+                  CTA BUTTONS
+              ================================================= */}
 
               <motion.div
                 key={`cta-${currentSlide}`}
@@ -318,20 +387,28 @@ export default function Hero() {
                   delay: 0.3,
                 }}
                 className="
-                  mt-7
+                  mt-6
                   flex
-                  flex-wrap
-                  items-center
-                  gap-4
+                  flex-col
+                  items-stretch
+                  gap-3
+
+                  sm:mt-7
+                  sm:flex-row
+                  sm:items-center
+                  sm:gap-4
                 "
               >
+                {/* BOOK FREE SURVEY */}
+
                 <Link
                   to="/contact"
                   className="
                     rounded-full
                     bg-sky-500
-                    px-7
-                    py-3.5
+                    px-6
+                    py-3
+                    text-center
                     text-xs
                     font-bold
                     tracking-wider
@@ -339,14 +416,21 @@ export default function Hero() {
                     shadow-lg
                     shadow-sky-500/30
                     transition
+                    duration-300
                     hover:-translate-y-0.5
                     hover:bg-sky-400
+
+                    sm:px-7
+                    sm:py-3.5
+
                     xl:px-8
                     xl:py-4
                   "
                 >
                   BOOK FREE SURVEY
                 </Link>
+
+                {/* EXPLORE SOLUTIONS */}
 
                 <Link
                   to="/services"
@@ -355,16 +439,22 @@ export default function Hero() {
                     border
                     border-white/25
                     bg-white/10
-                    px-7
-                    py-3.5
+                    px-6
+                    py-3
+                    text-center
                     text-xs
                     font-bold
                     tracking-wider
                     text-white
                     backdrop-blur-md
                     transition
+                    duration-300
                     hover:-translate-y-0.5
                     hover:bg-white/20
+
+                    sm:px-7
+                    sm:py-3.5
+
                     xl:px-8
                     xl:py-4
                   "
@@ -374,10 +464,23 @@ export default function Hero() {
               </motion.div>
             </div>
 
-            {/* CONTROLS */}
+            {/* =================================================
+                SLIDER CONTROLS
+            ================================================= */}
 
-            <div className="flex items-end justify-between pt-6">
+            <div
+              className="
+                flex
+                items-end
+                justify-between
+                pt-8
+              "
+            >
               <div className="flex items-center gap-3">
+                {/* =================================================
+                    PREVIOUS BUTTON
+                ================================================= */}
+
                 <button
                   type="button"
                   onClick={handlePrev}
@@ -395,14 +498,20 @@ export default function Hero() {
                     text-white
                     backdrop-blur-md
                     transition
+                    duration-300
                     hover:border-sky-500
                     hover:bg-sky-500
+
                     xl:h-12
                     xl:w-12
                   "
                 >
                   <ChevronLeft size={18} />
                 </button>
+
+                {/* =================================================
+                    NEXT BUTTON
+                ================================================= */}
 
                 <button
                   type="button"
@@ -418,8 +527,10 @@ export default function Hero() {
                     bg-white
                     text-slate-900
                     transition
+                    duration-300
                     hover:bg-sky-400
                     hover:text-white
+
                     xl:h-12
                     xl:w-12
                   "
@@ -434,4 +545,3 @@ export default function Hero() {
     </section>
   );
 }
-
