@@ -1,6 +1,5 @@
-
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Phone,
   Mail,
@@ -21,10 +20,13 @@ export default function Contact() {
     email: "",
     location: "",
     requirement: "",
+    capacity: "",
     message: "",
   });
 
   const [error, setError] = useState("");
+
+  // ================= HANDLE INPUT CHANGE =================
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,10 +34,17 @@ export default function Contact() {
     setFormData((prev) => ({
       ...prev,
       [name]: value,
+
+      // Reset capacity if user changes from Residential Solar
+      ...(name === "requirement" && value !== "Residential Solar"
+        ? { capacity: "" }
+        : {}),
     }));
 
     setError("");
   };
+
+  // ================= WHATSAPP SUBMIT =================
 
   const handleWhatsApp = (e) => {
     e.preventDefault();
@@ -53,9 +62,19 @@ export default function Contact() {
       return;
     }
 
+    // Residential capacity validation
+    if (
+      formData.requirement === "Residential Solar" &&
+      !formData.capacity
+    ) {
+      setError("Please select your residential solar capacity.");
+      return;
+    }
+
     // Your WhatsApp number
     const whatsappNumber = "919000000000";
 
+    // WhatsApp message
     const whatsappMessage = `
 Hello Pristine Energy,
 
@@ -68,7 +87,12 @@ Email: ${formData.email || "Not provided"}
 Location: ${formData.location}
 
 *Solar Requirement*
-${formData.requirement}
+Requirement: ${formData.requirement}
+${
+  formData.requirement === "Residential Solar"
+    ? `Capacity: ${formData.capacity}`
+    : ""
+}
 
 *Additional Message*
 ${formData.message || "No additional message"}
@@ -101,7 +125,7 @@ Thank you.
         sm:pb-24
       "
     >
-      {/* Background Glow */}
+      {/* ================= BACKGROUND GLOW ================= */}
 
       <div
         className="
@@ -240,12 +264,23 @@ Thank you.
             "
           >
 
-            {/* Form Header */}
+            {/* ================= FORM HEADER ================= */}
 
             <div className="mb-7">
               <div className="flex items-center gap-3">
 
-                <div
+                <motion.div
+                  initial={{
+                    scale: 0.8,
+                    opacity: 0,
+                  }}
+                  animate={{
+                    scale: 1,
+                    opacity: 1,
+                  }}
+                  transition={{
+                    duration: 0.5,
+                  }}
                   className="
                     flex
                     h-12
@@ -258,7 +293,7 @@ Thank you.
                   "
                 >
                   <MessageCircle size={22} />
-                </div>
+                </motion.div>
 
                 <div>
                   <h2 className="text-xl font-bold text-slate-900">
@@ -273,12 +308,14 @@ Thank you.
               </div>
             </div>
 
+            {/* ================= FORM ================= */}
+
             <form
               onSubmit={handleWhatsApp}
               className="space-y-5"
             >
 
-              {/* Name + Phone */}
+              {/* ================= NAME + PHONE ================= */}
 
               <div className="grid gap-5 sm:grid-cols-2">
 
@@ -384,7 +421,7 @@ Thank you.
 
               </div>
 
-              {/* Email + Location */}
+              {/* ================= EMAIL + LOCATION ================= */}
 
               <div className="grid gap-5 sm:grid-cols-2">
 
@@ -490,9 +527,10 @@ Thank you.
 
               </div>
 
-              {/* Solar Requirement */}
+              {/* ================= SOLAR REQUIREMENT ================= */}
 
               <div>
+
                 <label className="mb-2 block text-xs font-bold text-slate-700">
                   Solar Requirement *
                 </label>
@@ -506,6 +544,7 @@ Thank you.
                       absolute
                       left-4
                       top-1/2
+                      z-10
                       -translate-y-1/2
                       text-slate-400
                     "
@@ -535,6 +574,7 @@ Thank you.
                       focus:ring-sky-100
                     "
                   >
+
                     <option value="">
                       Select your requirement
                     </option>
@@ -562,14 +602,183 @@ Thank you.
                     <option value="Not Sure - Need Consultation">
                       Not Sure - Need Consultation
                     </option>
+
                   </select>
 
                 </div>
+
               </div>
 
-              {/* Message */}
+              {/* =====================================================
+                  RESIDENTIAL CAPACITY
+              ====================================================== */}
+
+              <AnimatePresence mode="wait">
+
+                {formData.requirement === "Residential Solar" && (
+
+                  <motion.div
+                    initial={{
+                      opacity: 0,
+                      height: 0,
+                      y: -15,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      height: "auto",
+                      y: 0,
+                    }}
+                    exit={{
+                      opacity: 0,
+                      height: 0,
+                      y: -15,
+                    }}
+                    transition={{
+                      duration: 0.4,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                    className="overflow-hidden"
+                  >
+
+                    <label className="mb-2 block text-xs font-bold text-slate-700">
+                      Select Residential Capacity *
+                    </label>
+
+                    <div className="relative">
+
+                      {/* ================= ANIMATED ZAP ================= */}
+
+                      <motion.div
+                        initial={{
+                          scale: 0.5,
+                          opacity: 0,
+                          rotate: -25,
+                        }}
+                        animate={{
+                          scale: 1,
+                          opacity: 1,
+                          rotate: 0,
+                        }}
+                        transition={{
+                          duration: 0.45,
+                          delay: 0.12,
+                          ease: "easeOut",
+                        }}
+                        className="
+                          absolute
+                          left-4
+                          top-1/2
+                          z-10
+                          -translate-y-1/2
+                        "
+                      >
+
+                        <motion.div
+                          animate={{
+                            y: [0, -2, 0],
+                          }}
+                          transition={{
+                            duration: 1.8,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                          }}
+                        >
+
+                          <Zap
+                            size={17}
+                            className="
+                              pointer-events-none
+                              text-slate-400
+                            "
+                          />
+
+                        </motion.div>
+
+                      </motion.div>
+
+                      {/* ================= CAPACITY SELECT ================= */}
+
+                      <motion.select
+                        name="capacity"
+                        value={formData.capacity}
+                        onChange={handleChange}
+                        initial={{
+                          opacity: 0,
+                          x: -12,
+                          scale: 0.98,
+                        }}
+                        animate={{
+                          opacity: 1,
+                          x: 0,
+                          scale: 1,
+                        }}
+                        transition={{
+                          duration: 0.4,
+                          delay: 0.08,
+                          ease: "easeOut",
+                        }}
+                        whileFocus={{
+                          scale: 1.01,
+                        }}
+                        className="
+                          w-full
+                          appearance-none
+                          rounded-xl
+                          border
+                          border-slate-200
+                          bg-slate-50
+                          py-3
+                          pl-11
+                          pr-4
+                          text-sm
+                          text-slate-700
+                          outline-none
+                          transition
+                          focus:border-sky-400
+                          focus:bg-white
+                          focus:ring-4
+                          focus:ring-sky-100
+                        "
+                      >
+
+                        <option value="">
+                          Select Residential Capacity
+                        </option>
+
+                        <option value="3 kW">
+                          3 kW
+                        </option>
+
+                        <option value="4 kW">
+                          4 kW
+                        </option>
+
+                        <option value="5 kW">
+                          5 kW
+                        </option>
+
+                        <option value="6 kW">
+                          6 kW
+                        </option>
+
+                        <option value="6+ kW">
+                          6+ kW
+                        </option>
+
+                      </motion.select>
+
+                    </div>
+
+                  </motion.div>
+
+                )}
+
+              </AnimatePresence>
+
+              {/* ================= MESSAGE ================= */}
 
               <div>
+
                 <label className="mb-2 block text-xs font-bold text-slate-700">
                   Additional Message
                 </label>
@@ -600,32 +809,57 @@ Thank you.
                     focus:ring-sky-100
                   "
                 />
+
               </div>
 
-              {/* Error */}
+              {/* ================= ERROR ================= */}
 
-              {error && (
-                <div
-                  className="
-                    rounded-xl
-                    border
-                    border-red-200
-                    bg-red-50
-                    px-4
-                    py-3
-                    text-xs
-                    font-semibold
-                    text-red-600
-                  "
-                >
-                  {error}
-                </div>
-              )}
+              <AnimatePresence>
 
-              {/* WhatsApp Button */}
+                {error && (
 
-              <button
+                  <motion.div
+                    initial={{
+                      opacity: 0,
+                      y: -8,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                    }}
+                    exit={{
+                      opacity: 0,
+                      y: -8,
+                    }}
+                    className="
+                      rounded-xl
+                      border
+                      border-red-200
+                      bg-red-50
+                      px-4
+                      py-3
+                      text-xs
+                      font-semibold
+                      text-red-600
+                    "
+                  >
+                    {error}
+                  </motion.div>
+
+                )}
+
+              </AnimatePresence>
+
+              {/* ================= WHATSAPP BUTTON ================= */}
+
+              <motion.button
                 type="submit"
+                whileHover={{
+                  y: -3,
+                }}
+                whileTap={{
+                  scale: 0.98,
+                }}
                 className="
                   group
                   flex
@@ -644,13 +878,20 @@ Thank you.
                   shadow-green-500/20
                   transition
                   duration-300
-                  hover:-translate-y-1
                   hover:bg-[#20bd5a]
                   hover:shadow-xl
                 "
               >
 
-                <div
+                <motion.div
+                  animate={{
+                    scale: [1, 1.08, 1],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
                   className="
                     flex
                     h-9
@@ -662,6 +903,7 @@ Thank you.
                     bg-white
                   "
                 >
+
                   <img
                     src={whatsappIcon}
                     alt="WhatsApp"
@@ -672,7 +914,8 @@ Thank you.
                       object-contain
                     "
                   />
-                </div>
+
+                </motion.div>
 
                 <span>
                   Continue to WhatsApp
@@ -687,7 +930,7 @@ Thank you.
                   "
                 />
 
-              </button>
+              </motion.button>
 
               <p className="text-center text-[11px] text-slate-400">
                 Your enquiry details will be added automatically to the
@@ -695,6 +938,7 @@ Thank you.
               </p>
 
             </form>
+
           </motion.div>
 
           {/* ================= RIGHT SIDE ================= */}
@@ -728,9 +972,18 @@ Thank you.
             "
           >
 
-            {/* Glow */}
+            {/* ================= GLOW ================= */}
 
-            <div
+            <motion.div
+              animate={{
+                scale: [1, 1.1, 1],
+                opacity: [0.15, 0.25, 0.15],
+              }}
+              transition={{
+                duration: 5,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
               className="
                 pointer-events-none
                 absolute
@@ -745,6 +998,8 @@ Thank you.
             />
 
             <div className="relative">
+
+              {/* Badge */}
 
               <span
                 className="
@@ -764,6 +1019,8 @@ Thank you.
               >
                 Why Contact Us?
               </span>
+
+              {/* Heading */}
 
               <h2
                 className="
@@ -786,11 +1043,21 @@ Thank you.
                 solar system.
               </p>
 
-              {/* Benefits */}
+              {/* ================= BENEFITS ================= */}
 
               <div className="mt-8 space-y-4">
 
-                <div className="flex items-center gap-3">
+                {/* Home */}
+
+                <motion.div
+                  whileHover={{
+                    x: 5,
+                  }}
+                  transition={{
+                    duration: 0.2,
+                  }}
+                  className="flex items-center gap-3"
+                >
 
                   <div
                     className="
@@ -808,6 +1075,7 @@ Thank you.
                   </div>
 
                   <div>
+
                     <p className="text-sm font-bold text-white">
                       Home & Business Solutions
                     </p>
@@ -815,11 +1083,22 @@ Thank you.
                     <p className="text-xs text-slate-500">
                       Systems designed around your energy needs.
                     </p>
+
                   </div>
 
-                </div>
+                </motion.div>
 
-                <div className="flex items-center gap-3">
+                {/* Efficient */}
+
+                <motion.div
+                  whileHover={{
+                    x: 5,
+                  }}
+                  transition={{
+                    duration: 0.2,
+                  }}
+                  className="flex items-center gap-3"
+                >
 
                   <div
                     className="
@@ -837,6 +1116,7 @@ Thank you.
                   </div>
 
                   <div>
+
                     <p className="text-sm font-bold text-white">
                       Efficient Solar Systems
                     </p>
@@ -844,11 +1124,22 @@ Thank you.
                     <p className="text-xs text-slate-500">
                       High-performance solar technology.
                     </p>
+
                   </div>
 
-                </div>
+                </motion.div>
 
-                <div className="flex items-center gap-3">
+                {/* WhatsApp */}
+
+                <motion.div
+                  whileHover={{
+                    x: 5,
+                  }}
+                  transition={{
+                    duration: 0.2,
+                  }}
+                  className="flex items-center gap-3"
+                >
 
                   <div
                     className="
@@ -866,6 +1157,7 @@ Thank you.
                   </div>
 
                   <div>
+
                     <p className="text-sm font-bold text-white">
                       Quick WhatsApp Support
                     </p>
@@ -873,21 +1165,35 @@ Thank you.
                     <p className="text-xs text-slate-500">
                       Talk directly with our solar team.
                     </p>
+
                   </div>
 
-                </div>
+                </motion.div>
 
               </div>
 
-              {/* Direct Contact */}
+              {/* ================= DIRECT CONTACT ================= */}
 
               <div className="mt-9 border-t border-white/10 pt-7">
 
-                <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                <p
+                  className="
+                    text-xs
+                    font-semibold
+                    uppercase
+                    tracking-wider
+                    text-slate-500
+                  "
+                >
                   Direct Contact
                 </p>
 
-                <a
+                {/* Phone */}
+
+                <motion.a
+                  whileHover={{
+                    x: 4,
+                  }}
                   href="tel:+919000000000"
                   className="
                     mt-4
@@ -901,11 +1207,22 @@ Thank you.
                     hover:text-sky-400
                   "
                 >
-                  <Phone size={17} className="text-sky-400" />
-                  +91 90000 00000
-                </a>
 
-                <a
+                  <Phone
+                    size={17}
+                    className="text-sky-400"
+                  />
+
+                  +91 90000 00000
+
+                </motion.a>
+
+                {/* Email */}
+
+                <motion.a
+                  whileHover={{
+                    x: 4,
+                  }}
                   href="mailto:hello@pristineenergys.in"
                   className="
                     mt-3
@@ -919,19 +1236,26 @@ Thank you.
                     hover:text-sky-400
                   "
                 >
-                  <Mail size={17} className="text-sky-400" />
+
+                  <Mail
+                    size={17}
+                    className="text-sky-400"
+                  />
+
                   hello@pristineenergys.in
-                </a>
+
+                </motion.a>
 
               </div>
 
             </div>
+
           </motion.div>
 
         </div>
 
       </div>
+
     </section>
   );
 }
-

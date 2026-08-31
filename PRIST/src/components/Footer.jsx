@@ -16,7 +16,8 @@ export default function Footer() {
         text-slate-400
       "
     >
-      {/* Top Accent */}
+      {/* ================= TOP ACCENT ================= */}
+
       <div
         className="
           absolute
@@ -50,7 +51,9 @@ export default function Footer() {
                 hover:opacity-90
               "
             >
-              {/* CIRCULAR LOGO */}
+
+              {/* ================= LOGO ================= */}
+
               <div
                 className="
                   flex
@@ -70,7 +73,7 @@ export default function Footer() {
               >
                 <img
                   src={logo}
-                  alt="Pristine Energy Logo"
+                  alt="Pristine Horizon Logo"
                   className="
                     h-full
                     w-full
@@ -79,8 +82,11 @@ export default function Footer() {
                 />
               </div>
 
-              {/* BRAND TEXT */}
+              {/* ================= COMPANY NAME ================= */}
+
               <div className="flex flex-col leading-none">
+
+                {/* MAIN COMPANY */}
 
                 <span
                   className="
@@ -92,9 +98,25 @@ export default function Footer() {
                 >
                   PRISTINE{" "}
                   <span className="text-sky-500">
-                    ENERGY
+                    HORIZON
                   </span>
                 </span>
+
+                {/* SUB BRAND */}
+
+                <span
+                  className="
+                    mt-1.5
+                    text-[9px]
+                    font-extrabold
+                    tracking-[2px]
+                    text-sky-400
+                  "
+                >
+                  PRISTINE ENERGY
+                </span>
+
+                {/* TAGLINE */}
 
                 <span
                   className="
@@ -111,6 +133,8 @@ export default function Footer() {
               </div>
             </a>
 
+            {/* ================= DESCRIPTION ================= */}
+
             <p className="max-w-sm text-sm leading-relaxed text-slate-400">
               Clean, smart solar energy solutions engineered for homes,
               businesses, and industries across Kerala.
@@ -121,6 +145,7 @@ export default function Footer() {
             <div className="flex items-center gap-3 pt-2">
 
               {/* LinkedIn */}
+
               <a
                 href="#"
                 aria-label="LinkedIn"
@@ -150,6 +175,7 @@ export default function Footer() {
               </a>
 
               {/* Instagram */}
+
               <a
                 href="#"
                 aria-label="Instagram"
@@ -179,6 +205,7 @@ export default function Footer() {
               </a>
 
               {/* WhatsApp */}
+
               <a
                 href="#"
                 aria-label="WhatsApp"
@@ -212,43 +239,7 @@ export default function Footer() {
 
           {/* ================= QUICK LINKS ================= */}
 
-          <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200">
-              Quick Links
-            </h4>
-
-            <ul className="mt-4 space-y-3 text-sm">
-              <li>
-                <a href="/" className="transition hover:text-sky-400">
-                  Home
-                </a>
-              </li>
-
-              <li>
-                <a href="/about" className="transition hover:text-sky-400">
-                  About Us
-                </a>
-              </li>
-
-              <li>
-                <a href="/services" className="transition hover:text-sky-400">
-                  Services
-                </a>
-              </li>
-
-              <li>
-                <a href="/projects" className="transition hover:text-sky-400">
-                  Projects
-                </a>
-              </li>
-
-              <li>
-                <a href="/contact" className="transition hover:text-sky-400">
-                  Contact
-                </a>
-              </li>
-            </ul>
-          </div>
+          
 
           {/* ================= SOLAR SOLUTIONS ================= */}
 
@@ -258,41 +249,59 @@ export default function Footer() {
             </h4>
 
             <ul className="mt-4 space-y-3 text-sm">
+
               <li>
-                <a href="/services" className="transition hover:text-sky-400">
+                <a
+                  href="/services"
+                  className="transition hover:text-sky-400"
+                >
                   Residential Solar
                 </a>
               </li>
 
               <li>
-                <a href="/services" className="transition hover:text-sky-400">
+                <a
+                  href="/services"
+                  className="transition hover:text-sky-400"
+                >
                   Commercial Rooftop
                 </a>
               </li>
 
               <li>
-                <a href="/services" className="transition hover:text-sky-400">
+                <a
+                  href="/services"
+                  className="transition hover:text-sky-400"
+                >
                   Industrial Solutions
                 </a>
               </li>
 
               <li>
-                <a href="/services" className="transition hover:text-sky-400">
+                <a
+                  href="/services"
+                  className="transition hover:text-sky-400"
+                >
                   Battery &amp; Off-Grid Systems
                 </a>
               </li>
 
               <li>
-                <a href="/services" className="transition hover:text-sky-400">
+                <a
+                  href="/services"
+                  className="transition hover:text-sky-400"
+                >
                   Solar Maintenance
                 </a>
               </li>
+
             </ul>
           </div>
 
           {/* ================= CONTACT ================= */}
 
           <div>
+
             <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200">
               Get in Touch
             </h4>
@@ -300,6 +309,7 @@ export default function Footer() {
             <ul className="mt-4 space-y-4 text-sm">
 
               {/* Phone */}
+
               <li>
                 <a
                   href="tel:+919000000000"
@@ -329,6 +339,7 @@ export default function Footer() {
               </li>
 
               {/* Email */}
+
               <li>
                 <a
                   href="mailto:hello@pristineenergys.in"
@@ -358,7 +369,9 @@ export default function Footer() {
               </li>
 
               {/* Location */}
+
               <li className="flex items-center gap-3">
+
                 <span
                   className="
                     flex
@@ -376,10 +389,12 @@ export default function Footer() {
                 </span>
 
                 Kerala, India
+
               </li>
 
             </ul>
           </div>
+
         </div>
 
         {/* ================= BOTTOM BAR ================= */}
@@ -400,11 +415,13 @@ export default function Footer() {
             sm:flex-row
           "
         >
+
           <p>
-            © {currentYear} Pristine Energy. All rights reserved.
+            © {currentYear} Pristine Horizon. All rights reserved.
           </p>
 
           <div className="flex items-center gap-4">
+
             <a
               href="#privacy"
               className="transition hover:text-sky-400"
@@ -420,6 +437,7 @@ export default function Footer() {
             >
               Terms of Service
             </a>
+
           </div>
 
           <p>
@@ -438,6 +456,7 @@ export default function Footer() {
               Winshine Infotech
             </a>
           </p>
+
         </div>
 
       </div>
