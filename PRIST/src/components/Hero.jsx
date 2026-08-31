@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
@@ -85,13 +86,17 @@ export default function Hero() {
           mx-auto
           w-full
           max-w-[1900px]
+
           px-3
-          pt-20
+          pt-28
           pb-3
 
           sm:px-5
-          sm:pt-24
+          sm:pt-28
           sm:pb-5
+
+          md:px-6
+          md:pt-28
 
           lg:px-8
           lg:pt-28
@@ -101,9 +106,9 @@ export default function Hero() {
           xl:pt-28
         "
       >
-        {/* =====================================================
+        {/* ===================================================
             HERO CARD
-        ===================================================== */}
+        =================================================== */}
 
         <div
           className="
@@ -116,12 +121,12 @@ export default function Hero() {
             shadow-2xl
             shadow-sky-950/50
 
-            min-h-[calc(100vh-100px)]
+            min-h-[calc(100vh-120px)]
 
-            sm:min-h-[calc(100vh-115px)]
+            sm:min-h-[calc(100vh-125px)]
             sm:rounded-3xl
 
-            md:min-h-[calc(100vh-120px)]
+            md:min-h-[calc(100vh-130px)]
 
             lg:min-h-[calc(100vh-135px)]
 
@@ -139,7 +144,7 @@ export default function Hero() {
               alt="Solar energy project"
               initial={{
                 opacity: 0,
-                scale: 1.06,
+                scale: 1.08,
               }}
               animate={{
                 opacity: 1,
@@ -147,9 +152,10 @@ export default function Hero() {
               }}
               exit={{
                 opacity: 0,
+                scale: 1.02,
               }}
               transition={{
-                duration: 0.9,
+                duration: 1,
                 ease: "easeInOut",
               }}
               className="
@@ -163,7 +169,21 @@ export default function Hero() {
           </AnimatePresence>
 
           {/* ===================================================
-              DARK VERTICAL OVERLAY
+              MOBILE OVERLAY
+          =================================================== */}
+
+          <div
+            className="
+              absolute
+              inset-0
+              bg-[#041122]/45
+
+              sm:bg-transparent
+            "
+          />
+
+          {/* ===================================================
+              VERTICAL OVERLAY
           =================================================== */}
 
           <div
@@ -178,7 +198,7 @@ export default function Hero() {
           />
 
           {/* ===================================================
-              DARK HORIZONTAL OVERLAY
+              HORIZONTAL OVERLAY
           =================================================== */}
 
           <div
@@ -201,25 +221,36 @@ export default function Hero() {
               relative
               z-10
               flex
-              min-h-[calc(100vh-100px)]
+              min-h-[calc(100vh-120px)]
               flex-col
-              justify-between
+              items-center
+              justify-center
 
-              p-6
+              px-5
+              py-14
+              text-center
 
-              sm:min-h-[calc(100vh-115px)]
-              sm:p-10
+              sm:min-h-[calc(100vh-125px)]
+              sm:px-8
+              sm:py-16
 
-              md:min-h-[calc(100vh-120px)]
-              md:p-12
+              md:min-h-[calc(100vh-130px)]
+              md:items-start
+              md:justify-between
+              md:px-12
+              md:py-16
+              md:text-left
 
               lg:min-h-[calc(100vh-135px)]
-              lg:p-16
+              lg:px-16
+              lg:py-20
 
               xl:min-h-[calc(100vh-145px)]
-              xl:p-20
+              xl:px-20
+              xl:py-20
 
-              2xl:p-24
+              2xl:px-24
+              2xl:py-24
             "
           >
             {/* =================================================
@@ -230,6 +261,12 @@ export default function Hero() {
               className="
                 w-full
                 max-w-2xl
+
+                sm:max-w-xl
+
+                md:max-w-2xl
+
+                lg:max-w-3xl
 
                 xl:max-w-3xl
 
@@ -244,17 +281,20 @@ export default function Hero() {
                 key={`badge-${currentSlide}`}
                 initial={{
                   opacity: 0,
-                  y: 10,
+                  y: 25,
+                  scale: 0.9,
                 }}
                 animate={{
                   opacity: 1,
                   y: 0,
+                  scale: 1,
                 }}
                 transition={{
-                  duration: 0.4,
+                  duration: 0.6,
+                  ease: "easeOut",
                 }}
                 className="
-                  mb-4
+                  mb-5
                   inline-flex
                   items-center
                   gap-2
@@ -272,8 +312,10 @@ export default function Hero() {
                   backdrop-blur-md
 
                   sm:px-4
-                  sm:py-1
+                  sm:py-2
                   sm:text-[11px]
+
+                  md:mb-4
                 "
               >
                 <span
@@ -300,26 +342,31 @@ export default function Hero() {
                 key={`title-${currentSlide}`}
                 initial={{
                   opacity: 0,
-                  y: 20,
+                  y: 35,
                 }}
                 animate={{
                   opacity: 1,
                   y: 0,
                 }}
                 transition={{
-                  duration: 0.5,
-                  delay: 0.1,
+                  duration: 0.7,
+                  delay: 0.12,
+                  ease: "easeOut",
                 }}
                 className="
-                  max-w-[95%]
+                  mx-auto
+                  max-w-full
                   text-3xl
                   font-bold
                   leading-[1.08]
                   tracking-tight
                   text-white
 
+                  sm:max-w-[90%]
                   sm:text-4xl
 
+                  md:mx-0
+                  md:max-w-[95%]
                   md:text-5xl
 
                   lg:text-6xl
@@ -340,24 +387,30 @@ export default function Hero() {
                 key={`desc-${currentSlide}`}
                 initial={{
                   opacity: 0,
-                  y: 20,
+                  y: 30,
                 }}
                 animate={{
                   opacity: 1,
                   y: 0,
                 }}
                 transition={{
-                  duration: 0.5,
-                  delay: 0.2,
+                  duration: 0.7,
+                  delay: 0.25,
+                  ease: "easeOut",
                 }}
                 className="
-                  mt-4
-                  max-w-xl
+                  mx-auto
+                  mt-5
+                  max-w-lg
                   text-sm
                   leading-relaxed
                   text-sky-100/90
 
+                  sm:mt-5
                   sm:text-base
+
+                  md:mx-0
+                  md:max-w-xl
 
                   lg:text-lg
 
@@ -376,27 +429,32 @@ export default function Hero() {
                 key={`cta-${currentSlide}`}
                 initial={{
                   opacity: 0,
-                  y: 20,
+                  y: 30,
                 }}
                 animate={{
                   opacity: 1,
                   y: 0,
                 }}
                 transition={{
-                  duration: 0.5,
-                  delay: 0.3,
+                  duration: 0.7,
+                  delay: 0.4,
+                  ease: "easeOut",
                 }}
                 className="
-                  mt-6
+                  mt-7
                   flex
+                  w-full
                   flex-col
-                  items-stretch
+                  items-center
                   gap-3
 
-                  sm:mt-7
+                  sm:mt-8
                   sm:flex-row
-                  sm:items-center
-                  sm:gap-4
+                  sm:justify-center
+
+                  md:justify-start
+
+                  md:gap-4
                 "
               >
                 {/* BOOK FREE SURVEY */}
@@ -404,10 +462,12 @@ export default function Hero() {
                 <Link
                   to="/contact"
                   className="
+                    w-full
+                    max-w-[260px]
                     rounded-full
                     bg-sky-500
                     px-6
-                    py-3
+                    py-3.5
                     text-center
                     text-xs
                     font-bold
@@ -415,13 +475,16 @@ export default function Hero() {
                     text-white
                     shadow-lg
                     shadow-sky-500/30
-                    transition
+                    transition-all
                     duration-300
-                    hover:-translate-y-0.5
-                    hover:bg-sky-400
 
+                    hover:-translate-y-1
+                    hover:bg-sky-400
+                    hover:shadow-sky-400/40
+
+                    sm:w-auto
+                    sm:max-w-none
                     sm:px-7
-                    sm:py-3.5
 
                     xl:px-8
                     xl:py-4
@@ -435,25 +498,29 @@ export default function Hero() {
                 <Link
                   to="/services"
                   className="
+                    w-full
+                    max-w-[260px]
                     rounded-full
                     border
                     border-white/25
                     bg-white/10
                     px-6
-                    py-3
+                    py-3.5
                     text-center
                     text-xs
                     font-bold
                     tracking-wider
                     text-white
                     backdrop-blur-md
-                    transition
+                    transition-all
                     duration-300
-                    hover:-translate-y-0.5
+
+                    hover:-translate-y-1
                     hover:bg-white/20
 
+                    sm:w-auto
+                    sm:max-w-none
                     sm:px-7
-                    sm:py-3.5
 
                     xl:px-8
                     xl:py-4
@@ -463,85 +530,96 @@ export default function Hero() {
                 </Link>
               </motion.div>
             </div>
-
-            {/* =================================================
-                SLIDER CONTROLS
-            ================================================= */}
-
-            <div
-              className="
-                flex
-                items-end
-                justify-between
-                pt-8
-              "
-            >
-              <div className="flex items-center gap-3">
-                {/* =================================================
-                    PREVIOUS BUTTON
-                ================================================= */}
-
-                <button
-                  type="button"
-                  onClick={handlePrev}
-                  aria-label="Previous Slide"
-                  className="
-                    flex
-                    h-10
-                    w-10
-                    items-center
-                    justify-center
-                    rounded-full
-                    border
-                    border-white/15
-                    bg-black/40
-                    text-white
-                    backdrop-blur-md
-                    transition
-                    duration-300
-                    hover:border-sky-500
-                    hover:bg-sky-500
-
-                    xl:h-12
-                    xl:w-12
-                  "
-                >
-                  <ChevronLeft size={18} />
-                </button>
-
-                {/* =================================================
-                    NEXT BUTTON
-                ================================================= */}
-
-                <button
-                  type="button"
-                  onClick={handleNext}
-                  aria-label="Next Slide"
-                  className="
-                    flex
-                    h-10
-                    w-10
-                    items-center
-                    justify-center
-                    rounded-full
-                    bg-white
-                    text-slate-900
-                    transition
-                    duration-300
-                    hover:bg-sky-400
-                    hover:text-white
-
-                    xl:h-12
-                    xl:w-12
-                  "
-                >
-                  <ChevronRight size={18} />
-                </button>
-              </div>
-            </div>
           </div>
+
+          {/* ===================================================
+              MOBILE / TABLET SLIDER ARROWS
+              HIDDEN ON LARGE SCREENS
+          =================================================== */}
+
+          {/* PREVIOUS */}
+          <button
+            type="button"
+            onClick={handlePrev}
+            aria-label="Previous Slide"
+            className="
+              absolute
+              left-3
+              top-1/2
+              z-30
+              flex
+              h-10
+              w-10
+              -translate-y-1/2
+              items-center
+              justify-center
+              rounded-full
+              border
+              border-white/20
+              bg-black/40
+              text-white
+              shadow-lg
+              backdrop-blur-md
+              transition-all
+              duration-300
+
+              hover:scale-105
+              hover:border-sky-400
+              hover:bg-sky-500
+
+              sm:left-5
+              sm:h-11
+              sm:w-11
+
+              md:left-6
+
+              lg:hidden
+            "
+          >
+            <ChevronLeft size={18} />
+          </button>
+
+          {/* NEXT */}
+          <button
+            type="button"
+            onClick={handleNext}
+            aria-label="Next Slide"
+            className="
+              absolute
+              right-3
+              top-1/2
+              z-30
+              flex
+              h-10
+              w-10
+              -translate-y-1/2
+              items-center
+              justify-center
+              rounded-full
+              bg-white
+              text-slate-900
+              shadow-lg
+              transition-all
+              duration-300
+
+              hover:scale-105
+              hover:bg-sky-400
+              hover:text-white
+
+              sm:right-5
+              sm:h-11
+              sm:w-11
+
+              md:right-6
+
+              lg:hidden
+            "
+          >
+            <ChevronRight size={18} />
+          </button>
         </div>
       </div>
     </section>
   );
 }
+

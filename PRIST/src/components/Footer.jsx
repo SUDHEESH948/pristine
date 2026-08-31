@@ -1,5 +1,7 @@
 
 import logo from "../assets/logo.png";
+import facebookLogo from "../assets/Facebook-f_Logo-Blue-Logo.wine.svg";
+import instagramLogo from "../assets/Instagram-Logo.wine.svg";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -51,8 +53,7 @@ export default function Footer() {
                 hover:opacity-90
               "
             >
-
-              {/* ================= LOGO ================= */}
+              {/* LOGO */}
 
               <div
                 className="
@@ -73,20 +74,14 @@ export default function Footer() {
               >
                 <img
                   src={logo}
-                  alt="Pristine Horizon Logo"
-                  className="
-                    h-full
-                    w-full
-                    object-cover
-                  "
+                  alt="Pristine Energy Logo"
+                  className="h-full w-full object-cover"
                 />
               </div>
 
-              {/* ================= COMPANY NAME ================= */}
+              {/* COMPANY NAME */}
 
               <div className="flex flex-col leading-none">
-
-                {/* MAIN COMPANY */}
 
                 <span
                   className="
@@ -102,8 +97,6 @@ export default function Footer() {
                   </span>
                 </span>
 
-                {/* SUB BRAND */}
-
                 <span
                   className="
                     mt-1.5
@@ -115,8 +108,6 @@ export default function Footer() {
                 >
                   PRISTINE ENERGY
                 </span>
-
-                {/* TAGLINE */}
 
                 <span
                   className="
@@ -133,7 +124,7 @@ export default function Footer() {
               </div>
             </a>
 
-            {/* ================= DESCRIPTION ================= */}
+            {/* DESCRIPTION */}
 
             <p className="max-w-sm text-sm leading-relaxed text-slate-400">
               Clean, smart solar energy solutions engineered for homes,
@@ -144,11 +135,69 @@ export default function Footer() {
 
             <div className="flex items-center gap-3 pt-2">
 
-              {/* LinkedIn */}
+              {/* ================= FACEBOOK ================= */}
 
               <a
                 href="#"
-                aria-label="LinkedIn"
+                aria-label="Facebook - Pristine Energy"
+                className="
+                  flex
+                  h-9
+                  w-9
+                  items-center
+                  justify-center
+                  rounded-lg
+                  border
+                  border-slate-800
+                  bg-slate-900/60
+                  transition-all
+                  duration-300
+                  hover:-translate-y-1
+                  hover:border-blue-500/50
+                  hover:bg-blue-500/10
+                "
+              >
+                <img
+                  src={facebookLogo}
+                  alt="Facebook"
+                  className="h-[18px] w-[18px] object-contain"
+                />
+              </a>
+
+              {/* ================= INSTAGRAM ================= */}
+
+              <a
+                href="#"
+                aria-label="Instagram - Pristine Energy"
+                className="
+                  flex
+                  h-9
+                  w-9
+                  items-center
+                  justify-center
+                  rounded-lg
+                  border
+                  border-slate-800
+                  bg-slate-900/60
+                  transition-all
+                  duration-300
+                  hover:-translate-y-1
+                  hover:border-pink-500/50
+                  hover:bg-pink-500/10
+                "
+              >
+                <img
+                  src={instagramLogo}
+                  alt="Instagram"
+                  className="h-[18px] w-[18px] object-contain"
+                />
+              </a>
+
+              {/* ================= LINKEDIN ================= */}
+
+              <a
+                href="#"
+                aria-label="LinkedIn - Pristine Energy"
                 className="
                   flex
                   h-9
@@ -160,25 +209,30 @@ export default function Footer() {
                   border-slate-800
                   bg-slate-900/60
                   text-slate-400
-                  transition
-                  hover:border-sky-500/40
-                  hover:bg-sky-500/10
-                  hover:text-sky-400
+                  transition-all
+                  duration-300
+                  hover:-translate-y-1
+                  hover:border-blue-500/50
+                  hover:bg-blue-500/10
+                  hover:text-blue-400
                 "
               >
                 <svg
-                  className="h-4 w-4 fill-current"
+                  className="h-[18px] w-[18px] fill-current"
                   viewBox="0 0 24 24"
+                  aria-hidden="true"
                 >
-                  <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.2a1.66 1.66 0 0 0-1.66 1.66c0 .92.74 1.66 1.66 1.66.92 0 1.66-.74 1.66-1.66 0-.92-.74-1.66-1.66-1.66Z" />
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.476-.9 1.637-1.85 3.37-1.85 3.602 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.124 2.062 2.062 0 0 1 0 4.124zM3.555 20.452h3.558V9H3.555v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                 </svg>
               </a>
 
-              {/* Instagram */}
+              {/* ================= WHATSAPP ================= */}
 
               <a
-                href="#"
-                aria-label="Instagram"
+                href="https://wa.me/917012694985"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="WhatsApp - Pristine Energy"
                 className="
                   flex
                   h-9
@@ -190,47 +244,21 @@ export default function Footer() {
                   border-slate-800
                   bg-slate-900/60
                   text-slate-400
-                  transition
-                  hover:border-sky-500/40
-                  hover:bg-sky-500/10
-                  hover:text-sky-400
+                  transition-all
+                  duration-300
+                  hover:-translate-y-1
+                  hover:border-green-500/50
+                  hover:bg-green-500/10
+                  hover:text-green-400
                 "
               >
                 <svg
-                  className="h-4 w-4 fill-current"
+                  className="h-[18px] w-[18px] fill-current"
                   viewBox="0 0 24 24"
+                  aria-hidden="true"
                 >
-                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.07-.07-1.644-.07-4.849 0-3.204.13-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" />
-                </svg>
-              </a>
-
-              {/* WhatsApp */}
-
-              <a
-                href="#"
-                aria-label="WhatsApp"
-                className="
-                  flex
-                  h-9
-                  w-9
-                  items-center
-                  justify-center
-                  rounded-lg
-                  border
-                  border-slate-800
-                  bg-slate-900/60
-                  text-slate-400
-                  transition
-                  hover:border-sky-500/40
-                  hover:bg-sky-500/10
-                  hover:text-sky-400
-                "
-              >
-                <svg
-                  className="h-4 w-4 fill-current"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.14.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.34-.76-1.84-.2-.49-.4-.42-.56-.43h-.47c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1s.9 2.43 1.03 2.6c.13.17 1.77 2.7 4.28 3.79.6.26 1.07.41 1.44.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.07-.12-.22-.19-.47-.32" />
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.611-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                  <path d="M12.004 2C6.478 2 2 6.477 2 12c0 1.765.46 3.423 1.267 4.866L2 22l5.243-1.245A9.953 9.953 0 0 0 12.004 22C17.523 22 22 17.523 22 12S17.523 2 12.004 2zm0 18.181c-1.56 0-3.09-.418-4.43-1.209l-.317-.188-3.111.738.742-3.035-.207-.329A8.177 8.177 0 0 1 3.818 12c0-4.516 3.67-8.182 8.186-8.182S20.186 7.484 20.186 12s-3.67 8.181-8.182 8.181z" />
                 </svg>
               </a>
 
@@ -239,17 +267,83 @@ export default function Footer() {
 
           {/* ================= QUICK LINKS ================= */}
 
-          
+          <div>
+            <h4
+              className="
+                text-xs
+                font-bold
+                uppercase
+                tracking-wider
+                text-slate-200
+              "
+            >
+              Quick Links
+            </h4>
+
+            <ul className="mt-4 space-y-3 text-sm">
+              <li>
+                <a
+                  href="/"
+                  className="transition hover:text-sky-400"
+                >
+                  Home
+                </a>
+              </li>
+
+              <li>
+                <a
+                  href="/about"
+                  className="transition hover:text-sky-400"
+                >
+                  About Us
+                </a>
+              </li>
+
+              <li>
+                <a
+                  href="/services"
+                  className="transition hover:text-sky-400"
+                >
+                  Services
+                </a>
+              </li>
+
+              <li>
+                <a
+                  href="/projects"
+                  className="transition hover:text-sky-400"
+                >
+                  Projects
+                </a>
+              </li>
+
+              <li>
+                <a
+                  href="/contact"
+                  className="transition hover:text-sky-400"
+                >
+                  Contact
+                </a>
+              </li>
+            </ul>
+          </div>
 
           {/* ================= SOLAR SOLUTIONS ================= */}
 
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200">
+            <h4
+              className="
+                text-xs
+                font-bold
+                uppercase
+                tracking-wider
+                text-slate-200
+              "
+            >
               Solar Solutions
             </h4>
 
             <ul className="mt-4 space-y-3 text-sm">
-
               <li>
                 <a
                   href="/services"
@@ -294,26 +388,39 @@ export default function Footer() {
                   Solar Maintenance
                 </a>
               </li>
-
             </ul>
           </div>
 
           {/* ================= CONTACT ================= */}
 
           <div>
-
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200">
+            <h4
+              className="
+                text-xs
+                font-bold
+                uppercase
+                tracking-wider
+                text-slate-200
+              "
+            >
               Get in Touch
             </h4>
 
             <ul className="mt-4 space-y-4 text-sm">
 
-              {/* Phone */}
+              {/* PHONE */}
 
               <li>
                 <a
-                  href="tel:+919000000000"
-                  className="group flex items-center gap-3 transition hover:text-white"
+                  href="tel:+917012694985"
+                  className="
+                    group
+                    flex
+                    items-center
+                    gap-3
+                    transition
+                    hover:text-white
+                  "
                 >
                   <span
                     className="
@@ -331,19 +438,77 @@ export default function Footer() {
                       group-hover:text-sky-400
                     "
                   >
-                    ☎
+                    {/* Phone */}
+                    <svg
+                      className="h-4 w-4 fill-current"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C10.61 21 3 13.39 3 4c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+                    </svg>
                   </span>
 
-                  +91 90000 00000
+                  +91 7012 694 985
                 </a>
               </li>
 
-              {/* Email */}
+              {/* WHATSAPP */}
+
+              <li>
+                <a
+                  href="https://wa.me/917012694985"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="
+                    group
+                    flex
+                    items-center
+                    gap-3
+                    transition
+                    hover:text-white
+                  "
+                >
+                  <span
+                    className="
+                      flex
+                      h-8
+                      w-8
+                      shrink-0
+                      items-center
+                      justify-center
+                      rounded-lg
+                      bg-slate-800
+                      text-slate-400
+                      transition
+                      group-hover:bg-green-500/10
+                      group-hover:text-green-400
+                    "
+                  >
+                    <svg
+                      className="h-4 w-4 fill-current"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.611-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                      <path d="M12.004 2C6.478 2 2 6.477 2 12c0 1.765.46 3.423 1.267 4.866L2 22l5.243-1.245A9.953 9.953 0 0 0 12.004 22C17.523 22 22 17.523 22 12S17.523 2 12.004 2zm0 18.181c-1.56 0-3.09-.418-4.43-1.209l-.317-.188-3.111.738.742-3.035-.207-.329A8.177 8.177 0 0 1 3.818 12c0-4.516 3.67-8.182 8.186-8.182S20.186 7.484 20.186 12s-3.67 8.181-8.182 8.181z" />
+                    </svg>
+                  </span>
+
+                  WhatsApp
+                </a>
+              </li>
+
+              {/* EMAIL */}
 
               <li>
                 <a
                   href="mailto:hello@pristineenergys.in"
-                  className="group flex items-center gap-3 transition hover:text-white"
+                  className="
+                    group
+                    flex
+                    items-center
+                    gap-3
+                    transition
+                    hover:text-white
+                  "
                 >
                   <span
                     className="
@@ -361,17 +526,22 @@ export default function Footer() {
                       group-hover:text-sky-400
                     "
                   >
-                    ✉
+                    {/* Email */}
+                    <svg
+                      className="h-4 w-4 fill-current"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z" />
+                    </svg>
                   </span>
 
                   hello@pristineenergys.in
                 </a>
               </li>
 
-              {/* Location */}
+              {/* LOCATION */}
 
               <li className="flex items-center gap-3">
-
                 <span
                   className="
                     flex
@@ -385,16 +555,20 @@ export default function Footer() {
                     text-slate-400
                   "
                 >
-                  📍
+                  {/* Location */}
+                  <svg
+                    className="h-4 w-4 fill-current"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z" />
+                  </svg>
                 </span>
 
-                Kerala, India
-
+                Kozhikode, Kerala, India
               </li>
 
             </ul>
           </div>
-
         </div>
 
         {/* ================= BOTTOM BAR ================= */}
@@ -412,16 +586,15 @@ export default function Footer() {
             pt-6
             text-xs
             text-slate-500
+
             sm:flex-row
           "
         >
-
           <p>
-            © {currentYear} Pristine Horizon. All rights reserved.
+            © {currentYear} Pristine Energy. All rights reserved.
           </p>
 
           <div className="flex items-center gap-4">
-
             <a
               href="#privacy"
               className="transition hover:text-sky-400"
@@ -437,7 +610,6 @@ export default function Footer() {
             >
               Terms of Service
             </a>
-
           </div>
 
           <p>
@@ -456,11 +628,8 @@ export default function Footer() {
               Winshine Infotech
             </a>
           </p>
-
         </div>
-
       </div>
     </footer>
   );
 }
-

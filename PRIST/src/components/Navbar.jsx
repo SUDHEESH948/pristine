@@ -18,6 +18,13 @@ const NAV_LINKS = [
 ];
 
 // =========================================================
+// BRAND COLORS
+// =========================================================
+
+const PRIMARY_BLUE = "#0284c7";
+const PRIMARY_BLUE_HOVER = "#0369a1";
+
+// =========================================================
 // NAVBAR
 // =========================================================
 
@@ -26,8 +33,14 @@ export default function Navbar() {
 
   return (
     <motion.header
-      initial={{ y: -60, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
+      initial={{
+        y: -60,
+        opacity: 0,
+      }}
+      animate={{
+        y: 0,
+        opacity: 1,
+      }}
       transition={{
         duration: 0.5,
         ease: "easeOut",
@@ -76,7 +89,7 @@ export default function Navbar() {
             bg-white/95
             px-6
             py-2.5
-            shadow-[0_15px_45px_rgba(0,0,0,0.35)]
+            shadow-[0_15px_45px_rgba(0,0,0,0.20)]
             backdrop-blur-xl
             lg:flex
             xl:px-8
@@ -84,7 +97,9 @@ export default function Navbar() {
           "
         >
 
-          {/* LOGO */}
+          {/* =================================================
+              LOGO
+          ================================================= */}
 
           <Link
             to="/"
@@ -108,6 +123,7 @@ export default function Navbar() {
             />
 
             <div className="flex flex-col leading-none">
+
               <span
                 className="
                   whitespace-nowrap
@@ -119,7 +135,12 @@ export default function Navbar() {
                 "
               >
                 PRISTINE{" "}
-                <span className="font-extrabold text-[#0284c7]">
+                <span
+                  className="font-extrabold"
+                  style={{
+                    color: PRIMARY_BLUE,
+                  }}
+                >
                   ENERGY
                 </span>
               </span>
@@ -136,10 +157,13 @@ export default function Navbar() {
               >
                 SOLAR SOLUTIONS
               </span>
+
             </div>
           </Link>
 
-          {/* DESKTOP LINKS */}
+          {/* =================================================
+              DESKTOP LINKS
+          ================================================= */}
 
           <nav
             className="
@@ -163,11 +187,15 @@ export default function Navbar() {
                   text-slate-600
                   transition-all
                   duration-300
-                  hover:text-[#0284c7]
                   xl:text-sm
                 "
+                style={{
+                  "--hover-color": PRIMARY_BLUE,
+                }}
               >
-                {label}
+                <span className="transition-colors duration-300 group-hover:text-[#0284c7]">
+                  {label}
+                </span>
 
                 <span
                   className="
@@ -188,11 +216,14 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* CONTACT BUTTON */}
+          {/* =================================================
+              DESKTOP CONTACT BUTTON
+          ================================================= */}
 
           <Link
             to="/contact"
             className="
+              group
               inline-flex
               shrink-0
               items-center
@@ -204,13 +235,12 @@ export default function Navbar() {
               text-[13px]
               font-semibold
               text-white
-              shadow-[0_4px_14px_rgba(244,63,94,0.45)]
+              shadow-[0_6px_18px_rgba(2,132,199,0.30)]
               transition-all
-              
-              duration-200
+              duration-300
               hover:-translate-y-0.5
-              hover:bg-[#e11d48]
-              hover:shadow-lg
+              hover:bg-[#0369a1]
+              hover:shadow-[0_8px_24px_rgba(2,132,199,0.40)]
               active:scale-95
               xl:px-8
               xl:py-3
@@ -218,6 +248,7 @@ export default function Navbar() {
           >
             Contact
           </Link>
+
         </div>
 
         {/* =====================================================
@@ -234,13 +265,15 @@ export default function Navbar() {
             border-slate-200
             bg-white/95
             p-3
-            shadow-[0_15px_45px_rgba(0,0,0,0.35)]
+            shadow-[0_15px_45px_rgba(0,0,0,0.20)]
             backdrop-blur-xl
             lg:hidden
           "
         >
 
-          {/* MOBILE HEADER */}
+          {/* =================================================
+              MOBILE HEADER
+          ================================================= */}
 
           <div
             className="
@@ -251,7 +284,9 @@ export default function Navbar() {
             "
           >
 
-            {/* MOBILE LOGO */}
+            {/* =================================================
+                MOBILE LOGO
+            ================================================= */}
 
             <Link
               to="/"
@@ -275,6 +310,7 @@ export default function Navbar() {
               />
 
               <div className="flex flex-col leading-none">
+
                 <span
                   className="
                     whitespace-nowrap
@@ -301,10 +337,13 @@ export default function Navbar() {
                 >
                   SOLAR SOLUTIONS
                 </span>
+
               </div>
             </Link>
 
-            {/* MOBILE MENU BUTTON */}
+            {/* =================================================
+                MOBILE MENU BUTTON
+            ================================================= */}
 
             <button
               type="button"
@@ -312,12 +351,14 @@ export default function Navbar() {
                 setMobileMenuOpen((prev) => !prev)
               }
               aria-label="Toggle navigation menu"
+              aria-expanded={mobileMenuOpen}
               className="
                 rounded-full
                 p-2
                 text-slate-700
                 transition
-                hover:bg-slate-100
+                hover:bg-sky-50
+                hover:text-[#0284c7]
                 active:scale-95
               "
             >
@@ -327,9 +368,12 @@ export default function Navbar() {
                 <Menu size={21} />
               )}
             </button>
+
           </div>
 
-          {/* MOBILE MENU */}
+          {/* =================================================
+              MOBILE MENU
+          ================================================= */}
 
           <AnimatePresence>
             {mobileMenuOpen && (
@@ -348,9 +392,11 @@ export default function Navbar() {
                 }}
                 transition={{
                   duration: 0.25,
+                  ease: "easeOut",
                 }}
                 className="overflow-hidden"
               >
+
                 <ul
                   className="
                     mt-2
@@ -363,6 +409,11 @@ export default function Navbar() {
                     text-center
                   "
                 >
+
+                  {/* =================================================
+                      MOBILE LINKS
+                  ================================================= */}
+
                   {NAV_LINKS.map(({ label, href }) => (
                     <li key={label}>
                       <Link
@@ -387,9 +438,12 @@ export default function Navbar() {
                     </li>
                   ))}
 
-                  {/* MOBILE CONTACT */}
+                  {/* =================================================
+                      MOBILE CONTACT BUTTON
+                  ================================================= */}
 
                   <li className="pb-1 pt-2">
+
                     <Link
                       to="/contact"
                       onClick={() =>
@@ -404,18 +458,30 @@ export default function Navbar() {
                         font-bold
                         text-white
                         shadow-md
-                        shadow-rose-500/25
+                        shadow-sky-500/25
+                        transition-all
+                        duration-300
+                        hover:bg-[#0369a1]
+                        hover:shadow-lg
+                        hover:shadow-sky-500/30
+                        active:scale-[0.98]
                       "
                     >
                       Contact
                     </Link>
+
                   </li>
+
                 </ul>
+
               </motion.div>
             )}
           </AnimatePresence>
+
         </div>
+
       </div>
     </motion.header>
   );
 }
+

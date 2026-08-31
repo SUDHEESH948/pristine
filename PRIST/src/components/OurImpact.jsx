@@ -7,21 +7,22 @@ import {
   Zap,
   Headphones,
   ArrowUpRight,
+  ArrowRight,
 } from "lucide-react";
 
 import { useScrollAnimation } from "../hooks/useScrollAnimation";
 
 // ============================================================
 // IMPACT IMAGES
-// Change these filenames to match your actual files
 // ============================================================
+
 import impact1 from "../assets/image1.png";
 import impact2 from "../assets/image2.png";
-
 
 // ============================================================
 // IMPACT DATA
 // ============================================================
+
 const IMPACT_CARDS = [
   {
     icon: Sun,
@@ -72,6 +73,7 @@ const IMPACT_CARDS = [
 // ============================================================
 // COUNTER
 // ============================================================
+
 function Counter({ end, duration = 2000, isVisible }) {
   const [count, setCount] = useState(0);
 
@@ -115,6 +117,7 @@ function Counter({ end, duration = 2000, isVisible }) {
 // ============================================================
 // OUR IMPACT
 // ============================================================
+
 export default function OurImpact() {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -123,6 +126,7 @@ export default function OurImpact() {
   // ============================================================
   // INTERSECTION OBSERVER
   // ============================================================
+
   useEffect(() => {
     const currentRef = ref.current;
 
@@ -150,10 +154,12 @@ export default function OurImpact() {
   // ============================================================
   // ANIMATION VARIANTS
   // ============================================================
+
   const containerVariants = {
     hidden: {
       opacity: 0,
     },
+
     visible: {
       opacity: 1,
       transition: {
@@ -168,6 +174,7 @@ export default function OurImpact() {
       opacity: 0,
       y: 25,
     },
+
     visible: {
       opacity: 1,
       y: 0,
@@ -186,14 +193,16 @@ export default function OurImpact() {
         relative
         overflow-hidden
         bg-[#e6f7ff]
-        py-20
+        py-16
         font-['Plus_Jakarta_Sans',sans-serif]
-        sm:py-24
+        sm:py-20
+        md:py-24
       "
     >
       {/* ======================================================
           AMBIENT BACKGROUND
       ======================================================= */}
+
       <div
         className="
           pointer-events-none
@@ -213,22 +222,45 @@ export default function OurImpact() {
       {/* ======================================================
           MAIN CONTAINER
       ======================================================= */}
-      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
+
+      <div
+        className="
+          relative
+          mx-auto
+          max-w-7xl
+          px-4
+          sm:px-6
+          lg:px-8
+        "
+      >
 
         {/* ====================================================
             SECTION HEADER
         ===================================================== */}
+
         <div className="mx-auto max-w-2xl text-center">
 
-          {/* Badge */}
+          {/* BADGE */}
+
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
+            initial={{
+              opacity: 0,
+              y: 10,
+            }}
             animate={
               isVisible
-                ? { opacity: 1, y: 0 }
-                : { opacity: 0, y: 10 }
+                ? {
+                    opacity: 1,
+                    y: 0,
+                  }
+                : {
+                    opacity: 0,
+                    y: 10,
+                  }
             }
-            transition={{ duration: 0.4 }}
+            transition={{
+              duration: 0.4,
+            }}
             className="
               inline-flex
               items-center
@@ -237,9 +269,11 @@ export default function OurImpact() {
               bg-sky-100
               px-3.5
               py-1
-              text-xs
+              text-[10px]
               font-semibold
+              tracking-wide
               text-sky-700
+              sm:text-xs
             "
           >
             <span
@@ -255,13 +289,23 @@ export default function OurImpact() {
             OUR TRACK RECORD
           </motion.div>
 
-          {/* Heading */}
+          {/* HEADING */}
+
           <motion.h2
-            initial={{ opacity: 0, y: 15 }}
+            initial={{
+              opacity: 0,
+              y: 15,
+            }}
             animate={
               isVisible
-                ? { opacity: 1, y: 0 }
-                : { opacity: 0, y: 15 }
+                ? {
+                    opacity: 1,
+                    y: 0,
+                  }
+                : {
+                    opacity: 0,
+                    y: 15,
+                  }
             }
             transition={{
               duration: 0.5,
@@ -269,34 +313,48 @@ export default function OurImpact() {
             }}
             className="
               mt-3
-              text-3xl
+              text-2xl
               font-bold
               tracking-tight
               text-slate-900
-              sm:text-4xl
+              sm:text-3xl
+              md:text-4xl
             "
           >
             Clean Energy at Proven Scale
           </motion.h2>
 
-          {/* Description */}
+          {/* DESCRIPTION */}
+
           <motion.p
-            initial={{ opacity: 0, y: 15 }}
+            initial={{
+              opacity: 0,
+              y: 15,
+            }}
             animate={
               isVisible
-                ? { opacity: 1, y: 0 }
-                : { opacity: 0, y: 15 }
+                ? {
+                    opacity: 1,
+                    y: 0,
+                  }
+                : {
+                    opacity: 0,
+                    y: 15,
+                  }
             }
             transition={{
               duration: 0.5,
               delay: 0.2,
             }}
             className="
+              mx-auto
               mt-3
-              text-sm
+              max-w-xl
+              text-xs
               leading-relaxed
               text-slate-500
-              sm:text-base
+              sm:text-sm
+              md:text-base
             "
           >
             Powering sustainable growth across Kerala with high-efficiency
@@ -307,13 +365,17 @@ export default function OurImpact() {
         {/* ====================================================
             IMPACT CARDS
         ===================================================== */}
+
         <motion.div
           className="
-            mt-14
+            mt-10
             grid
             grid-cols-1
-            gap-6
+            gap-5
+            sm:mt-12
             sm:grid-cols-2
+            sm:gap-6
+            lg:mt-14
             lg:grid-cols-4
           "
           variants={containerVariants}
@@ -348,25 +410,26 @@ export default function OurImpact() {
                   border
                   border-sky-100
                   bg-white
-                  p-5
+                  p-4
                   shadow-sm
                   transition-all
                   duration-300
                   hover:border-sky-200
                   hover:shadow-xl
                   hover:shadow-sky-900/5
+                  sm:p-5
                 "
               >
 
                 {/* =================================================
                     IMAGE / METRIC HEADER
                 ================================================== */}
+
                 <div
                   className="
-                    group
                     relative
                     mb-5
-                    h-36
+                    h-32
                     w-full
                     overflow-hidden
                     rounded-xl
@@ -374,10 +437,12 @@ export default function OurImpact() {
                     border-sky-400/20
                     shadow-xl
                     shadow-black/20
+                    sm:h-36
                   "
                 >
 
                   {/* IMAGE */}
+
                   <img
                     src={image}
                     alt={title}
@@ -394,7 +459,8 @@ export default function OurImpact() {
                     "
                   />
 
-                  {/* Dark overlay */}
+                  {/* DARK OVERLAY */}
+
                   <div
                     className="
                       absolute
@@ -403,7 +469,8 @@ export default function OurImpact() {
                     "
                   />
 
-                  {/* Cinematic gradient */}
+                  {/* CINEMATIC GRADIENT */}
+
                   <div
                     className="
                       absolute
@@ -415,7 +482,8 @@ export default function OurImpact() {
                     "
                   />
 
-                  {/* Bottom gradient */}
+                  {/* BOTTOM GRADIENT */}
+
                   <div
                     className="
                       absolute
@@ -428,7 +496,8 @@ export default function OurImpact() {
                     "
                   />
 
-                  {/* Blue glow */}
+                  {/* BLUE GLOW */}
+
                   <div
                     className="
                       pointer-events-none
@@ -443,9 +512,8 @@ export default function OurImpact() {
                     "
                   />
 
-                  {/* =================================================
-                      IMAGE CONTENT
-                  ================================================== */}
+                  {/* IMAGE CONTENT */}
+
                   <div
                     className="
                       relative
@@ -454,25 +522,30 @@ export default function OurImpact() {
                       h-full
                       flex-col
                       justify-between
-                      p-4
+                      p-3
+                      sm:p-4
                     "
                   >
 
                     {/* TOP */}
+
                     <div
                       className="
                         flex
                         items-center
                         justify-between
+                        gap-2
                       "
                     >
 
                       {/* ICON */}
+
                       <div
                         className="
                           flex
-                          h-10
-                          w-10
+                          h-9
+                          w-9
+                          shrink-0
                           items-center
                           justify-center
                           rounded-full
@@ -486,42 +559,46 @@ export default function OurImpact() {
                           duration-300
                           group-hover:border-sky-300/50
                           group-hover:bg-sky-500/20
+                          sm:h-10
+                          sm:w-10
                         "
                       >
                         <Icon
-                          size={20}
-                          className="text-sky-300"
+                          size={18}
+                          className="text-sky-300 sm:h-5 sm:w-5"
                         />
                       </div>
 
                       {/* BADGE */}
+
                       <span
                         className="
                           rounded-full
                           border
                           border-white/20
                           bg-black/45
-                          px-2.5
+                          px-2
                           py-1
-                          text-[11px]
+                          text-[9px]
                           font-medium
                           text-sky-100
                           shadow-lg
                           backdrop-blur-md
+                          sm:px-2.5
+                          sm:text-[11px]
                         "
                       >
                         {badge}
                       </span>
                     </div>
 
-                    {/* =================================================
-                        COUNTER
-                    ================================================== */}
+                    {/* COUNTER */}
+
                     <div className="relative">
 
                       <div
                         className="
-                          text-3xl
+                          text-2xl
                           font-bold
                           tracking-tight
                           text-white
@@ -537,7 +614,7 @@ export default function OurImpact() {
                         <span
                           className="
                             ml-1
-                            text-xl
+                            text-lg
                             font-semibold
                             text-sky-200
                             drop-shadow-lg
@@ -554,40 +631,47 @@ export default function OurImpact() {
                 {/* =================================================
                     CARD CONTENT
                 ================================================== */}
+
                 <div className="px-1">
 
                   {/* TAG */}
+
                   <span
                     className="
-                      text-[11px]
+                      text-[10px]
                       font-bold
                       uppercase
                       tracking-wider
                       text-sky-500
+                      sm:text-[11px]
                     "
                   >
                     {tag}
                   </span>
 
                   {/* TITLE */}
+
                   <h3
                     className="
                       mt-1
-                      text-base
+                      text-sm
                       font-bold
                       text-slate-900
+                      sm:text-base
                     "
                   >
                     {title}
                   </h3>
 
                   {/* DESCRIPTION */}
+
                   <p
                     className="
                       mt-2
-                      text-xs
+                      text-[11px]
                       leading-relaxed
                       text-slate-500
+                      sm:text-xs
                     "
                   >
                     {description}
@@ -597,6 +681,7 @@ export default function OurImpact() {
                 {/* =================================================
                     FOOTER
                 ================================================== */}
+
                 <div
                   className="
                     mt-5
@@ -611,11 +696,12 @@ export default function OurImpact() {
                 >
                   <span
                     className="
-                      text-xs
+                      text-[10px]
                       font-semibold
                       text-slate-400
                       transition
                       group-hover:text-sky-600
+                      sm:text-xs
                     "
                   >
                     Verified Metric
@@ -646,35 +732,89 @@ export default function OurImpact() {
         </motion.div>
 
         {/* ====================================================
-            CTA
+            VIEW ALL PROJECTS CTA
         ===================================================== */}
-        <div className="mt-12 text-center">
+
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 15,
+          }}
+          animate={
+            isVisible
+              ? {
+                  opacity: 1,
+                  y: 0,
+                }
+              : {
+                  opacity: 0,
+                  y: 15,
+                }
+          }
+          transition={{
+            duration: 0.5,
+            delay: 0.6,
+          }}
+          className="
+            mt-10
+            flex
+            justify-center
+            sm:mt-12
+          "
+        >
           <a
-            href="#projects"
+            href="/projects"
             className="
+              group
               inline-flex
+              w-full
+              max-w-xs
               items-center
+              justify-center
               gap-2
               rounded-full
               border
               border-sky-300
               bg-white
-              px-7
+              px-6
               py-3
+              text-center
               text-xs
-              font-semibold
+              font-bold
+              tracking-wide
               text-sky-700
               shadow-sm
-              transition
-              hover:border-sky-400
-              hover:bg-sky-50
+              transition-all
+              duration-300
+              hover:-translate-y-1
+              hover:border-sky-500
+              hover:bg-sky-600
+              hover:text-white
+              hover:shadow-lg
+              hover:shadow-sky-500/20
+              sm:w-auto
+              sm:max-w-none
+              sm:px-7
+              sm:py-3.5
             "
           >
-            <span>View All Completed Projects</span>
-            <span>→</span>
+            <span>
+              View All Completed Projects
+            </span>
+
+            <ArrowRight
+              size={16}
+              className="
+                transition-transform
+                duration-300
+                group-hover:translate-x-1
+              "
+            />
           </a>
-        </div>
+        </motion.div>
+
       </div>
     </section>
   );
 }
+

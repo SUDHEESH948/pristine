@@ -249,7 +249,7 @@ export default function Services() {
           className="mt-16 text-center"
         >
           <a
-            href="#contact"
+            href="/contact"
             className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-8 py-4 text-xs font-bold uppercase tracking-wider text-white shadow-xl shadow-slate-900/15 transition-all duration-300 hover:-translate-y-0.5 hover:bg-sky-600 hover:shadow-sky-600/25 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
           >
             Get a Free Solar Consultation
