@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -9,9 +10,214 @@ import {
   User,
   Home,
   Zap,
+  Sun,
+  Building2,
+  BatteryCharging,
 } from "lucide-react";
 
 import whatsappIcon from "../assets/whatsappicon.png";
+
+// =========================================================
+// RESIDENTIAL STRING INVERTER SYSTEMS
+// =========================================================
+
+const RESIDENTIAL_STRING = [
+  {
+    capacity: "2.32 kW",
+    dcCapacity: "2.32 kWp",
+    inverter: "2 kW",
+    modules: 4,
+    structure: "Without Structure",
+    price: "₹1,71,500",
+    subsidy: "₹60,000",
+  },
+  {
+    capacity: "2.32 kW",
+    dcCapacity: "2.32 kWp",
+    inverter: "2 kW",
+    modules: 4,
+    structure: "RCC Ballast",
+    price: "₹1,80,000",
+    subsidy: "₹60,000",
+  },
+  {
+    capacity: "2.32 kW",
+    dcCapacity: "2.32 kWp",
+    inverter: "2 kW",
+    modules: 4,
+    structure: "Sheet Roof - Short Rail",
+    price: "₹1,74,500",
+    subsidy: "₹60,000",
+  },
+  {
+    capacity: "2.32 kW",
+    dcCapacity: "2.32 kWp",
+    inverter: "2 kW",
+    modules: 4,
+    structure: "L-Angle Without Ballast",
+    price: "₹1,77,000",
+    subsidy: "₹60,000",
+  },
+  {
+    capacity: "2.32 kW",
+    dcCapacity: "2.32 kWp",
+    inverter: "2 kW",
+    modules: 4,
+    structure: "Additional Work Above RCC",
+    price: "₹1,88,500",
+    subsidy: "₹60,000",
+  },
+  {
+    capacity: "2.32 kW",
+    dcCapacity: "2.32 kWp",
+    inverter: "2 kW",
+    modules: 4,
+    structure: "Additional Work Above Sheet Roof",
+    price: "₹1,98,000",
+    subsidy: "₹60,000",
+  },
+
+  {
+    capacity: "2.90 kW",
+    dcCapacity: "2.90 kWp",
+    inverter: "3 kW",
+    modules: 5,
+    structure: "Without Structure",
+    price: "₹1,96,500",
+    subsidy: "₹76,200",
+  },
+
+  {
+    capacity: "3.48 kW",
+    dcCapacity: "3.48 kWp",
+    inverter: "3 kW",
+    modules: 6,
+    structure: "Without Structure",
+    price: "₹2,15,000",
+    subsidy: "₹78,000",
+  },
+
+  {
+    capacity: "4.64 kW",
+    dcCapacity: "4.64 kWp",
+    inverter: "4 kW",
+    modules: 8,
+    structure: "Without Structure",
+    price: "₹2,67,000",
+    subsidy: "₹78,000",
+  },
+
+  {
+    capacity: "5.22 kW",
+    dcCapacity: "5.22 kWp",
+    inverter: "5 kW",
+    modules: 9,
+    structure: "Without Structure",
+    price: "₹2,99,000",
+    subsidy: "₹78,000",
+  },
+
+  {
+    capacity: "6.38 kW",
+    dcCapacity: "6.38 kWp",
+    inverter: "6 kW",
+    modules: 11,
+    structure: "Without Structure",
+    price: "₹3,76,000",
+    subsidy: "₹78,000",
+  },
+
+  {
+    capacity: "8.70 kW",
+    dcCapacity: "8.70 kWp",
+    inverter: "8 kW",
+    modules: 15,
+    structure: "Without Structure",
+    price: "₹4,80,000",
+    subsidy: "₹78,000",
+  },
+
+  {
+    capacity: "9.86 kW",
+    dcCapacity: "9.86 kWp",
+    inverter: "10 kW",
+    modules: 17,
+    structure: "Without Structure",
+    price: "₹5,40,000",
+    subsidy: "₹78,000",
+  },
+];
+
+// =========================================================
+// RESIDENTIAL MICRO INVERTER SYSTEMS
+// =========================================================
+
+const RESIDENTIAL_MICRO = [
+  {
+    capacity: "2.24 kW",
+    dcCapacity: "2.24 kWp",
+    inverter: "Enphase",
+    phase: "1 Phase",
+    modules: 4,
+    structure: "Without Structure",
+    price: "₹2,50,000",
+    subsidy: "₹57,600",
+  },
+  {
+    capacity: "3.36 kW",
+    dcCapacity: "3.36 kWp",
+    inverter: "Enphase",
+    phase: "1 Phase",
+    modules: 6,
+    structure: "Without Structure",
+    price: "₹3,20,000",
+    subsidy: "₹75,840",
+  },
+  {
+    capacity: "5.04 kW",
+    dcCapacity: "5.04 kWp",
+    inverter: "Enphase",
+    phase: "1 Phase",
+    modules: 9,
+    structure: "Without Structure",
+    price: "₹4,76,000",
+    subsidy: "₹78,000",
+  },
+  {
+    capacity: "5.04 kW",
+    dcCapacity: "5.04 kWp",
+    inverter: "Enphase",
+    phase: "3 Phase",
+    modules: 9,
+    structure: "Without Structure",
+    price: "₹4,87,000",
+    subsidy: "₹78,000",
+  },
+  {
+    capacity: "7.84 kW",
+    dcCapacity: "7.84 kWp",
+    inverter: "Enphase",
+    phase: "3 Phase",
+    modules: 14,
+    structure: "Without Structure",
+    price: "₹6,83,000",
+    subsidy: "₹78,000",
+  },
+  {
+    capacity: "10.08 kW",
+    dcCapacity: "10.08 kWp",
+    inverter: "Enphase",
+    phase: "3 Phase",
+    modules: 18,
+    structure: "Without Structure",
+    price: "₹8,23,000",
+    subsidy: "₹78,000",
+  },
+];
+
+// =========================================================
+// COMPONENT
+// =========================================================
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -20,36 +226,124 @@ export default function Contact() {
     email: "",
     location: "",
     requirement: "",
+    inverterType: "",
     capacity: "",
+    structure: "",
+    phase: "",
+    additionalDetails: "",
     message: "",
   });
 
   const [error, setError] = useState("");
 
-  // ================= HANDLE INPUT CHANGE =================
+  // =========================================================
+  // HANDLE INPUT
+  // =========================================================
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
+    setFormData((prev) => {
+      let updated = {
+        ...prev,
+        [name]: value,
+      };
 
-      // Reset capacity if user changes from Residential Solar
-      ...(name === "requirement" && value !== "Residential Solar"
-        ? { capacity: "" }
-        : {}),
-    }));
+      // Reset residential fields when requirement changes
+      if (name === "requirement") {
+        updated = {
+          ...updated,
+          inverterType: "",
+          capacity: "",
+          structure: "",
+          phase: "",
+        };
+      }
+
+      // Reset dependent fields when inverter type changes
+      if (name === "inverterType") {
+        updated = {
+          ...updated,
+          capacity: "",
+          structure: "",
+          phase: "",
+        };
+      }
+
+      return updated;
+    });
 
     setError("");
   };
 
-  // ================= WHATSAPP SUBMIT =================
+  // =========================================================
+  // GET SELECTED SYSTEM
+  // =========================================================
+
+  const getSelectedSystem = () => {
+    if (formData.requirement !== "Residential Solar") {
+      return null;
+    }
+
+    const systems =
+      formData.inverterType === "String Inverter"
+        ? RESIDENTIAL_STRING
+        : formData.inverterType === "Micro Inverter"
+        ? RESIDENTIAL_MICRO
+        : [];
+
+    return (
+      systems.find(
+        (item) =>
+          item.capacity === formData.capacity &&
+          item.structure === formData.structure &&
+          (formData.inverterType === "String Inverter" ||
+            item.phase === formData.phase)
+      ) || null
+    );
+  };
+
+  // =========================================================
+  // AVAILABLE CAPACITIES
+  // =========================================================
+
+  const availableSystems =
+    formData.inverterType === "String Inverter"
+      ? RESIDENTIAL_STRING
+      : formData.inverterType === "Micro Inverter"
+      ? RESIDENTIAL_MICRO
+      : [];
+
+  const capacities = [
+    ...new Set(availableSystems.map((item) => item.capacity)),
+  ];
+
+  const structureOptions = [
+    ...new Set(
+      availableSystems
+        .filter((item) => item.capacity === formData.capacity)
+        .map((item) => item.structure)
+    ),
+  ];
+
+  const phaseOptions = [
+    ...new Set(
+      availableSystems
+        .filter((item) => item.capacity === formData.capacity)
+        .map((item) => item.phase)
+        .filter(Boolean)
+    ),
+  ];
+
+  const selectedSystem = getSelectedSystem();
+
+  // =========================================================
+  // WHATSAPP SUBMIT
+  // =========================================================
 
   const handleWhatsApp = (e) => {
     e.preventDefault();
 
-    // Basic validation
     if (
       !formData.name ||
       !formData.phone ||
@@ -62,19 +356,48 @@ export default function Contact() {
       return;
     }
 
-    // Residential capacity validation
-    if (
-      formData.requirement === "Residential Solar" &&
-      !formData.capacity
-    ) {
-      setError("Please select your residential solar capacity.");
-      return;
+    if (formData.requirement === "Residential Solar") {
+      if (!formData.inverterType) {
+        setError("Please select your inverter type.");
+        return;
+      }
+
+      if (!formData.capacity) {
+        setError("Please select your residential capacity.");
+        return;
+      }
+
+      if (formData.inverterType === "Micro Inverter" && !formData.phase) {
+        setError("Please select the phase.");
+        return;
+      }
+
+      if (!formData.structure) {
+        setError("Please select the structure type.");
+        return;
+      }
     }
 
-    // Your WhatsApp number
-    const whatsappNumber = "919000000000";
+    const whatsappNumber = "7012694985";
 
-    // WhatsApp message
+    const residentialDetails =
+      formData.requirement === "Residential Solar"
+        ? `
+*Residential Solar Details*
+Inverter Type: ${formData.inverterType}
+Capacity: ${formData.capacity}
+Structure: ${formData.structure}
+${formData.phase ? `Phase: ${formData.phase}` : ""}
+${
+  selectedSystem
+    ? `Modules: ${selectedSystem.modules}
+Offer Price: ${selectedSystem.price}
+Applicable Subsidy: ${selectedSystem.subsidy}`
+    : ""
+}
+`
+        : "";
+
     const whatsappMessage = `
 Hello Pristine Energy,
 
@@ -88,11 +411,11 @@ Location: ${formData.location}
 
 *Solar Requirement*
 Requirement: ${formData.requirement}
-${
-  formData.requirement === "Residential Solar"
-    ? `Capacity: ${formData.capacity}`
-    : ""
-}
+
+${residentialDetails}
+
+*Additional Details*
+${formData.additionalDetails || "Not provided"}
 
 *Additional Message*
 ${formData.message || "No additional message"}
@@ -108,6 +431,49 @@ Thank you.
 
     window.open(whatsappURL, "_blank");
   };
+
+  // =========================================================
+  // INPUT CLASS
+  // =========================================================
+
+  const inputClass = `
+    w-full
+    rounded-xl
+    border
+    border-slate-200
+    bg-slate-50
+    py-3
+    pl-11
+    pr-4
+    text-sm
+    text-slate-800
+    outline-none
+    transition
+    placeholder:text-slate-400
+    focus:border-sky-400
+    focus:bg-white
+    focus:ring-4
+    focus:ring-sky-100
+  `;
+
+  const selectClass = `
+    w-full
+    appearance-none
+    rounded-xl
+    border
+    border-slate-200
+    bg-slate-50
+    py-3
+    px-4
+    text-sm
+    text-slate-700
+    outline-none
+    transition
+    focus:border-sky-400
+    focus:bg-white
+    focus:ring-4
+    focus:ring-sky-100
+  `;
 
   return (
     <section
@@ -125,7 +491,9 @@ Thank you.
         sm:pb-24
       "
     >
-      {/* ================= BACKGROUND GLOW ================= */}
+      {/* =====================================================
+          BACKGROUND GLOW
+      ====================================================== */}
 
       <div
         className="
@@ -157,23 +525,15 @@ Thank you.
 
       <div className="relative mx-auto max-w-7xl">
 
-        {/* ================= HEADER ================= */}
+        {/* =====================================================
+            HEADER
+        ====================================================== */}
 
         <motion.div
-          initial={{
-            opacity: 0,
-            y: 25,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          viewport={{
-            once: true,
-          }}
-          transition={{
-            duration: 0.6,
-          }}
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
           className="mx-auto max-w-3xl text-center"
         >
           <span
@@ -224,32 +584,26 @@ Thank you.
               sm:text-base
             "
           >
-            Tell us about your solar requirements. Fill out the form and
-            continue directly to WhatsApp.
+            Tell us about your solar requirements. Fill out the form
+            and continue directly to WhatsApp.
           </p>
         </motion.div>
 
-        {/* ================= MAIN CONTENT ================= */}
+        {/* =====================================================
+            MAIN CONTENT
+        ====================================================== */}
 
         <div className="mt-14 grid gap-7 lg:grid-cols-5">
 
-          {/* ================= FORM ================= */}
+          {/* ===================================================
+              FORM
+          ==================================================== */}
 
           <motion.div
-            initial={{
-              opacity: 0,
-              x: -30,
-            }}
-            whileInView={{
-              opacity: 1,
-              x: 0,
-            }}
-            viewport={{
-              once: true,
-            }}
-            transition={{
-              duration: 0.6,
-            }}
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
             className="
               rounded-3xl
               border
@@ -264,23 +618,12 @@ Thank you.
             "
           >
 
-            {/* ================= FORM HEADER ================= */}
+            {/* FORM HEADER */}
 
             <div className="mb-7">
               <div className="flex items-center gap-3">
 
-                <motion.div
-                  initial={{
-                    scale: 0.8,
-                    opacity: 0,
-                  }}
-                  animate={{
-                    scale: 1,
-                    opacity: 1,
-                  }}
-                  transition={{
-                    duration: 0.5,
-                  }}
+                <div
                   className="
                     flex
                     h-12
@@ -293,7 +636,7 @@ Thank you.
                   "
                 >
                   <MessageCircle size={22} />
-                </motion.div>
+                </div>
 
                 <div>
                   <h2 className="text-xl font-bold text-slate-900">
@@ -308,18 +651,16 @@ Thank you.
               </div>
             </div>
 
-            {/* ================= FORM ================= */}
-
             <form
               onSubmit={handleWhatsApp}
               className="space-y-5"
             >
 
-              {/* ================= NAME + PHONE ================= */}
+              {/* =================================================
+                  NAME + PHONE
+              ================================================== */}
 
               <div className="grid gap-5 sm:grid-cols-2">
-
-                {/* Name */}
 
                 <div>
                   <label className="mb-2 block text-xs font-bold text-slate-700">
@@ -327,7 +668,6 @@ Thank you.
                   </label>
 
                   <div className="relative">
-
                     <User
                       size={17}
                       className="
@@ -345,31 +685,10 @@ Thank you.
                       value={formData.name}
                       onChange={handleChange}
                       placeholder="Enter your name"
-                      className="
-                        w-full
-                        rounded-xl
-                        border
-                        border-slate-200
-                        bg-slate-50
-                        py-3
-                        pl-11
-                        pr-4
-                        text-sm
-                        text-slate-800
-                        outline-none
-                        transition
-                        placeholder:text-slate-400
-                        focus:border-sky-400
-                        focus:bg-white
-                        focus:ring-4
-                        focus:ring-sky-100
-                      "
+                      className={inputClass}
                     />
-
                   </div>
                 </div>
-
-                {/* Phone */}
 
                 <div>
                   <label className="mb-2 block text-xs font-bold text-slate-700">
@@ -377,7 +696,6 @@ Thank you.
                   </label>
 
                   <div className="relative">
-
                     <Phone
                       size={17}
                       className="
@@ -395,37 +713,18 @@ Thank you.
                       value={formData.phone}
                       onChange={handleChange}
                       placeholder="+91 XXXXX XXXXX"
-                      className="
-                        w-full
-                        rounded-xl
-                        border
-                        border-slate-200
-                        bg-slate-50
-                        py-3
-                        pl-11
-                        pr-4
-                        text-sm
-                        text-slate-800
-                        outline-none
-                        transition
-                        placeholder:text-slate-400
-                        focus:border-sky-400
-                        focus:bg-white
-                        focus:ring-4
-                        focus:ring-sky-100
-                      "
+                      className={inputClass}
                     />
-
                   </div>
                 </div>
 
               </div>
 
-              {/* ================= EMAIL + LOCATION ================= */}
+              {/* =================================================
+                  EMAIL + LOCATION
+              ================================================== */}
 
               <div className="grid gap-5 sm:grid-cols-2">
-
-                {/* Email */}
 
                 <div>
                   <label className="mb-2 block text-xs font-bold text-slate-700">
@@ -433,7 +732,6 @@ Thank you.
                   </label>
 
                   <div className="relative">
-
                     <Mail
                       size={17}
                       className="
@@ -451,31 +749,10 @@ Thank you.
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="your@email.com"
-                      className="
-                        w-full
-                        rounded-xl
-                        border
-                        border-slate-200
-                        bg-slate-50
-                        py-3
-                        pl-11
-                        pr-4
-                        text-sm
-                        text-slate-800
-                        outline-none
-                        transition
-                        placeholder:text-slate-400
-                        focus:border-sky-400
-                        focus:bg-white
-                        focus:ring-4
-                        focus:ring-sky-100
-                      "
+                      className={inputClass}
                     />
-
                   </div>
                 </div>
-
-                {/* Location */}
 
                 <div>
                   <label className="mb-2 block text-xs font-bold text-slate-700">
@@ -483,7 +760,6 @@ Thank you.
                   </label>
 
                   <div className="relative">
-
                     <MapPin
                       size={17}
                       className="
@@ -501,42 +777,23 @@ Thank you.
                       value={formData.location}
                       onChange={handleChange}
                       placeholder="City / District"
-                      className="
-                        w-full
-                        rounded-xl
-                        border
-                        border-slate-200
-                        bg-slate-50
-                        py-3
-                        pl-11
-                        pr-4
-                        text-sm
-                        text-slate-800
-                        outline-none
-                        transition
-                        placeholder:text-slate-400
-                        focus:border-sky-400
-                        focus:bg-white
-                        focus:ring-4
-                        focus:ring-sky-100
-                      "
+                      className={inputClass}
                     />
-
                   </div>
                 </div>
 
               </div>
 
-              {/* ================= SOLAR REQUIREMENT ================= */}
+              {/* =================================================
+                  REQUIREMENT
+              ================================================== */}
 
               <div>
-
                 <label className="mb-2 block text-xs font-bold text-slate-700">
                   Solar Requirement *
                 </label>
 
                 <div className="relative">
-
                   <Zap
                     size={17}
                     className="
@@ -554,27 +811,8 @@ Thank you.
                     name="requirement"
                     value={formData.requirement}
                     onChange={handleChange}
-                    className="
-                      w-full
-                      appearance-none
-                      rounded-xl
-                      border
-                      border-slate-200
-                      bg-slate-50
-                      py-3
-                      pl-11
-                      pr-4
-                      text-sm
-                      text-slate-700
-                      outline-none
-                      transition
-                      focus:border-sky-400
-                      focus:bg-white
-                      focus:ring-4
-                      focus:ring-sky-100
-                    "
+                    className={`${selectClass} pl-11`}
                   >
-
                     <option value="">
                       Select your requirement
                     </option>
@@ -602,16 +840,13 @@ Thank you.
                     <option value="Not Sure - Need Consultation">
                       Not Sure - Need Consultation
                     </option>
-
                   </select>
-
                 </div>
-
               </div>
 
-              {/* =====================================================
-                  RESIDENTIAL CAPACITY
-              ====================================================== */}
+              {/* =================================================
+                  RESIDENTIAL DETAILS
+              ================================================== */}
 
               <AnimatePresence mode="wait">
 
@@ -635,160 +870,280 @@ Thank you.
                     }}
                     transition={{
                       duration: 0.4,
-                      ease: [0.22, 1, 0.36, 1],
                     }}
                     className="overflow-hidden"
                   >
 
-                    <label className="mb-2 block text-xs font-bold text-slate-700">
-                      Select Residential Capacity *
-                    </label>
+                    <div
+                      className="
+                        space-y-5
+                        rounded-2xl
+                        border
+                        border-sky-100
+                        bg-sky-50/60
+                        p-5
+                      "
+                    >
 
-                    <div className="relative">
+                      <div className="flex items-center gap-3">
+                        <div
+                          className="
+                            flex
+                            h-10
+                            w-10
+                            items-center
+                            justify-center
+                            rounded-xl
+                            bg-sky-500
+                            text-white
+                          "
+                        >
+                          <Home size={18} />
+                        </div>
 
-                      {/* ================= ANIMATED ZAP ================= */}
+                        <div>
+                          <h3 className="text-sm font-black text-slate-900">
+                            Residential System Details
+                          </h3>
 
-                      <motion.div
-                        initial={{
-                          scale: 0.5,
-                          opacity: 0,
-                          rotate: -25,
-                        }}
-                        animate={{
-                          scale: 1,
-                          opacity: 1,
-                          rotate: 0,
-                        }}
-                        transition={{
-                          duration: 0.45,
-                          delay: 0.12,
-                          ease: "easeOut",
-                        }}
-                        className="
-                          absolute
-                          left-4
-                          top-1/2
-                          z-10
-                          -translate-y-1/2
-                        "
-                      >
+                          <p className="text-xs text-slate-500">
+                            Select your preferred solar configuration
+                          </p>
+                        </div>
+                      </div>
 
+                      {/* INVERTER TYPE */}
+
+                      <div>
+                        <label className="mb-2 block text-xs font-bold text-slate-700">
+                          Inverter Type *
+                        </label>
+
+                        <select
+                          name="inverterType"
+                          value={formData.inverterType}
+                          onChange={handleChange}
+                          className={selectClass}
+                        >
+                          <option value="">
+                            Select inverter type
+                          </option>
+
+                          <option value="String Inverter">
+                            String Inverter
+                          </option>
+
+                          <option value="Micro Inverter">
+                            Micro Inverter - Enphase
+                          </option>
+                        </select>
+                      </div>
+
+                      {/* CAPACITY */}
+
+                      {formData.inverterType && (
                         <motion.div
-                          animate={{
-                            y: [0, -2, 0],
-                          }}
-                          transition={{
-                            duration: 1.8,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                          }}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          className="grid gap-5 sm:grid-cols-2"
                         >
 
-                          <Zap
-                            size={17}
-                            className="
-                              pointer-events-none
-                              text-slate-400
-                            "
-                          />
+                          <div>
+                            <label className="mb-2 block text-xs font-bold text-slate-700">
+                              Solar Capacity *
+                            </label>
+
+                            <select
+                              name="capacity"
+                              value={formData.capacity}
+                              onChange={handleChange}
+                              className={selectClass}
+                            >
+                              <option value="">
+                                Select capacity
+                              </option>
+
+                              {capacities.map((capacity) => (
+                                <option
+                                  key={capacity}
+                                  value={capacity}
+                                >
+                                  {capacity}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+
+                          {/* PHASE */}
+
+                          {formData.inverterType === "Micro Inverter" &&
+                            formData.capacity && (
+                              <div>
+                                <label className="mb-2 block text-xs font-bold text-slate-700">
+                                  Phase *
+                                </label>
+
+                                <select
+                                  name="phase"
+                                  value={formData.phase}
+                                  onChange={handleChange}
+                                  className={selectClass}
+                                >
+                                  <option value="">
+                                    Select phase
+                                  </option>
+
+                                  {phaseOptions.map((phase) => (
+                                    <option
+                                      key={phase}
+                                      value={phase}
+                                    >
+                                      {phase}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                            )}
 
                         </motion.div>
+                      )}
 
-                      </motion.div>
+                      {/* STRUCTURE */}
 
-                      {/* ================= CAPACITY SELECT ================= */}
+                      {formData.capacity && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                        >
+                          <label className="mb-2 block text-xs font-bold text-slate-700">
+                            Structure Type *
+                          </label>
 
-                      <motion.select
-                        name="capacity"
-                        value={formData.capacity}
-                        onChange={handleChange}
-                        initial={{
-                          opacity: 0,
-                          x: -12,
-                          scale: 0.98,
-                        }}
-                        animate={{
-                          opacity: 1,
-                          x: 0,
-                          scale: 1,
-                        }}
-                        transition={{
-                          duration: 0.4,
-                          delay: 0.08,
-                          ease: "easeOut",
-                        }}
-                        whileFocus={{
-                          scale: 1.01,
-                        }}
-                        className="
-                          w-full
-                          appearance-none
-                          rounded-xl
-                          border
-                          border-slate-200
-                          bg-slate-50
-                          py-3
-                          pl-11
-                          pr-4
-                          text-sm
-                          text-slate-700
-                          outline-none
-                          transition
-                          focus:border-sky-400
-                          focus:bg-white
-                          focus:ring-4
-                          focus:ring-sky-100
-                        "
-                      >
+                          <select
+                            name="structure"
+                            value={formData.structure}
+                            onChange={handleChange}
+                            className={selectClass}
+                          >
+                            <option value="">
+                              Select structure type
+                            </option>
 
-                        <option value="">
-                          Select Residential Capacity
-                        </option>
+                            {structureOptions.map((structure) => (
+                              <option
+                                key={structure}
+                                value={structure}
+                              >
+                                {structure}
+                              </option>
+                            ))}
+                          </select>
+                        </motion.div>
+                      )}
 
-                        <option value="3 kW">
-                          3 kW
-                        </option>
+                      {/* SELECTED SYSTEM SUMMARY */}
 
-                        <option value="4 kW">
-                          4 kW
-                        </option>
+                      {selectedSystem && (
+                        <motion.div
+                          initial={{
+                            opacity: 0,
+                            scale: 0.97,
+                          }}
+                          animate={{
+                            opacity: 1,
+                            scale: 1,
+                          }}
+                          className="
+                            rounded-2xl
+                            border
+                            border-sky-200
+                            bg-white
+                            p-5
+                            shadow-sm
+                          "
+                        >
 
-                        <option value="5 kW">
-                          5 kW
-                        </option>
+                          <div className="mb-4 flex items-center gap-2">
+                            <Sun
+                              size={18}
+                              className="text-sky-500"
+                            />
 
-                        <option value="6 kW">
-                          6 kW
-                        </option>
+                            <h4 className="text-sm font-black text-slate-900">
+                              Selected System
+                            </h4>
+                          </div>
 
-                        <option value="6+ kW">
-                          6+ kW
-                        </option>
+                          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
 
-                      </motion.select>
+                            <div>
+                              <p className="text-[10px] font-bold uppercase text-slate-400">
+                                Capacity
+                              </p>
+
+                              <p className="mt-1 text-sm font-black text-slate-900">
+                                {selectedSystem.capacity}
+                              </p>
+                            </div>
+
+                            <div>
+                              <p className="text-[10px] font-bold uppercase text-slate-400">
+                                Modules
+                              </p>
+
+                              <p className="mt-1 text-sm font-black text-slate-900">
+                                {selectedSystem.modules}
+                              </p>
+                            </div>
+
+                            <div>
+                              <p className="text-[10px] font-bold uppercase text-slate-400">
+                                Offer Price
+                              </p>
+
+                              <p className="mt-1 text-sm font-black text-sky-600">
+                                {selectedSystem.price}
+                              </p>
+                            </div>
+
+                            <div>
+                              <p className="text-[10px] font-bold uppercase text-slate-400">
+                                Subsidy
+                              </p>
+
+                              <p className="mt-1 text-sm font-black text-green-600">
+                                {selectedSystem.subsidy}
+                              </p>
+                            </div>
+
+                          </div>
+
+                        </motion.div>
+                      )}
 
                     </div>
 
                   </motion.div>
-
                 )}
 
               </AnimatePresence>
 
-              {/* ================= MESSAGE ================= */}
+              {/* =================================================
+                  ADDITIONAL DETAILS
+              ================================================== */}
 
               <div>
 
                 <label className="mb-2 block text-xs font-bold text-slate-700">
-                  Additional Message
+                  Additional Details
                 </label>
 
                 <textarea
-                  name="message"
-                  value={formData.message}
+                  name="additionalDetails"
+                  value={formData.additionalDetails}
                   onChange={handleChange}
                   rows="4"
-                  placeholder="Tell us about your electricity usage, roof, required capacity, etc."
+                  placeholder="Example: RCC roof / Sheet roof, monthly electricity bill, preferred installation date, roof area, existing solar system, special requirements..."
                   className="
                     w-full
                     resize-none
@@ -812,12 +1167,52 @@ Thank you.
 
               </div>
 
-              {/* ================= ERROR ================= */}
+              {/* =================================================
+                  MESSAGE
+              ================================================== */}
+
+              <div>
+
+                <label className="mb-2 block text-xs font-bold text-slate-700">
+                  Additional Message
+                </label>
+
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  rows="3"
+                  placeholder="Tell us anything else you'd like our solar team to know..."
+                  className="
+                    w-full
+                    resize-none
+                    rounded-xl
+                    border
+                    border-slate-200
+                    bg-slate-50
+                    px-4
+                    py-3
+                    text-sm
+                    text-slate-800
+                    outline-none
+                    transition
+                    placeholder:text-slate-400
+                    focus:border-sky-400
+                    focus:bg-white
+                    focus:ring-4
+                    focus:ring-sky-100
+                  "
+                />
+
+              </div>
+
+              {/* =================================================
+                  ERROR
+              ================================================== */}
 
               <AnimatePresence>
 
                 {error && (
-
                   <motion.div
                     initial={{
                       opacity: 0,
@@ -845,12 +1240,13 @@ Thank you.
                   >
                     {error}
                   </motion.div>
-
                 )}
 
               </AnimatePresence>
 
-              {/* ================= WHATSAPP BUTTON ================= */}
+              {/* =================================================
+                  WHATSAPP BUTTON
+              ================================================== */}
 
               <motion.button
                 type="submit"
@@ -903,7 +1299,6 @@ Thank you.
                     bg-white
                   "
                 >
-
                   <img
                     src={whatsappIcon}
                     alt="WhatsApp"
@@ -914,7 +1309,6 @@ Thank you.
                       object-contain
                     "
                   />
-
                 </motion.div>
 
                 <span>
@@ -933,31 +1327,22 @@ Thank you.
               </motion.button>
 
               <p className="text-center text-[11px] text-slate-400">
-                Your enquiry details will be added automatically to the
-                WhatsApp message.
+                Your selected solar system and enquiry details will
+                be added automatically to the WhatsApp message.
               </p>
 
             </form>
-
           </motion.div>
 
-          {/* ================= RIGHT SIDE ================= */}
+          {/* =====================================================
+              RIGHT SIDE
+          ====================================================== */}
 
           <motion.div
-            initial={{
-              opacity: 0,
-              x: 30,
-            }}
-            whileInView={{
-              opacity: 1,
-              x: 0,
-            }}
-            viewport={{
-              once: true,
-            }}
-            transition={{
-              duration: 0.6,
-            }}
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
             className="
               relative
               overflow-hidden
@@ -971,8 +1356,6 @@ Thank you.
               sm:p-10
             "
           >
-
-            {/* ================= GLOW ================= */}
 
             <motion.div
               animate={{
@@ -999,8 +1382,6 @@ Thank you.
 
             <div className="relative">
 
-              {/* Badge */}
-
               <span
                 className="
                   inline-flex
@@ -1020,8 +1401,6 @@ Thank you.
                 Why Contact Us?
               </span>
 
-              {/* Heading */}
-
               <h2
                 className="
                   mt-6
@@ -1038,27 +1417,16 @@ Thank you.
               </h2>
 
               <p className="mt-4 text-sm leading-7 text-slate-400">
-                Whether you're looking to power your home, business, or
-                industrial facility, our team can help you choose a suitable
-                solar system.
+                Whether you're looking to power your home, business,
+                or industrial facility, our team can help you choose
+                a suitable solar system.
               </p>
 
-              {/* ================= BENEFITS ================= */}
+              {/* BENEFITS */}
 
-              <div className="mt-8 space-y-4">
+              <div className="mt-8 space-y-5">
 
-                {/* Home */}
-
-                <motion.div
-                  whileHover={{
-                    x: 5,
-                  }}
-                  transition={{
-                    duration: 0.2,
-                  }}
-                  className="flex items-center gap-3"
-                >
-
+                <div className="flex items-center gap-3">
                   <div
                     className="
                       flex
@@ -1075,31 +1443,17 @@ Thank you.
                   </div>
 
                   <div>
-
                     <p className="text-sm font-bold text-white">
-                      Home & Business Solutions
+                      Residential Solar
                     </p>
 
                     <p className="text-xs text-slate-500">
-                      Systems designed around your energy needs.
+                      String and Enphase micro inverter systems.
                     </p>
-
                   </div>
+                </div>
 
-                </motion.div>
-
-                {/* Efficient */}
-
-                <motion.div
-                  whileHover={{
-                    x: 5,
-                  }}
-                  transition={{
-                    duration: 0.2,
-                  }}
-                  className="flex items-center gap-3"
-                >
-
+                <div className="flex items-center gap-3">
                   <div
                     className="
                       flex
@@ -1116,7 +1470,6 @@ Thank you.
                   </div>
 
                   <div>
-
                     <p className="text-sm font-bold text-white">
                       Efficient Solar Systems
                     </p>
@@ -1124,23 +1477,37 @@ Thank you.
                     <p className="text-xs text-slate-500">
                       High-performance solar technology.
                     </p>
+                  </div>
+                </div>
 
+                <div className="flex items-center gap-3">
+                  <div
+                    className="
+                      flex
+                      h-10
+                      w-10
+                      items-center
+                      justify-center
+                      rounded-xl
+                      bg-sky-500/10
+                      text-sky-400
+                    "
+                  >
+                    <BatteryCharging size={18} />
                   </div>
 
-                </motion.div>
+                  <div>
+                    <p className="text-sm font-bold text-white">
+                      Complete Solar Guidance
+                    </p>
 
-                {/* WhatsApp */}
+                    <p className="text-xs text-slate-500">
+                      We help you select capacity and structure.
+                    </p>
+                  </div>
+                </div>
 
-                <motion.div
-                  whileHover={{
-                    x: 5,
-                  }}
-                  transition={{
-                    duration: 0.2,
-                  }}
-                  className="flex items-center gap-3"
-                >
-
+                <div className="flex items-center gap-3">
                   <div
                     className="
                       flex
@@ -1157,7 +1524,6 @@ Thank you.
                   </div>
 
                   <div>
-
                     <p className="text-sm font-bold text-white">
                       Quick WhatsApp Support
                     </p>
@@ -1165,14 +1531,12 @@ Thank you.
                     <p className="text-xs text-slate-500">
                       Talk directly with our solar team.
                     </p>
-
                   </div>
-
-                </motion.div>
+                </div>
 
               </div>
 
-              {/* ================= DIRECT CONTACT ================= */}
+              {/* DIRECT CONTACT */}
 
               <div className="mt-9 border-t border-white/10 pt-7">
 
@@ -1188,12 +1552,8 @@ Thank you.
                   Direct Contact
                 </p>
 
-                {/* Phone */}
-
                 <motion.a
-                  whileHover={{
-                    x: 4,
-                  }}
+                  whileHover={{ x: 4 }}
                   href="tel:+919000000000"
                   className="
                     mt-4
@@ -1207,22 +1567,16 @@ Thank you.
                     hover:text-sky-400
                   "
                 >
-
                   <Phone
                     size={17}
                     className="text-sky-400"
                   />
 
                   +91 90000 00000
-
                 </motion.a>
 
-                {/* Email */}
-
                 <motion.a
-                  whileHover={{
-                    x: 4,
-                  }}
+                  whileHover={{ x: 4 }}
                   href="mailto:hello@pristineenergys.in"
                   className="
                     mt-3
@@ -1236,26 +1590,21 @@ Thank you.
                     hover:text-sky-400
                   "
                 >
-
                   <Mail
                     size={17}
                     className="text-sky-400"
                   />
 
                   hello@pristineenergys.in
-
                 </motion.a>
 
               </div>
 
             </div>
-
           </motion.div>
 
         </div>
-
       </div>
-
     </section>
   );
 }
