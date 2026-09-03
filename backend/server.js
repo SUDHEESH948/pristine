@@ -8,39 +8,48 @@ const connectDB = require("./config/db");
 const solarProductRoutes = require("./routes/solarProductRoutes");
 const authRoutes = require("./routes/authRoutes");
 
-const {
-  createDefaultUser,
-} = require("./controllers/authController");
-
+const { createDefaultUser } = require("./controllers/authController");
 const errorMiddleware = require("./middleware/errorMiddleware");
 
 const app = express();
 
-// ==========================================
+// ============================================================
 // CORS
-// ==========================================
+// ============================================================
 
 const allowedOrigins = [
   "http://localhost:5173",
+  "http://127.0.0.1:5173",
   "https://pristine-livid.vercel.app",
 ];
 
 app.use(
   cors({
     origin: function (origin, callback) {
-      // Allow requests without an origin
-      // such as Postman/server-to-server requests
+      // Postman / server-to-server
       if (!origin) {
         return callback(null, true);
       }
 
-      if (allowedOrigins.includes(origin)) {
+      // Local development
+      const isLocalOrigin =
+        /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin);
+
+      // Vercel deployments
+      const isVercelOrigin =
+        /^https:\/\/[a-z0-9-]+\.vercel\.app$/.test(origin);
+
+      if (
+        allowedOrigins.includes(origin) ||
+        isLocalOrigin ||
+        isVercelOrigin
+      ) {
         return callback(null, true);
       }
 
-      return callback(
-        new Error(`CORS blocked for origin: ${origin}`)
-      );
+      console.log("CORS blocked:", origin);
+
+      return callback(new Error(`CORS blocked for origin: ${origin}`));
     },
 
     methods: [
@@ -61,55 +70,54 @@ app.use(
   })
 );
 
-// ==========================================
+// ============================================================
 // MIDDLEWARE
-// ==========================================
+// ============================================================
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ==========================================
+// ============================================================
 // DATABASE
-// ==========================================
+// ============================================================
 
 connectDB()
   .then(async () => {
-    await createDefaultUser();
+    console.log("MongoDB connected successfully");
+
+    try {
+      await createDefaultUser();
+    } catch (error) {
+      console.error("Default user creation error:", error.message);
+    }
   })
   .catch((error) => {
-    console.error(
-      "Database initialization error:",
-      error
-    );
+    console.error("Database initialization error:", error);
   });
 
-// ==========================================
+// ============================================================
 // API ROUTES
-// ==========================================
+// ============================================================
 
-// Authentication
 app.use("/api/auth", authRoutes);
 
-// Solar Products
 app.use("/api/solar-products", solarProductRoutes);
 
-// ==========================================
+// ============================================================
 // DASHBOARD ROUTES
-// ==========================================
+// ============================================================
 
-// Dashboard
 app.get("/Dashbord", (req, res) => {
   res.redirect("https://pristine-livid.vercel.app/login");
 });
 
-// Lowercase dashboard
 app.get("/dashboard", (req, res) => {
   res.redirect("https://pristine-livid.vercel.app/login");
 });
 
-// ==========================================
+// ============================================================
 // TEST ROUTE
-// ==========================================
+// ============================================================
 
 app.get("/", (req, res) => {
   res.status(200).json({
@@ -118,9 +126,9 @@ app.get("/", (req, res) => {
   });
 });
 
-// ==========================================
-// 404 ROUTE
-// ==========================================
+// ============================================================
+// 404
+// ============================================================
 
 app.use((req, res) => {
   res.status(404).json({
@@ -129,21 +137,19 @@ app.use((req, res) => {
   });
 });
 
-// ==========================================
+// ============================================================
 // GLOBAL ERROR HANDLER
-// ==========================================
+// ============================================================
 
 app.use(errorMiddleware);
 
-// ==========================================
+// ============================================================
 // SERVER
-// ==========================================
+// ============================================================
 
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(
-    `Server running on port ${PORT}`
-  );
+  console.log(`Server running on port ${PORT}`);
 });
 

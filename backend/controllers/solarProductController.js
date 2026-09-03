@@ -1,11 +1,10 @@
-
 const mongoose = require("mongoose");
 const SolarProduct = require("../models/SolarProduct");
 
-// ==========================================
+// ============================================================
 // CREATE SOLAR PRODUCT
-// POST /api/solar-products
-// ==========================================
+// ============================================================
+
 const createSolarProduct = async (req, res) => {
   try {
     const {
@@ -41,10 +40,7 @@ const createSolarProduct = async (req, res) => {
       });
     }
 
-    const numericPhase = Number.parseInt(
-      String(phase).trim(),
-      10
-    );
+    const numericPhase = Number.parseInt(String(phase).trim(), 10);
 
     if (![1, 3].includes(numericPhase)) {
       return res.status(400).json({
@@ -53,58 +49,69 @@ const createSolarProduct = async (req, res) => {
       });
     }
 
-    const normalizedStructures = structures.map((structure) => {
-      const type = structure.type || structure.structure;
+    const normalizedStructures = structures.map((structure) => ({
+      type: structure.type || structure.structure,
 
-      return {
-        type,
-        maxSellingPrice: Number(
-          structure.maxSellingPrice ??
+      maxSellingPrice: Number(
+        structure.maxSellingPrice ??
           structure.maxPrice ??
           structure.msp
-        ),
-        specialOffer: Number(
-          structure.specialOffer ??
+      ),
+
+      specialOffer: Number(
+        structure.specialOffer ??
           structure.specialOfferPrice ??
           0
-        ),
-        offerPrice: Number(
-          structure.offerPrice ??
-          structure.offer
-        ),
-        subsidy: Number(structure.subsidy ?? 0),
-      };
-    });
+      ),
 
-    if (
-      normalizedStructures.some(
-        (structure) =>
-          !structure.type ||
-          !Number.isFinite(structure.maxSellingPrice) ||
-          !Number.isFinite(structure.offerPrice)
-      )
-    ) {
+      offerPrice: Number(
+        structure.offerPrice ??
+          structure.offer
+      ),
+
+      subsidy: Number(structure.subsidy ?? 0),
+    }));
+
+    const invalidStructure = normalizedStructures.some(
+      (structure) =>
+        !structure.type ||
+        !Number.isFinite(structure.maxSellingPrice) ||
+        !Number.isFinite(structure.offerPrice)
+    );
+
+    if (invalidStructure) {
       return res.status(400).json({
         success: false,
         message:
-          "Each structure requires a type, max selling price, and offer price",
+          "Each structure requires type, maxSellingPrice and offerPrice",
       });
     }
 
     const product = await SolarProduct.create({
       productName,
       systemType,
-      moduleCount,
-      moduleWattage,
-      dcCapacity,
-      inverterCapacity,
-      inverterCapacity2: inverterCapacity2 ?? null,
-      batteryCapacity: batteryCapacity ?? null,
+      moduleCount: Number(moduleCount),
+      moduleWattage: Number(moduleWattage),
+      dcCapacity: Number(dcCapacity),
+      inverterCapacity: Number(inverterCapacity),
+      inverterCapacity2:
+        inverterCapacity2 !== undefined &&
+        inverterCapacity2 !== null
+          ? Number(inverterCapacity2)
+          : null,
+
+      batteryCapacity:
+        batteryCapacity !== undefined &&
+        batteryCapacity !== null
+          ? Number(batteryCapacity)
+          : null,
+
       phase: numericPhase,
       structures: normalizedStructures,
-      gstRate: gstRate ?? 8.9,
-      currency: currency ?? "INR",
-      status: status ?? true,
+      gstRate:
+        gstRate !== undefined ? Number(gstRate) : 5,
+      currency: currency || "INR",
+      status: status !== undefined ? Boolean(status) : true,
     });
 
     return res.status(201).json({
@@ -113,7 +120,7 @@ const createSolarProduct = async (req, res) => {
       product,
     });
   } catch (error) {
-    console.error("Create Solar Product Error:", error);
+    console.error("CREATE SOLAR PRODUCT ERROR:", error);
 
     return res.status(500).json({
       success: false,
@@ -122,14 +129,35 @@ const createSolarProduct = async (req, res) => {
   }
 };
 
-// ==========================================
+// ============================================================
 // GET ALL SOLAR PRODUCTS
-// GET /api/solar-products
-// ==========================================
+// ============================================================
+
 const getSolarProducts = async (req, res) => {
   try {
-    const products = await SolarProduct.find()
-      .sort({ createdAt: -1 });
+    console.log("GET /api/solar-products");
+
+    console.log(
+      "MongoDB readyState:",
+      mongoose.connection.readyState
+    );
+
+    if (mongoose.connection.readyState !== 1) {
+      return res.status(503).json({
+        success: false,
+        message: "MongoDB is not connected",
+      });
+    }
+
+    const products = await SolarProduct.find({
+      status: true,
+    })
+      .sort({ createdAt: -1 })
+      .lean();
+
+    console.log(
+      `Solar products found: ${products.length}`
+    );
 
     return res.status(200).json({
       success: true,
@@ -137,7 +165,7 @@ const getSolarProducts = async (req, res) => {
       products,
     });
   } catch (error) {
-    console.error("Get Solar Products Error:", error);
+    console.error("GET SOLAR PRODUCTS ERROR:", error);
 
     return res.status(500).json({
       success: false,
@@ -146,15 +174,14 @@ const getSolarProducts = async (req, res) => {
   }
 };
 
-// ==========================================
-// GET SINGLE SOLAR PRODUCT
-// GET /api/solar-products/:id
-// ==========================================
+// ============================================================
+// GET SINGLE PRODUCT
+// ============================================================
+
 const getSolarProductById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    // Prevent Mongoose CastError for invalid IDs such as "123"
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({
         success: false,
@@ -162,7 +189,7 @@ const getSolarProductById = async (req, res) => {
       });
     }
 
-    const product = await SolarProduct.findById(id);
+    const product = await SolarProduct.findById(id).lean();
 
     if (!product) {
       return res.status(404).json({
@@ -176,24 +203,23 @@ const getSolarProductById = async (req, res) => {
       product,
     });
   } catch (error) {
-    console.error("Get Solar Product Error:", error);
+    console.error("GET SOLAR PRODUCT ERROR:", error);
 
     return res.status(500).json({
       success: false,
-      message: "Failed to get solar product",
+      message: error.message,
     });
   }
 };
 
-// ==========================================
-// UPDATE SOLAR PRODUCT
-// PUT /api/solar-products/:id
-// ==========================================
+// ============================================================
+// UPDATE
+// ============================================================
+
 const updateSolarProduct = async (req, res) => {
   try {
     const { id } = req.params;
 
-    // Validate MongoDB ObjectId
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({
         success: false,
@@ -205,7 +231,7 @@ const updateSolarProduct = async (req, res) => {
       id,
       req.body,
       {
-        returnDocument: "after",
+        new: true,
         runValidators: true,
       }
     );
@@ -223,7 +249,7 @@ const updateSolarProduct = async (req, res) => {
       product,
     });
   } catch (error) {
-    console.error("Update Solar Product Error:", error);
+    console.error("UPDATE SOLAR PRODUCT ERROR:", error);
 
     return res.status(500).json({
       success: false,
@@ -232,15 +258,14 @@ const updateSolarProduct = async (req, res) => {
   }
 };
 
-// ==========================================
-// DELETE SOLAR PRODUCT
-// DELETE /api/solar-products/:id
-// ==========================================
+// ============================================================
+// DELETE
+// ============================================================
+
 const deleteSolarProduct = async (req, res) => {
   try {
     const { id } = req.params;
 
-    // Validate MongoDB ObjectId
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({
         success: false,
@@ -262,7 +287,7 @@ const deleteSolarProduct = async (req, res) => {
       message: "Solar product deleted successfully",
     });
   } catch (error) {
-    console.error("Delete Solar Product Error:", error);
+    console.error("DELETE SOLAR PRODUCT ERROR:", error);
 
     return res.status(500).json({
       success: false,
@@ -278,4 +303,3 @@ module.exports = {
   updateSolarProduct,
   deleteSolarProduct,
 };
-

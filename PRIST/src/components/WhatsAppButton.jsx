@@ -18,20 +18,20 @@ export default function WhatsAppButton() {
       aria-label="Contact Pristine Energy on WhatsApp"
       className="
         fixed
-        bottom-6
-        right-6
+        bottom-5
+        right-5
         z-50
         flex
-        h-16
-        w-23
+        h-14
+        w-14
         items-center
         justify-center
         rounded-full
         transition-all
         duration-300
         hover:scale-110
-        sm:bottom-8
-        sm:right-8
+        sm:bottom-6
+        sm:right-6
       "
     >
       <img
@@ -52,8 +52,8 @@ export default function WhatsAppButton() {
           absolute
           right-0
           top-0
-          h-4
-          w-4
+          h-3.5
+          w-3.5
           rounded-full
           border-2
           border-white
