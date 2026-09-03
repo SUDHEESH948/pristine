@@ -27,7 +27,7 @@ const IMPACT_CARDS = [
   {
     icon: Sun,
     image: impact1,
-    value: 500,
+    value: 100,
     suffix: "+",
     title: "Solar Installations",
     badge: "99.8% CSAT",
@@ -38,7 +38,7 @@ const IMPACT_CARDS = [
   {
     icon: ShieldCheck,
     image: impact2,
-    value: 15,
+    value: 1,
     suffix: "+",
     title: "Years Experience",
     badge: "Tier-1 Certified",

@@ -1,30 +1,32 @@
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 
-import image1 from "../assets/image1.png";
-import image2 from "../assets/image2.png";
+import heroVideo from "../assets/Add_this_vido_to_house_to_solo.mp4";
 
 // =========================================================
-// HERO SLIDES
+// HERO TEXT SLIDES
 // =========================================================
 
-const SLIDES = [
+const TEXT_SLIDES = [
   {
-    image: image1,
     badge: "Tier-1 Installation",
     title: "Power Your Future with Clean Solar",
-    subtitle:
+    description:
       "High-efficiency rooftop solar systems engineered for homes, businesses, and industries across Kerala.",
   },
   {
-    image: image2,
     badge: "25-Year Reliability",
     title: "Smart Solar Solutions for Modern Energy",
-    subtitle:
+    description:
       "Lock in predictable power costs, gain energy independence, and achieve zero carbon emissions.",
+  },
+  {
+    badge: "Clean Energy",
+    title: "Make the Switch to Solar Energy",
+    description:
+      "Reliable and sustainable solar power solutions designed to reduce energy costs and build a cleaner future.",
   },
 ];
 
@@ -33,37 +35,21 @@ const SLIDES = [
 // =========================================================
 
 export default function Hero() {
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentText, setCurrentText] = useState(0);
 
-  // =========================================================
-  // AUTO SLIDER
-  // =========================================================
+  // =======================================================
+  // AUTOMATIC TEXT SLIDER
+  // =======================================================
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % SLIDES.length);
+      setCurrentText((prev) => (prev + 1) % TEXT_SLIDES.length);
     }, 6500);
 
     return () => clearInterval(timer);
   }, []);
 
-  // =========================================================
-  // NEXT SLIDE
-  // =========================================================
-
-  const handleNext = () => {
-    setCurrentSlide((prev) => (prev + 1) % SLIDES.length);
-  };
-
-  // =========================================================
-  // PREVIOUS SLIDE
-  // =========================================================
-
-  const handlePrev = () => {
-    setCurrentSlide(
-      (prev) => (prev - 1 + SLIDES.length) % SLIDES.length
-    );
-  };
+  const slide = TEXT_SLIDES[currentText];
 
   return (
     <section
@@ -77,9 +63,9 @@ export default function Hero() {
         text-white
       "
     >
-      {/* =====================================================
+      {/* ===================================================
           MAIN HERO WRAPPER
-      ===================================================== */}
+      =================================================== */}
 
       <div
         className="
@@ -106,9 +92,9 @@ export default function Hero() {
           xl:pt-28
         "
       >
-        {/* ===================================================
+        {/* =================================================
             HERO CARD
-        =================================================== */}
+        ================================================= */}
 
         <div
           className="
@@ -133,88 +119,74 @@ export default function Hero() {
             xl:min-h-[calc(100vh-145px)]
           "
         >
-          {/* ===================================================
-              BACKGROUND IMAGE
-          =================================================== */}
+          {/* =================================================
+              BACKGROUND VIDEO
+          ================================================= */}
 
-          <AnimatePresence initial={false}>
-            <motion.img
-              key={currentSlide}
-              src={SLIDES[currentSlide].image}
-              alt="Solar energy project"
-              initial={{
-                opacity: 0,
-                scale: 1.08,
-              }}
-              animate={{
-                opacity: 1,
-                scale: 1,
-              }}
-              exit={{
-                opacity: 0,
-                scale: 1.02,
-              }}
-              transition={{
-                duration: 1,
-                ease: "easeInOut",
-              }}
-              className="
-                absolute
-                inset-0
-                h-full
-                w-full
-                object-cover
-              "
-            />
-          </AnimatePresence>
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            className="
+              absolute
+              inset-0
+              h-full
+              w-full
+              object-cover
+            "
+          >
+            <source src={heroVideo} type="video/mp4" />
 
-          {/* ===================================================
-              MOBILE OVERLAY
-          =================================================== */}
+            Your browser does not support the video tag.
+          </video>
+
+          {/* =================================================
+              LIGHT OVERLAY
+          ================================================= */}
 
           <div
             className="
               absolute
               inset-0
-              bg-[#041122]/45
-
-              sm:bg-transparent
+              bg-[#041122]/10
             "
           />
 
-          {/* ===================================================
-              VERTICAL OVERLAY
-          =================================================== */}
+          {/* =================================================
+              LIGHT BOTTOM GRADIENT
+          ================================================= */}
 
           <div
             className="
               absolute
               inset-0
               bg-gradient-to-t
-              from-[#041122]
-              via-[#04182e]/60
-              to-[#04182e]/20
+              from-[#041122]/40
+              via-[#04182e]/10
+              to-transparent
             "
           />
 
-          {/* ===================================================
-              HORIZONTAL OVERLAY
-          =================================================== */}
+          {/* =================================================
+              LIGHT LEFT GRADIENT
+          ================================================= */}
 
           <div
             className="
               absolute
               inset-0
               bg-gradient-to-r
-              from-[#041122]/90
-              via-[#04182e]/40
+              from-[#041122]/40
+              via-[#04182e]/10
               to-transparent
             "
           />
 
-          {/* ===================================================
+          {/* =================================================
               CONTENT
-          =================================================== */}
+          ================================================= */}
 
           <div
             className="
@@ -227,30 +199,30 @@ export default function Hero() {
               justify-center
 
               px-5
-              py-14
+              py-10
               text-center
 
               sm:min-h-[calc(100vh-125px)]
               sm:px-8
-              sm:py-16
+              sm:py-12
 
               md:min-h-[calc(100vh-130px)]
               md:items-start
-              md:justify-between
+              md:justify-center
               md:px-12
-              md:py-16
+              md:py-14
               md:text-left
 
               lg:min-h-[calc(100vh-135px)]
               lg:px-16
-              lg:py-20
+              lg:py-16
 
               xl:min-h-[calc(100vh-145px)]
               xl:px-20
-              xl:py-20
+              xl:py-16
 
               2xl:px-24
-              2xl:py-24
+              2xl:py-20
             "
           >
             {/* =================================================
@@ -260,201 +232,158 @@ export default function Hero() {
             <div
               className="
                 w-full
-                max-w-2xl
+                max-w-xl
 
                 sm:max-w-xl
 
                 md:max-w-2xl
 
-                lg:max-w-3xl
+                lg:max-w-2xl
 
                 xl:max-w-3xl
-
-                2xl:max-w-4xl
               "
             >
-              {/* =================================================
-                  BADGE
-              ================================================= */}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentText}
+                  initial={{
+                    opacity: 0,
+                    y: 15,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  exit={{
+                    opacity: 0,
+                    y: -15,
+                  }}
+                  transition={{
+                    duration: 0.5,
+                    ease: "easeInOut",
+                  }}
+                >
+                  {/* =================================================
+                      BADGE
+                  ================================================= */}
 
-              <motion.div
-                key={`badge-${currentSlide}`}
-                initial={{
-                  opacity: 0,
-                  y: 25,
-                  scale: 0.9,
-                }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                  scale: 1,
-                }}
-                transition={{
-                  duration: 0.6,
-                  ease: "easeOut",
-                }}
-                className="
-                  mb-5
-                  inline-flex
-                  items-center
-                  gap-2
-                  rounded-full
-                  border
-                  border-sky-400/30
-                  bg-sky-950/70
-                  px-3
-                  py-1.5
-                  text-[10px]
-                  font-semibold
-                  uppercase
-                  tracking-wider
-                  text-sky-200
-                  backdrop-blur-md
+                  <div
+                    className="
+                      mb-3
+                      inline-flex
+                      items-center
+                      gap-2
+                      rounded-full
+                      border
+                      border-sky-400/30
+                      bg-sky-950/25
+                      px-3
+                      py-1
+                      text-[9px]
+                      font-semibold
+                      uppercase
+                      tracking-wider
+                      text-sky-200
+                      backdrop-blur-sm
 
-                  sm:px-4
-                  sm:py-2
-                  sm:text-[11px]
+                      sm:mb-3
+                      sm:px-3.5
+                      sm:py-1.5
+                      sm:text-[10px]
+                    "
+                  >
+                    <span
+                      className="
+                        h-1.5
+                        w-1.5
+                        animate-pulse
+                        rounded-full
+                        bg-sky-400
+                      "
+                    />
 
-                  md:mb-4
-                "
-              >
-                <span
-                  className="
-                    h-1.5
-                    w-1.5
-                    animate-pulse
-                    rounded-full
-                    bg-sky-400
+                    {slide.badge}
+                  </div>
 
-                    sm:h-2
-                    sm:w-2
-                  "
-                />
+                  {/* =================================================
+                      TITLE
+                  ================================================= */}
 
-                {SLIDES[currentSlide].badge}
-              </motion.div>
+                  <h1
+                    className="
+                      mx-auto
+                      max-w-full
+                      text-2xl
+                      font-bold
+                      leading-[1.1]
+                      tracking-tight
+                      text-white
 
-              {/* =================================================
-                  TITLE
-              ================================================= */}
+                      sm:max-w-[90%]
+                      sm:text-3xl
 
-              <motion.h1
-                key={`title-${currentSlide}`}
-                initial={{
-                  opacity: 0,
-                  y: 35,
-                }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                transition={{
-                  duration: 0.7,
-                  delay: 0.12,
-                  ease: "easeOut",
-                }}
-                className="
-                  mx-auto
-                  max-w-full
-                  text-3xl
-                  font-bold
-                  leading-[1.08]
-                  tracking-tight
-                  text-white
+                      md:mx-0
+                      md:max-w-[90%]
+                      md:text-4xl
 
-                  sm:max-w-[90%]
-                  sm:text-4xl
+                      lg:text-5xl
 
-                  md:mx-0
-                  md:max-w-[95%]
-                  md:text-5xl
+                      xl:text-6xl
+                    "
+                  >
+                    {slide.title}
+                  </h1>
 
-                  lg:text-6xl
+                  {/* =================================================
+                      DESCRIPTION
+                  ================================================= */}
 
-                  xl:text-7xl
+                  <p
+                    className="
+                      mx-auto
+                      mt-3
+                      max-w-md
+                      text-xs
+                      leading-relaxed
+                      text-white/90
 
-                  2xl:text-8xl
-                "
-              >
-                {SLIDES[currentSlide].title}
-              </motion.h1>
+                      sm:mt-3
+                      sm:text-sm
 
-              {/* =================================================
-                  DESCRIPTION
-              ================================================= */}
+                      md:mx-0
+                      md:max-w-lg
 
-              <motion.p
-                key={`desc-${currentSlide}`}
-                initial={{
-                  opacity: 0,
-                  y: 30,
-                }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                transition={{
-                  duration: 0.7,
-                  delay: 0.25,
-                  ease: "easeOut",
-                }}
-                className="
-                  mx-auto
-                  mt-5
-                  max-w-lg
-                  text-sm
-                  leading-relaxed
-                  text-sky-100/90
+                      lg:text-base
 
-                  sm:mt-5
-                  sm:text-base
-
-                  md:mx-0
-                  md:max-w-xl
-
-                  lg:text-lg
-
-                  xl:max-w-2xl
-                  xl:text-xl
-                "
-              >
-                {SLIDES[currentSlide].subtitle}
-              </motion.p>
+                      xl:max-w-xl
+                      xl:text-lg
+                    "
+                  >
+                    {slide.description}
+                  </p>
+                </motion.div>
+              </AnimatePresence>
 
               {/* =================================================
                   CTA BUTTONS
               ================================================= */}
 
-              <motion.div
-                key={`cta-${currentSlide}`}
-                initial={{
-                  opacity: 0,
-                  y: 30,
-                }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                transition={{
-                  duration: 0.7,
-                  delay: 0.4,
-                  ease: "easeOut",
-                }}
+              <div
                 className="
-                  mt-7
+                  mt-5
                   flex
                   w-full
                   flex-col
                   items-center
-                  gap-3
+                  gap-2.5
 
-                  sm:mt-8
+                  sm:mt-6
                   sm:flex-row
                   sm:justify-center
 
                   md:justify-start
 
-                  md:gap-4
+                  md:gap-3
                 "
               >
                 {/* BOOK FREE SURVEY */}
@@ -463,31 +392,30 @@ export default function Hero() {
                   to="/contact"
                   className="
                     w-full
-                    max-w-[260px]
+                    max-w-[230px]
                     rounded-full
                     bg-sky-500
-                    px-6
-                    py-3.5
+                    px-5
+                    py-3
                     text-center
-                    text-xs
+                    text-[11px]
                     font-bold
                     tracking-wider
                     text-white
                     shadow-lg
-                    shadow-sky-500/30
+                    shadow-sky-500/25
                     transition-all
                     duration-300
 
                     hover:-translate-y-1
                     hover:bg-sky-400
-                    hover:shadow-sky-400/40
 
                     sm:w-auto
                     sm:max-w-none
-                    sm:px-7
+                    sm:px-6
 
-                    xl:px-8
-                    xl:py-4
+                    xl:px-7
+                    xl:py-3.5
                   "
                 >
                   BOOK FREE SURVEY
@@ -499,19 +427,19 @@ export default function Hero() {
                   to="/services"
                   className="
                     w-full
-                    max-w-[260px]
+                    max-w-[230px]
                     rounded-full
                     border
                     border-white/25
                     bg-white/10
-                    px-6
-                    py-3.5
+                    px-5
+                    py-3
                     text-center
-                    text-xs
+                    text-[11px]
                     font-bold
                     tracking-wider
                     text-white
-                    backdrop-blur-md
+                    backdrop-blur-sm
                     transition-all
                     duration-300
 
@@ -520,106 +448,19 @@ export default function Hero() {
 
                     sm:w-auto
                     sm:max-w-none
-                    sm:px-7
+                    sm:px-6
 
-                    xl:px-8
-                    xl:py-4
+                    xl:px-7
+                    xl:py-3.5
                   "
                 >
                   EXPLORE SOLUTIONS
                 </Link>
-              </motion.div>
+              </div>
             </div>
           </div>
-
-          {/* ===================================================
-              MOBILE / TABLET SLIDER ARROWS
-              HIDDEN ON LARGE SCREENS
-          =================================================== */}
-
-          {/* PREVIOUS */}
-          <button
-            type="button"
-            onClick={handlePrev}
-            aria-label="Previous Slide"
-            className="
-              absolute
-              left-3
-              top-1/2
-              z-30
-              flex
-              h-10
-              w-10
-              -translate-y-1/2
-              items-center
-              justify-center
-              rounded-full
-              border
-              border-white/20
-              bg-black/40
-              text-white
-              shadow-lg
-              backdrop-blur-md
-              transition-all
-              duration-300
-
-              hover:scale-105
-              hover:border-sky-400
-              hover:bg-sky-500
-
-              sm:left-5
-              sm:h-11
-              sm:w-11
-
-              md:left-6
-
-              lg:hidden
-            "
-          >
-            <ChevronLeft size={18} />
-          </button>
-
-          {/* NEXT */}
-          <button
-            type="button"
-            onClick={handleNext}
-            aria-label="Next Slide"
-            className="
-              absolute
-              right-3
-              top-1/2
-              z-30
-              flex
-              h-10
-              w-10
-              -translate-y-1/2
-              items-center
-              justify-center
-              rounded-full
-              bg-white
-              text-slate-900
-              shadow-lg
-              transition-all
-              duration-300
-
-              hover:scale-105
-              hover:bg-sky-400
-              hover:text-white
-
-              sm:right-5
-              sm:h-11
-              sm:w-11
-
-              md:right-6
-
-              lg:hidden
-            "
-          >
-            <ChevronRight size={18} />
-          </button>
         </div>
       </div>
     </section>
   );
 }
-

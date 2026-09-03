@@ -76,17 +76,10 @@ export default function About() {
             </h2>
 
             <p className="mt-6 text-sm leading-7 text-slate-500 sm:text-base">
-              Pristine Energy delivers high-performance solar power systems
-              designed for homes, businesses, and industries across Kerala.
-              Our approach combines reliable technology, professional
-              engineering, and long-term customer support.
+              Tata Power Solar Systems Ltd. — Since 1989, India’s oldest solar manufacturer and No.1 Rooftop Solar Company. Part of the 155-year-old Tata Group. 4.9 GW integrated cell & module manufacturing capacity in Bengaluru & Tirunelveli, 100% Made in India, BIS-certified, MNRE-approved TOPCon Bifacial technology. First Indian company to ship 1 GW modules globally, powering 30M+ lives. Now offering India’s highest 30 Years Performance Warranty with life-long power generation capability.
             </p>
 
-            <p className="mt-4 text-sm leading-7 text-slate-500 sm:text-base">
-              From initial consultation and site assessment to installation,
-              grid synchronization, monitoring, and maintenance, we provide
-              an end-to-end solar experience.
-            </p>
+            
 
             <a
               href="#services"
@@ -142,8 +135,7 @@ export default function About() {
               </h3>
 
               <p className="mt-2 text-xs leading-relaxed text-slate-500">
-                Make clean, affordable, and dependable solar energy accessible
-                to every customer.
+                To deliver life-long electricity with 30 Years Tata Warranty and life-long local support.
               </p>
             </div>
 
@@ -230,7 +222,7 @@ export default function About() {
 
           <div className="text-center">
             <div className="text-3xl font-black text-sky-500">
-              500+
+              100+
             </div>
             <p className="mt-1 text-xs font-semibold text-slate-500">
               Installations
@@ -248,7 +240,7 @@ export default function About() {
 
           <div className="text-center">
             <div className="text-3xl font-black text-sky-500">
-              15+
+              1+
             </div>
             <p className="mt-1 text-xs font-semibold text-slate-500">
               Years Experience

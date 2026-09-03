@@ -2,7 +2,7 @@
 import logo from "../assets/whatsappicon.png";
 
 export default function WhatsAppButton() {
-  const phoneNumber = "919000000000";
+  const phoneNumber = "7012694985";
 
   const message = encodeURIComponent(
     "Hello Pristine Energy, I am interested in your solar solutions."

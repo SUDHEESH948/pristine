@@ -18,14 +18,14 @@ const VALUES = [
     title: "Our Vision",
     badge: "Future Ready",
     description:
-      "To be the premier clean energy partner across Kerala, making dependable solar power accessible to every home, business, and institution.",
+      "To make every rooftop in our 4 districts a life-long power house.",
   },
   {
     icon: Eye,
     title: "Our Mission",
     badge: "Precision First",
     description:
-      "To engineer and deploy high-efficiency solar systems backed by rigorous safety protocols and dedicated lifetime maintenance.",
+      "To deliver life-long electricity with 30 Years Tata Warranty and life-long local support.",
   },
   {
     icon: Leaf,
