@@ -1,14 +1,12 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { SOLAR_PRODUCTS_API } from "../../api/api";
 
 // ============================================================
 // CONSTANTS & HELPERS
 // ============================================================
 
-const API_BASE_URL =
-  import.meta.env.VITE_API_URL || "http://localhost:5000";
-const API_URL = `${API_BASE_URL}/api/solar-products`;
 const PRODUCT_SYNC_CHANNEL = "solar_products_sync";
 const PRODUCT_SYNC_STORAGE_KEY = "solar_product_last_added";
 
@@ -151,8 +149,8 @@ function Toast({ toast, onDone }) {
             exit={{ opacity: 0, y: -16, scale: 0.95 }}
             transition={{ type: "spring", stiffness: 350, damping: 25 }}
             className={`pointer-events-auto flex items-center gap-3 rounded-xl px-5 py-3 shadow-2xl backdrop-blur-md ${toast.type === "error"
-                ? "border border-red-400/40 bg-red-600/90 text-white"
-                : "border border-emerald-400/40 bg-emerald-600/90 text-white"
+              ? "border border-red-400/40 bg-red-600/90 text-white"
+              : "border border-emerald-400/40 bg-emerald-600/90 text-white"
               }`}
           >
             <span className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-white/20 text-xs font-bold">
@@ -357,7 +355,7 @@ export default function AddSolarProduct() {
 
     try {
       setLoading(true);
-      const res = await fetch(API_URL, {
+      const res = await fetch(SOLAR_PRODUCTS_API, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { AUTH_LOGIN_API } from "../../api/api";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -64,7 +65,7 @@ export default function Login() {
       setLoading(true);
 
       const response = await fetch(
-        "http://localhost:5000/api/auth/login",
+        AUTH_LOGIN_API,
         {
           method: "POST",
           headers: {
@@ -627,16 +628,16 @@ export default function Login() {
                   whileHover={
                     !loading
                       ? {
-                          scale: 1.02,
-                          y: -2,
-                        }
+                        scale: 1.02,
+                        y: -2,
+                      }
                       : {}
                   }
                   whileTap={
                     !loading
                       ? {
-                          scale: 0.97,
-                        }
+                        scale: 0.97,
+                      }
                       : {}
                   }
                   className="

@@ -20,14 +20,11 @@ import {
     Loader2,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { SOLAR_PRODUCTS_API } from "../../api/api";
 
 // ============================================================
 // API CONFIG
 // ============================================================
-const API_BASE_URL =
-    import.meta.env.VITE_API_URL || "http://localhost:5000";
-
-const SOLAR_PRODUCTS_API = `${API_BASE_URL}/api/solar-products`;
 const PRODUCT_SYNC_CHANNEL = "solar_products_sync";
 const PRODUCT_SYNC_STORAGE_KEY = "solar_product_last_added";
 
