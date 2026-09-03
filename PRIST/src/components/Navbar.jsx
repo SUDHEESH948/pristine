@@ -70,6 +70,7 @@ export default function Navbar() {
           mx-auto
           w-full
           max-w-[1900px]
+          overflow-hidden
           pointer-events-auto
         "
       >
@@ -88,13 +89,13 @@ export default function Navbar() {
             border
             border-slate-200/80
             bg-white/95
-            px-6
+            px-4
             py-2.5
             shadow-[0_15px_45px_rgba(0,0,0,0.20)]
             backdrop-blur-xl
             lg:flex
-            xl:px-8
-            2xl:px-10
+            xl:px-6
+            2xl:px-8
           "
         >
 
@@ -170,9 +171,9 @@ export default function Navbar() {
             className="
               flex
               items-center
-              gap-7
-              xl:gap-10
-              2xl:gap-12
+              gap-4
+              xl:gap-7
+              2xl:gap-9
             "
           >
             {NAV_LINKS.map(({ label, href }) => (
@@ -231,7 +232,7 @@ export default function Navbar() {
               justify-center
               rounded-full
               bg-[#0284c7]
-              px-7
+              px-5
               py-2.5
               text-[13px]
               font-semibold
@@ -243,7 +244,7 @@ export default function Navbar() {
               hover:bg-[#0369a1]
               hover:shadow-[0_8px_24px_rgba(2,132,199,0.40)]
               active:scale-95
-              xl:px-8
+              xl:px-7
               xl:py-3
             "
           >

@@ -55,7 +55,7 @@ export default function Hero() {
     <section
       className="
         relative
-        min-h-screen
+          min-h-[calc(100svh-1rem)]
         w-full
         overflow-hidden
         bg-[#041122]
@@ -107,16 +107,16 @@ export default function Hero() {
             shadow-2xl
             shadow-sky-950/50
 
-            min-h-[calc(100vh-120px)]
+            min-h-[min(760px,calc(100svh-120px))]
 
-            sm:min-h-[calc(100vh-125px)]
+            sm:min-h-[min(780px,calc(100svh-125px))]
             sm:rounded-3xl
 
-            md:min-h-[calc(100vh-130px)]
+            md:min-h-[min(800px,calc(100svh-130px))]
 
-            lg:min-h-[calc(100vh-135px)]
+            lg:min-h-[min(820px,calc(100svh-135px))]
 
-            xl:min-h-[calc(100vh-145px)]
+            xl:min-h-[min(840px,calc(100svh-145px))]
           "
         >
           {/* =================================================
@@ -193,7 +193,7 @@ export default function Hero() {
               relative
               z-10
               flex
-              min-h-[calc(100vh-120px)]
+              min-h-[min(760px,calc(100svh-120px))]
               flex-col
               items-center
               justify-center
@@ -202,22 +202,22 @@ export default function Hero() {
               py-10
               text-center
 
-              sm:min-h-[calc(100vh-125px)]
+              sm:min-h-[min(780px,calc(100svh-125px))]
               sm:px-8
               sm:py-12
 
-              md:min-h-[calc(100vh-130px)]
+              md:min-h-[min(800px,calc(100svh-130px))]
               md:items-start
               md:justify-center
               md:px-12
               md:py-14
               md:text-left
 
-              lg:min-h-[calc(100vh-135px)]
+              lg:min-h-[min(820px,calc(100svh-135px))]
               lg:px-16
               lg:py-16
 
-              xl:min-h-[calc(100vh-145px)]
+              xl:min-h-[min(840px,calc(100svh-145px))]
               xl:px-20
               xl:py-16
 
