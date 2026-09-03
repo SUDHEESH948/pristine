@@ -1,3 +1,4 @@
+
 require("dotenv").config();
 
 const express = require("express");
@@ -19,11 +20,43 @@ const app = express();
 // CORS
 // ==========================================
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://pristine-livid.vercel.app",
+];
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    origin: function (origin, callback) {
+      // Allow requests without an origin
+      // such as Postman/server-to-server requests
+      if (!origin) {
+        return callback(null, true);
+      }
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(
+        new Error(`CORS blocked for origin: ${origin}`)
+      );
+    },
+
+    methods: [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE",
+      "OPTIONS",
+    ],
+
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+    ],
+
     credentials: true,
   })
 );
@@ -34,39 +67,49 @@ app.use(
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 // ==========================================
 // DATABASE
 // ==========================================
+
 connectDB()
   .then(async () => {
     await createDefaultUser();
   })
   .catch((error) => {
-    console.error("Database initialization error:", error);
+    console.error(
+      "Database initialization error:",
+      error
+    );
   });
+
 // ==========================================
 // API ROUTES
 // ==========================================
+
 // Authentication
 app.use("/api/auth", authRoutes);
+
 // Solar Products
 app.use("/api/solar-products", solarProductRoutes);
+
+// ==========================================
+// DASHBOARD ROUTES
+// ==========================================
+
+// Dashboard
 app.get("/Dashbord", (req, res) => {
-  res.redirect("http://localhost:5173/login");
+  res.redirect("https://pristine-livid.vercel.app/login");
 });
 
-// Also support lowercase dashboard URL
+// Lowercase dashboard
 app.get("/dashboard", (req, res) => {
-  res.redirect("http://localhost:5173/login");
+  res.redirect("https://pristine-livid.vercel.app/login");
 });
 
 // ==========================================
 // TEST ROUTE
 // ==========================================
-
-app.get("/Dashbord", (req, res) => {
-  res.redirect("http://localhost:5173/login");
-});
 
 app.get("/", (req, res) => {
   res.status(200).json({
@@ -99,5 +142,8 @@ app.use(errorMiddleware);
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(
+    `Server running on port ${PORT}`
+  );
 });
+
