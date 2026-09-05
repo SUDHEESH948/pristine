@@ -8,6 +8,7 @@ import { X, ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 
 import video1 from "../assets/WhatsApp Video 2026-09-03 at 4.21.44 PM.mp4";
 import video2 from "../assets/WhatsApp Video 2026-09-03 at 11.20.25 AM.mp4";
+import video3 from "../assets/WhatsApp Video 2026-09-03 at 4.21.43 PM.mp4";
 
 // ============================================================
 // GALLERY DATA
@@ -52,6 +53,10 @@ const videos = [
     {
         id: 2,
         src: video2,
+    },
+    {
+        id: 3,
+        src: video3,
     },
 ];
 
