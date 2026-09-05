@@ -1,8 +1,7 @@
-
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, PhoneCall } from "lucide-react";
 
 import logo from "../assets/logo.png";
 
@@ -18,472 +17,256 @@ const NAV_LINKS = [
   { label: "Pricing", href: "/pricing" },
 ];
 
-// =========================================================
-// BRAND COLORS
-// =========================================================
-
 const PRIMARY_BLUE = "#0284c7";
-const PRIMARY_BLUE_HOVER = "#0369a1";
-
-// =========================================================
-// NAVBAR
-// =========================================================
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
+
+  // Auto-close mobile drawer on route change
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [location.pathname]);
+
+  // Lock body scroll when mobile dropdown is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
+
+  // Mobile drawer animation variants
+  const menuVariants = {
+    closed: {
+      opacity: 0,
+      height: 0,
+      transition: {
+        duration: 0.25,
+        ease: [0.4, 0, 0.2, 1],
+        when: "afterChildren",
+      },
+    },
+    open: {
+      opacity: 1,
+      height: "auto",
+      transition: {
+        duration: 0.35,
+        ease: [0.16, 1, 0.3, 1],
+        staggerChildren: 0.05,
+        delayChildren: 0.05,
+      },
+    },
+  };
+
+  const itemVariants = {
+    closed: { opacity: 0, y: -8 },
+    open: { opacity: 1, y: 0 },
+  };
 
   return (
-    <motion.header
-      initial={{
-        y: -60,
-        opacity: 0,
-      }}
-      animate={{
-        y: 0,
-        opacity: 1,
-      }}
-      transition={{
-        duration: 0.5,
-        ease: "easeOut",
-      }}
-      className="
-        fixed
-        left-0
-        right-0
-        top-0
-        z-[9999]
-        flex
-        w-full
-        justify-center
-        px-3
-        pt-4
-        pointer-events-none
-        sm:px-5
-        sm:pt-5
-        lg:px-8
-        lg:pt-6
-        xl:px-10
-      "
-    >
-      <div
-        className="
-          mx-auto
-          w-full
-          max-w-[1900px]
-          overflow-hidden
-          pointer-events-auto
-        "
+    <>
+      <motion.header
+        initial={{ y: -60, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="fixed left-0 right-0 top-0 z-[9999] flex w-full justify-center px-3 pt-3 pointer-events-none sm:px-5 sm:pt-4 lg:px-8 lg:pt-5 xl:px-10"
       >
-
-        {/* =====================================================
-            DESKTOP NAVIGATION
-        ====================================================== */}
-
-        <div
-          className="
-            hidden
-            w-full
-            items-center
-            justify-between
-            rounded-full
-            border
-            border-slate-200/80
-            bg-white/95
-            px-4
-            py-2.5
-            shadow-[0_15px_45px_rgba(0,0,0,0.20)]
-            backdrop-blur-xl
-            lg:flex
-            xl:px-6
-            2xl:px-8
-          "
-        >
-
-          {/* =================================================
-              LOGO
-          ================================================= */}
-
-          <Link
-            to="/"
-            className="
-              flex
-              shrink-0
-              items-center
-              gap-2.5
-            "
-          >
-            <img
-              src={logo}
-              alt="Pristine Energy Logo"
-              className="
-                h-10
-                w-10
-                shrink-0
-                rounded-full
-                object-cover
-              "
-            />
-
-            <div className="flex flex-col leading-none">
-
-              <span
-                className="
-                  whitespace-nowrap
-                  text-xs
-                  font-black
-                  tracking-tight
-                  text-slate-900
-                  xl:text-sm
-                "
-              >
-                PRISTINE{" "}
-                <span
-                  className="font-extrabold"
-                  style={{
-                    color: PRIMARY_BLUE,
-                  }}
-                >
-                  ENERGY
-                </span>
-              </span>
-
-              <span
-                className="
-                  mt-0.5
-                  text-[7px]
-                  font-bold
-                  tracking-[2px]
-                  text-slate-400
-                  xl:text-[8px]
-                "
-              >
-                SOLAR SOLUTIONS
-              </span>
-
-            </div>
-          </Link>
-
-          {/* =================================================
-              DESKTOP LINKS
-          ================================================= */}
-
-          <nav
-            className="
-              flex
-              items-center
-              gap-4
-              xl:gap-7
-              2xl:gap-9
-            "
-          >
-            {NAV_LINKS.map(({ label, href }) => (
-              <Link
-                key={label}
-                to={href}
-                className="
-                  group
-                  relative
-                  whitespace-nowrap
-                  text-[13px]
-                  font-medium
-                  text-slate-600
-                  transition-all
-                  duration-300
-                  xl:text-sm
-                "
-                style={{
-                  "--hover-color": PRIMARY_BLUE,
-                }}
-              >
-                <span className="transition-colors duration-300 group-hover:text-[#0284c7]">
-                  {label}
-                </span>
-
-                <span
-                  className="
-                    absolute
-                    -bottom-1
-                    left-1/2
-                    h-[2px]
-                    w-0
-                    -translate-x-1/2
-                    rounded-full
-                    bg-[#0284c7]
-                    transition-all
-                    duration-300
-                    group-hover:w-full
-                  "
-                />
-              </Link>
-            ))}
-          </nav>
-
-          {/* =================================================
-              DESKTOP CONTACT BUTTON
-          ================================================= */}
-
-          <Link
-            to="/contact"
-            className="
-              group
-              inline-flex
-              shrink-0
-              items-center
-              justify-center
-              rounded-full
-              bg-[#0284c7]
-              px-5
-              py-2.5
-              text-[13px]
-              font-semibold
-              text-white
-              shadow-[0_6px_18px_rgba(2,132,199,0.30)]
-              transition-all
-              duration-300
-              hover:-translate-y-0.5
-              hover:bg-[#0369a1]
-              hover:shadow-[0_8px_24px_rgba(2,132,199,0.40)]
-              active:scale-95
-              xl:px-7
-              xl:py-3
-            "
-          >
-            Contact
-          </Link>
-
-        </div>
-
-        {/* =====================================================
-            MOBILE NAVIGATION
-        ====================================================== */}
-
-        <div
-          className="
-            flex
-            w-full
-            flex-col
-            rounded-3xl
-            border
-            border-slate-200
-            bg-white/95
-            p-3
-            shadow-[0_15px_45px_rgba(0,0,0,0.20)]
-            backdrop-blur-xl
-            lg:hidden
-          "
-        >
-
-          {/* =================================================
-              MOBILE HEADER
-          ================================================= */}
-
-          <div
-            className="
-              flex
-              items-center
-              justify-between
-              px-2
-            "
-          >
-
-            {/* =================================================
-                MOBILE LOGO
-            ================================================= */}
-
-            <Link
-              to="/"
-              onClick={() => setMobileMenuOpen(false)}
-              className="
-                flex
-                items-center
-                gap-2.5
-              "
-            >
+        <div className="mx-auto w-full max-w-7xl pointer-events-auto">
+          {/* =====================================================
+              DESKTOP NAVIGATION
+          ====================================================== */}
+          <div className="hidden w-full items-center justify-between rounded-full border border-slate-200/80 bg-white/95 px-4 py-2.5 shadow-[0_12px_40px_rgba(0,0,0,0.08)] backdrop-blur-xl lg:flex xl:px-6 2xl:px-8">
+            {/* LOGO */}
+            <Link to="/" className="flex shrink-0 items-center gap-2.5">
               <img
                 src={logo}
                 alt="Pristine Energy Logo"
-                className="
-                  h-10
-                  w-10
-                  shrink-0
-                  rounded-full
-                  object-cover
-                "
+                className="h-10 w-10 shrink-0 rounded-full object-cover"
               />
-
               <div className="flex flex-col leading-none">
-
-                <span
-                  className="
-                    whitespace-nowrap
-                    text-xs
-                    font-black
-                    tracking-tight
-                    text-slate-900
-                  "
-                >
+                <span className="whitespace-nowrap text-xs font-black tracking-tight text-slate-900 xl:text-sm">
                   PRISTINE{" "}
-                  <span className="font-extrabold text-[#0284c7]">
+                  <span className="font-extrabold" style={{ color: PRIMARY_BLUE }}>
                     ENERGY
                   </span>
                 </span>
-
-                <span
-                  className="
-                    mt-0.5
-                    text-[6px]
-                    font-bold
-                    tracking-[1.8px]
-                    text-slate-400
-                  "
-                >
+                <span className="mt-0.5 text-[7px] font-bold tracking-[2px] text-slate-400 xl:text-[8px]">
                   SOLAR SOLUTIONS
                 </span>
-
               </div>
             </Link>
 
-            {/* =================================================
-                MOBILE MENU BUTTON
-            ================================================= */}
+            {/* DESKTOP LINKS */}
+            <nav className="flex items-center gap-4 xl:gap-7 2xl:gap-9">
+              {NAV_LINKS.map(({ label, href }) => {
+                const isActive = location.pathname === href;
+                return (
+                  <Link
+                    key={label}
+                    to={href}
+                    className={`group relative whitespace-nowrap text-[13px] font-medium transition-all duration-300 xl:text-sm ${
+                      isActive ? "text-[#0284c7]" : "text-slate-600 hover:text-[#0284c7]"
+                    }`}
+                  >
+                    <span>{label}</span>
+                    <span
+                      className={`absolute -bottom-1 left-1/2 h-[2px] -translate-x-1/2 rounded-full bg-[#0284c7] transition-all duration-300 ${
+                        isActive ? "w-full" : "w-0 group-hover:w-full"
+                      }`}
+                    />
+                  </Link>
+                );
+              })}
+            </nav>
 
-            <button
-              type="button"
-              onClick={() =>
-                setMobileMenuOpen((prev) => !prev)
-              }
-              aria-label="Toggle navigation menu"
-              aria-expanded={mobileMenuOpen}
-              className="
-                rounded-full
-                p-2
-                text-slate-700
-                transition
-                hover:bg-sky-50
-                hover:text-[#0284c7]
-                active:scale-95
-              "
+            {/* DESKTOP CONTACT BUTTON */}
+            <Link
+              to="/contact"
+              className="group inline-flex shrink-0 items-center justify-center rounded-full bg-[#0284c7] px-6 py-2.5 text-[13px] font-semibold text-white shadow-[0_6px_18px_rgba(2,132,199,0.25)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#0369a1] hover:shadow-[0_8px_24px_rgba(2,132,199,0.35)] active:scale-95"
             >
-              {mobileMenuOpen ? (
-                <X size={21} />
-              ) : (
-                <Menu size={21} />
-              )}
-            </button>
-
+              Contact
+            </Link>
           </div>
 
-          {/* =================================================
-              MOBILE MENU
-          ================================================= */}
-
-          <AnimatePresence>
-            {mobileMenuOpen && (
-              <motion.div
-                initial={{
-                  opacity: 0,
-                  height: 0,
-                }}
-                animate={{
-                  opacity: 1,
-                  height: "auto",
-                }}
-                exit={{
-                  opacity: 0,
-                  height: 0,
-                }}
-                transition={{
-                  duration: 0.25,
-                  ease: "easeOut",
-                }}
-                className="overflow-hidden"
+          {/* =====================================================
+              MOBILE NAVIGATION BAR & DROPDOWN
+          ====================================================== */}
+          <div className="relative w-full rounded-2xl border border-slate-200/80 bg-white/95 p-2.5 shadow-[0_12px_40px_rgba(0,0,0,0.12)] backdrop-blur-xl lg:hidden">
+            {/* MOBILE TOP BAR */}
+            <div className="flex items-center justify-between px-1.5">
+              <Link
+                to="/"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center gap-2.5"
               >
+                <img
+                  src={logo}
+                  alt="Pristine Energy Logo"
+                  className="h-9 w-9 shrink-0 rounded-full object-cover"
+                />
+                <div className="flex flex-col leading-none">
+                  <span className="whitespace-nowrap text-xs font-black tracking-tight text-slate-900">
+                    PRISTINE{" "}
+                    <span className="font-extrabold text-[#0284c7]">ENERGY</span>
+                  </span>
+                  <span className="mt-0.5 text-[6.5px] font-bold tracking-[1.6px] text-slate-400">
+                    SOLAR SOLUTIONS
+                  </span>
+                </div>
+              </Link>
 
-                <ul
-                  className="
-                    mt-2
-                    flex
-                    flex-col
-                    gap-1
-                    border-t
-                    border-slate-100
-                    pt-3
-                    text-center
-                  "
-                >
-
-                  {/* =================================================
-                      MOBILE LINKS
-                  ================================================= */}
-
-                  {NAV_LINKS.map(({ label, href }) => (
-                    <li key={label}>
-                      <Link
-                        to={href}
-                        onClick={() =>
-                          setMobileMenuOpen(false)
-                        }
-                        className="
-                          block
-                          rounded-xl
-                          py-2.5
-                          text-xs
-                          font-semibold
-                          text-slate-700
-                          transition
-                          hover:bg-sky-50
-                          hover:text-[#0284c7]
-                        "
-                      >
-                        {label}
-                      </Link>
-                    </li>
-                  ))}
-
-                  {/* =================================================
-                      MOBILE CONTACT BUTTON
-                  ================================================= */}
-
-                  <li className="pb-1 pt-2">
-
-                    <Link
-                      to="/contact"
-                      onClick={() =>
-                        setMobileMenuOpen(false)
-                      }
-                      className="
-                        block
-                        rounded-full
-                        bg-[#0284c7]
-                        py-3
-                        text-xs
-                        font-bold
-                        text-white
-                        shadow-md
-                        shadow-sky-500/25
-                        transition-all
-                        duration-300
-                        hover:bg-[#0369a1]
-                        hover:shadow-lg
-                        hover:shadow-sky-500/30
-                        active:scale-[0.98]
-                      "
+              {/* TOGGLE HAMBURGER BUTTON */}
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen((prev) => !prev)}
+                aria-label="Toggle navigation menu"
+                aria-expanded={mobileMenuOpen}
+                className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-100/80 text-slate-700 transition hover:bg-sky-50 hover:text-[#0284c7] active:scale-90"
+              >
+                <AnimatePresence mode="wait" initial={false}>
+                  {mobileMenuOpen ? (
+                    <motion.span
+                      key="close"
+                      initial={{ rotate: -90, opacity: 0 }}
+                      animate={{ rotate: 0, opacity: 1 }}
+                      exit={{ rotate: 90, opacity: 0 }}
+                      transition={{ duration: 0.15 }}
                     >
-                      Contact
-                    </Link>
+                      <X size={20} />
+                    </motion.span>
+                  ) : (
+                    <motion.span
+                      key="menu"
+                      initial={{ rotate: 90, opacity: 0 }}
+                      animate={{ rotate: 0, opacity: 1 }}
+                      exit={{ rotate: -90, opacity: 0 }}
+                      transition={{ duration: 0.15 }}
+                    >
+                      <Menu size={20} />
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </button>
+            </div>
 
-                  </li>
+            {/* EXPANDABLE DRAWER */}
+            <AnimatePresence>
+              {mobileMenuOpen && (
+                <motion.div
+                  key="mobile-drawer"
+                  variants={menuVariants}
+                  initial="closed"
+                  animate="open"
+                  exit="closed"
+                  className="overflow-hidden"
+                >
+                  <ul className="mt-2 flex flex-col gap-1 border-t border-slate-100 pt-3 text-left">
+                    {NAV_LINKS.map(({ label, href }) => {
+                      const isActive = location.pathname === href;
+                      return (
+                        <motion.li key={label} variants={itemVariants}>
+                          <Link
+                            to={href}
+                            onClick={() => setMobileMenuOpen(false)}
+                            className={`block rounded-xl px-4 py-2.5 text-sm font-semibold transition ${
+                              isActive
+                                ? "bg-sky-50 text-[#0284c7]"
+                                : "text-slate-700 hover:bg-slate-50 hover:text-[#0284c7]"
+                            }`}
+                          >
+                            {label}
+                          </Link>
+                        </motion.li>
+                      );
+                    })}
 
-                </ul>
+                    {/* DIRECT CALL HELPLINE */}
+                    <motion.li variants={itemVariants} className="pt-2">
+                      <a
+                        href="tel:7012694985"
+                        className="flex items-center justify-center gap-2 rounded-xl border border-sky-100 bg-sky-50/50 py-2.5 text-xs font-bold text-sky-700 transition hover:bg-sky-100/60"
+                      >
+                        <PhoneCall size={14} />
+                        TPS Helpline: 7012694985
+                      </a>
+                    </motion.li>
 
-              </motion.div>
-            )}
-          </AnimatePresence>
-
+                    {/* CONTACT CTA BUTTON */}
+                    <motion.li variants={itemVariants} className="pb-1 pt-1">
+                      <Link
+                        to="/contact"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="block w-full rounded-xl bg-[#0284c7] py-3 text-center text-xs font-bold text-white shadow-md shadow-sky-500/25 transition hover:bg-[#0369a1] active:scale-[0.98]"
+                      >
+                        Get Free Consultation
+                      </Link>
+                    </motion.li>
+                  </ul>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
+      </motion.header>
 
-      </div>
-    </motion.header>
+      {/* DIM BACKDROP FOR OUTSIDE-CLICK CLOSING */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => setMobileMenuOpen(false)}
+            className="fixed inset-0 z-[9998] bg-black/25 backdrop-blur-[2px] lg:hidden"
+          />
+        )}
+      </AnimatePresence>
+    </>
   );
 }
-

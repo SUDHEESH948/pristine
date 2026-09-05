@@ -9,7 +9,7 @@ import {
   ArrowUpRight,
   CheckCircle2,
 } from "lucide-react";
-import image2 from "../assets/image2.png";
+import image2 from "../assets/Screenshot 2026-09-05 155514.png";
 import project1 from "../assets/project1.png";
 const SERVICES = [
   {
