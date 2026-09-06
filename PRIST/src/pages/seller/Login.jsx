@@ -426,7 +426,7 @@ export default function Login() {
               </motion.h1>
 
               <p className="mt-1 text-xs text-white/70">
-                Sign in to your Pristine Energy account
+                Sign in to your Pristine Horizon account
               </p>
             </motion.div>
 

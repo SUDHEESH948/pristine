@@ -1,43 +1,42 @@
-
 import { motion } from "framer-motion";
-import { ShieldCheck, Cpu, Wrench, Headphones } from "lucide-react";
+import { ShieldCheck, Cpu, Wrench, Headphones, Award } from "lucide-react";
 import { useScrollAnimation } from "../hooks/useScrollAnimation";
+
+const TATA_NAVY = "#004B87";
 
 const REASONS = [
   {
     number: "01",
     icon: ShieldCheck,
-    title: "Kerala Climate Engineering",
-    text: "Custom solar installations engineered to withstand heavy monsoons, high humidity, and local roofing architectures.",
+    title: "Genuine Tata Power Hardware",
+    text: "100% authentic Tata Monocrystalline PERC & TopCon solar modules equipped with direct OEM 25-to-30 year performance warranties.",
   },
   {
     number: "02",
     icon: Cpu,
-    title: "Tier-1 Quality Components",
-    text: "High-efficiency panels, smart micro/string inverters, and robust mounting structures with extended manufacturer warranties.",
+    title: "Kerala Coastal Climate Design",
+    text: "Heavy-duty anodized aluminium structures engineered to resist Kerala's intense monsoon rains, coastal saline air, and high winds.",
   },
   {
     number: "03",
     icon: Wrench,
-    title: "Seamless End-to-End Execution",
-    text: "From initial site feasibility surveys and KSEB net-metering paperwork to certified grid synchronization.",
+    title: "End-to-End KSEB & Subsidies",
+    text: "Complete management of PM Surya Ghar Muft Bijli Yojana paperwork, KSEB Soura net-metering, and grid synchronization.",
   },
   {
     number: "04",
     icon: Headphones,
-    title: "Dedicated Lifetime Support",
-    text: "Continuous generation monitoring, scheduled maintenance checks, and responsive on-call local support.",
+    title: "Dedicated Local Dealership Care",
+    text: "Certified engineers providing fast onsite support across Kozhikode and Northern Kerala with real-time digital generation tracking.",
   },
 ];
 
 /* =========================================================
-   HEADER ANIMATION
+   ANIMATION VARIANTS
 ========================================================= */
 
 const containerVariants = {
-  hidden: {
-    opacity: 0,
-  },
+  hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
@@ -47,26 +46,19 @@ const containerVariants = {
   },
 };
 
-/* =========================================================
-   CARD ANIMATION
-   LEFT → RIGHT
-========================================================= */
-
 const cardVariants = {
   hidden: {
     opacity: 0,
-    x: -100,
-    scale: 0.94,
+    x: -80,
+    scale: 0.95,
   },
-
   visible: (index) => ({
     opacity: 1,
     x: 0,
     scale: 1,
-
     transition: {
-      duration: 0.7,
-      delay: 0.35 + index * 0.55,
+      duration: 0.6,
+      delay: 0.25 + index * 0.2,
       ease: [0.22, 1, 0.36, 1],
     },
   }),
@@ -77,49 +69,21 @@ export default function WhyPristine() {
 
   return (
     <section
-      id="about"
+      id="why-us"
       ref={ref}
-      className="
-        relative
-        overflow-hidden
-        bg-white
-        py-20
-        font-['Manrope']
-        lg:py-28
-      "
+      className="relative overflow-hidden bg-white py-20 font-['Manrope'] lg:py-28"
     >
       {/* =====================================================
-          BACKGROUND GRID
+          BACKGROUND GRID & AMBIENT ACCENTS
       ===================================================== */}
-
       <div
         aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-          bg-[linear-gradient(rgba(0,128,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,128,255,0.03)_1px,transparent_1px)]
-          bg-[size:60px_60px]
-        "
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(0,75,135,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,75,135,0.03)_1px,transparent_1px)] bg-[size:60px_60px]"
       />
-
-      {/* =====================================================
-          BACKGROUND GLOW
-      ===================================================== */}
 
       <motion.div
         aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          -top-24
-          left-1/4
-          h-72
-          w-[36rem]
-          rounded-full
-          bg-[#0080ff]/5
-          blur-3xl
-        "
+        className="pointer-events-none absolute -top-24 left-1/4 h-72 w-[36rem] rounded-full bg-[#004B87]/5 blur-3xl"
         animate={{
           scale: [1, 1.15, 1],
           opacity: [0.4, 0.7, 0.4],
@@ -132,188 +96,76 @@ export default function WhyPristine() {
       />
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
-
         {/* ===================================================
             HEADER
         =================================================== */}
-
         <motion.div
-          className="max-w-2xl"
+          className="max-w-3xl"
           initial="hidden"
           animate={controls}
           variants={{
-            hidden: {
-              opacity: 0,
-            },
+            hidden: { opacity: 0 },
             visible: {
               opacity: 1,
-              transition: {
-                staggerChildren: 0.1,
-                delayChildren: 0.1,
-              },
+              transition: { staggerChildren: 0.1, delayChildren: 0.1 },
             },
           }}
         >
           {/* BADGE */}
-
           <motion.div
-            className="
-              inline-flex
-              items-center
-              gap-2
-              rounded-full
-              border
-              border-[#0080ff]/20
-              bg-[#0080ff]/10
-              px-4
-              py-1.5
-              text-xs
-              font-bold
-              uppercase
-              tracking-wider
-              text-[#0080ff]
-            "
-            initial={{
-              opacity: 0,
-              scale: 0.8,
-            }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-            }}
-            transition={{
-              duration: 0.5,
-            }}
+            className="inline-flex items-center gap-2 rounded-full border border-sky-200 bg-sky-50 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#004B87]"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.4 }}
           >
-            <motion.span
-              className="
-                h-1.5
-                w-1.5
-                rounded-full
-                bg-[#0080ff]
-              "
-              animate={{
-                scale: [1, 1.3, 1],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-              }}
-            />
-
-            Why Pristine
+            <Award size={14} className="text-[#004B87]" />
+            Authorised Tata Power Solar Dealer
           </motion.div>
 
           {/* HEADING */}
-
           <motion.h2
-            className="
-              mt-4
-              font-['Cormorant_Garamond']
-              text-4xl
-              font-bold
-              tracking-tight
-              text-slate-900
-              sm:text-5xl
-            "
-            initial={{
-              opacity: 0,
-              y: 20,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              duration: 0.6,
-              delay: 0.1,
-            }}
+            className="mt-4 font-['Plus_Jakarta_Sans',sans-serif] text-3xl font-black tracking-tight text-slate-900 sm:text-4xl lg:text-5xl"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
           >
-            Built for{" "}
-            <motion.span className="text-[#2D6CA1]">
-              Better Energy
-            </motion.span>
+            Why Choose Pristine Horizon for{" "}
+            <span className="text-[#004B87]">Tata Solar?</span>
           </motion.h2>
 
           {/* DESCRIPTION */}
-
           <motion.p
-            className="
-              mt-4
-              text-base
-              leading-relaxed
-              text-slate-600
-            "
-            initial={{
-              opacity: 0,
-              y: 20,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              duration: 0.6,
-              delay: 0.2,
-            }}
+            className="mt-4 text-base leading-relaxed text-slate-600"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
           >
-            We blend regional installation expertise, Tier-1 solar
-            components, and continuous maintenance to make your shift
-            to clean power effortless.
+            We merge India&apos;s most recognized green energy brand with swift local
+            execution. Receive genuine Tier-1 factory warranties, expedited KSEB net-metering,
+            and maximum PM Surya Ghar solar subsidies.
           </motion.p>
         </motion.div>
 
         {/* ===================================================
-            CARDS ANIMATION AREA
+            CARDS AREA
         =================================================== */}
-
-        <div className="relative mt-12 lg:mt-14">
-
-          {/* =================================================
-              SINGLE TRACK
-          ================================================= */}
-
+        <div className="relative mt-12 lg:mt-16">
+          {/* PROGRESS CONNECTOR BAR (DESKTOP) */}
           <div
             aria-hidden="true"
-            className="
-              pointer-events-none
-              absolute
-              left-0
-              right-0
-              top-6
-              hidden
-              h-[2px]
-              overflow-hidden
-              rounded-full
-              bg-slate-200
-              lg:block
-            "
+            className="pointer-events-none absolute left-0 right-0 top-6 hidden h-[2px] overflow-hidden rounded-full bg-slate-100 lg:block"
           >
-            {/* WIPE PROGRESS */}
-
             <motion.div
-              className="
-                absolute
-                left-0
-                top-0
-                h-full
-                w-full
-                origin-left
-                bg-[#0080ff]
-              "
-              initial={{
-                scaleX: 0,
-              }}
+              className="absolute left-0 top-0 h-full w-full origin-left bg-[#004B87]"
+              initial={{ scaleX: 0 }}
               animate={controls}
               variants={{
-                hidden: {
-                  scaleX: 0,
-                },
+                hidden: { scaleX: 0 },
                 visible: {
                   scaleX: 1,
                   transition: {
-                    duration: 3.2,
-                    delay: 0.8,
+                    duration: 2.5,
+                    delay: 0.5,
                     ease: "linear",
                   },
                 },
@@ -321,18 +173,9 @@ export default function WhyPristine() {
             />
           </div>
 
-          {/* =================================================
-              CARDS GRID
-          ================================================= */}
-
+          {/* CARDS GRID */}
           <motion.div
-            className="
-              grid
-              gap-6
-              sm:grid-cols-2
-              lg:grid-cols-4
-              lg:gap-5
-            "
+            className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5"
             variants={containerVariants}
             initial="hidden"
             animate={controls}
@@ -345,265 +188,59 @@ export default function WhyPristine() {
                   key={item.number}
                   custom={index}
                   variants={cardVariants}
-                  style={{
-                    "--order": index,
-                  }}
-                  className="
-                    reason-card
-                    group
-                    relative
-                    flex
-                    min-h-[270px]
-                    flex-col
-                    justify-between
-                    overflow-hidden
-                    rounded-2xl
-                    border
-                    border-slate-200/80
-                    bg-white
-                    p-7
-                    shadow-sm
-
-                    sm:p-8
-                  "
+                  className="group relative flex min-h-[300px] flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-7 shadow-sm transition-all duration-300 sm:p-8"
                   whileHover={{
-                    y: -10,
-                    borderColor: "rgba(0, 128, 255, 0.35)",
-                    boxShadow:
-                      "0 25px 50px rgba(0, 128, 255, 0.12)",
+                    y: -8,
+                    borderColor: "rgba(0, 75, 135, 0.4)",
+                    boxShadow: "0 20px 40px rgba(0, 75, 135, 0.12)",
                   }}
-                  whileTap={{
-                    scale: 0.98,
-                  }}
+                  whileTap={{ scale: 0.98 }}
                 >
-
-                  {/* =================================================
-                      SYNCHRONIZED CARD HIGHLIGHT
-                  ================================================= */}
-
+                  {/* TOP ACCENT LINE */}
                   <motion.div
                     aria-hidden="true"
-                    className="
-                      pointer-events-none
-                      absolute
-                      inset-0
-                      rounded-2xl
-                      border-2
-                      border-[#0080ff]/0
-                    "
-                    initial={{
-                      opacity: 0,
-                    }}
+                    className="absolute left-0 top-0 h-[3px] bg-[#004B87]"
+                    initial={{ width: "0%" }}
                     animate={controls}
                     variants={{
-                      hidden: {
-                        opacity: 0,
-                      },
-
-                      visible: {
-                        opacity: [0, 0, 1, 0],
-
-                        boxShadow: [
-                          "0 0 0 rgba(0,128,255,0)",
-                          "0 0 0 rgba(0,128,255,0)",
-                          "0 0 35px rgba(0,128,255,0.35)",
-                          "0 0 0 rgba(0,128,255,0)",
-                        ],
-
-                        transition: {
-                          duration: 0.8,
-                          delay: 1.35 + index * 0.8,
-                          ease: "easeInOut",
-                        },
-                      },
-                    }}
-                  />
-
-                  {/* =================================================
-                      CARD TOP WIPE
-                  ================================================= */}
-
-                  <motion.div
-                    aria-hidden="true"
-                    className="
-                      absolute
-                      left-0
-                      top-0
-                      h-[2px]
-                      bg-[#0080ff]
-                    "
-                    initial={{
-                      width: "0%",
-                    }}
-                    animate={controls}
-                    variants={{
-                      hidden: {
-                        width: "0%",
-                      },
-
+                      hidden: { width: "0%" },
                       visible: {
                         width: "100%",
-
                         transition: {
-                          duration: 0.7,
-                          delay: 0.9 + index * 0.8,
+                          duration: 0.6,
+                          delay: 0.6 + index * 0.4,
                           ease: "easeInOut",
                         },
                       },
                     }}
                   />
 
-                  {/* =================================================
-                      LEFT HOVER ACCENT
-                  ================================================= */}
+                  {/* LEFT HOVER BORDER */}
+                  <div className="absolute left-0 top-0 h-full w-1 origin-top bg-gradient-to-b from-[#004B87] to-sky-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
-                  <motion.div
-                    aria-hidden="true"
-                    className="
-                      absolute
-                      left-0
-                      top-0
-                      h-full
-                      w-1
-                      origin-top
-                      bg-gradient-to-b
-                      from-[#0080ff]
-                      to-[#0066cc]
-                    "
-                    initial={{
-                      scaleY: 0,
-                    }}
-                    whileHover={{
-                      scaleY: 1,
-                    }}
-                    transition={{
-                      duration: 0.3,
-                    }}
-                  />
-
-                  {/* =================================================
-                      CARD CONTENT
-                  ================================================= */}
-
+                  {/* CARD CONTENT */}
                   <div className="relative z-10">
-
-                    {/* ICON + NUMBER */}
-
                     <div className="flex items-center justify-between">
-
-                      <motion.div
-                        className="
-                          flex
-                          h-12
-                          w-12
-                          items-center
-                          justify-center
-                          rounded-xl
-                          bg-[#0080ff]/10
-                          text-[#0080ff]
-                        "
-                        whileHover={{
-                          backgroundColor:
-                            "rgba(0,128,255,1)",
-                          color: "white",
-                          scale: 1.12,
-                          rotate: 5,
-                        }}
-                      >
+                      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-sky-50 text-[#004B87] transition-all duration-300 group-hover:bg-[#004B87] group-hover:text-white group-hover:shadow-md group-hover:shadow-[#004B87]/30">
                         <Icon size={22} />
-                      </motion.div>
+                      </div>
 
-                      <motion.span
-                        className="
-                          font-['Cormorant_Garamond']
-                          text-3xl
-                          font-bold
-                          text-slate-200
-                        "
-                        whileHover={{
-                          color:
-                            "rgba(0,128,255,0.4)",
-                          scale: 1.1,
-                        }}
-                      >
+                      <span className="text-3xl font-black text-slate-200 transition-colors duration-300 group-hover:text-[#004B87]/30">
                         {item.number}
-                      </motion.span>
-
+                      </span>
                     </div>
 
-                    {/* TITLE */}
-
-                    <motion.h3
-                      className="
-                        mt-5
-                        font-['Cormorant_Garamond']
-                        text-2xl
-                        font-bold
-                        text-slate-900
-                      "
-                      whileHover={{
-                        color: "#0080ff",
-                      }}
-                    >
+                    <h3 className="mt-6 text-lg font-bold text-slate-900 transition-colors duration-300 group-hover:text-[#004B87]">
                       {item.title}
-                    </motion.h3>
+                    </h3>
 
-                    {/* DESCRIPTION */}
-
-                    <motion.p
-                      className="
-                        mt-2.5
-                        text-sm
-                        leading-relaxed
-                        text-slate-600
-                      "
-                      initial={{
-                        opacity: 0,
-                      }}
-                      animate={controls}
-                      variants={{
-                        hidden: {
-                          opacity: 0,
-                        },
-
-                        visible: {
-                          opacity: 1,
-                          transition: {
-                            delay: 0.75 + index * 0.55,
-                            duration: 0.5,
-                          },
-                        },
-                      }}
-                    >
+                    <p className="mt-2.5 text-xs leading-relaxed text-slate-600 sm:text-sm">
                       {item.text}
-                    </motion.p>
-
+                    </p>
                   </div>
 
-                  {/* =================================================
-                      BOTTOM BAR
-                  ================================================= */}
-
-                  <motion.div
-                    aria-hidden="true"
-                    className="
-                      mt-8
-                      h-1
-                      rounded-full
-                      bg-slate-200
-                    "
-                    initial={{
-                      width: 32,
-                    }}
-                    whileHover={{
-                      width: 64,
-                      backgroundColor: "#0080ff",
-                    }}
-                    transition={{
-                      duration: 0.3,
-                    }}
-                  />
-
+                  {/* BOTTOM HOVER INDICATOR */}
+                  <div className="mt-6 h-1 w-8 rounded-full bg-slate-200 transition-all duration-300 group-hover:w-16 group-hover:bg-[#004B87]" />
                 </motion.div>
               );
             })}
@@ -611,61 +248,36 @@ export default function WhyPristine() {
         </div>
 
         {/* ===================================================
-            MOBILE / TABLET TRACK
+            MOBILE PROGRESS TRACK
         =================================================== */}
-
         <div
           aria-hidden="true"
-          className="
-            mt-8
-            flex
-            items-center
-            justify-center
-            gap-2
-            lg:hidden
-          "
+          className="mt-8 flex items-center justify-center gap-2 lg:hidden"
         >
           {REASONS.map((item, index) => (
-            <motion.div
+            <div
               key={item.number}
-              className="
-                h-1
-                flex-1
-                overflow-hidden
-                rounded-full
-                bg-slate-200
-              "
+              className="h-1 flex-1 overflow-hidden rounded-full bg-slate-200"
             >
               <motion.div
-                className="
-                  h-full
-                  origin-left
-                  bg-[#0080ff]
-                "
-                initial={{
-                  scaleX: 0,
-                }}
+                className="h-full origin-left bg-[#004B87]"
+                initial={{ scaleX: 0 }}
                 animate={controls}
                 variants={{
-                  hidden: {
-                    scaleX: 0,
-                  },
-
+                  hidden: { scaleX: 0 },
                   visible: {
                     scaleX: 1,
-
                     transition: {
                       duration: 0.5,
-                      delay: 0.8 + index * 0.55,
+                      delay: 0.5 + index * 0.3,
                       ease: "easeInOut",
                     },
                   },
                 }}
               />
-            </motion.div>
+            </div>
           ))}
         </div>
-
       </div>
     </section>
   );

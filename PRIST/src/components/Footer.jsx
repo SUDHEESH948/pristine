@@ -74,7 +74,7 @@ export default function Footer() {
               >
                 <img
                   src={logo}
-                  alt="Pristine Energy Logo"
+                  alt="Pristine Horizon Logo"
                   className="h-full w-full object-cover"
                 />
               </div>
@@ -97,17 +97,7 @@ export default function Footer() {
                   </span>
                 </span>
 
-                <span
-                  className="
-                    mt-1.5
-                    text-[9px]
-                    font-extrabold
-                    tracking-[2px]
-                    text-sky-400
-                  "
-                >
-                  PRISTINE ENERGY
-                </span>
+              
 
                 <span
                   className="
@@ -139,7 +129,7 @@ export default function Footer() {
 
               <a
                 href="#"
-                aria-label="Facebook - Pristine Energy"
+                aria-label="Facebook - Pristine Horizon"
                 className="
                   flex
                   h-9
@@ -168,7 +158,7 @@ export default function Footer() {
 
               <a
                 href="#"
-                aria-label="Instagram - Pristine Energy"
+                aria-label="Instagram - Pristine Horizon"
                 className="
                   flex
                   h-9
@@ -197,7 +187,7 @@ export default function Footer() {
 
               <a
                 href="#"
-                aria-label="LinkedIn - Pristine Energy"
+                aria-label="LinkedIn - Pristine Horizon"
                 className="
                   flex
                   h-9
@@ -232,7 +222,7 @@ export default function Footer() {
                 href="https://wa.me/917012694985"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="WhatsApp - Pristine Energy"
+                aria-label="WhatsApp - Pristine Horizon"
                 className="
                   flex
                   h-9
@@ -591,7 +581,7 @@ export default function Footer() {
           "
         >
           <p>
-            © {currentYear} Pristine Energy. All rights reserved.
+            © {currentYear} Pristine Horizon. All rights reserved.
           </p>
 
           <div className="flex items-center gap-4">

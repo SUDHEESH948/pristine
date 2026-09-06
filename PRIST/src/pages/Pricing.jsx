@@ -11,10 +11,7 @@ import {
   Zap,
   BatteryCharging,
   Sun,
-  ShieldCheck,
-  Wrench,
   ArrowRight,
-  CheckCircle2,
   Filter,
   Layers,
   Cpu,
@@ -68,36 +65,33 @@ const normalizeBackendPricing = (products = []) => {
 
     if (!pricing[category]) pricing[category] = [];
 
-    product.structures.forEach((structure, index) => {
-      const max = Number(
-        structure.maxSellingPrice ?? structure.maxPrice ?? structure.msp ?? 0
-      );
-      const price = Number(
-        structure.offerPrice ?? structure.price ?? structure.offer ?? 0
-      );
-
-      pricing[category].push({
-        id: product._id || `${product.productName}-${index}`,
-        product: product.productName || "Solar System",
-        systemType: category,
-        modules: Number(product.moduleCount || 0),
-        moduleWattage: Number(product.moduleWattage || 0),
-        dc: Number(product.dcCapacity || 0),
-        inverter: Number(product.inverterCapacity || 0),
-        inverter2: Number(product.inverterCapacity2 || 0),
-        battery: product.batteryCapacity == null
-          ? null
-          : Number(product.batteryCapacity),
-        phase: Number(product.phase || 0),
-        structure: structure.type || structure.structure || "Without Structure",
-        max,
-        offer: Math.max(0, max - price),
-        price,
+    pricing[category].push({
+      id: product._id || product.productName,
+      product: product.productName || "Solar System",
+      systemType: category,
+      modules: Number(product.moduleCount || 0),
+      moduleWattage: Number(product.moduleWattage || 0),
+      dc: Number(product.dcCapacity || 0),
+      inverter: Number(product.inverterCapacity || 0),
+      inverter2: Number(product.inverterCapacity2 || 0),
+      battery: product.batteryCapacity == null
+        ? null
+        : Number(product.batteryCapacity),
+      phase: Number(product.phase || 0),
+      gstRate: Number(product.gstRate || 0),
+      currency: product.currency || "INR",
+      status: product.status !== false,
+      structures: product.structures.map((structure, index) => ({
+        id: `${product._id || product.productName}-${index}`,
+        type: structure.type || structure.structure || "Without Structure",
+        max: Number(
+          structure.maxSellingPrice ?? structure.maxPrice ?? structure.msp ?? 0
+        ),
+        price: Number(
+          structure.offerPrice ?? structure.price ?? structure.offer ?? 0
+        ),
         subsidy: Number(structure.subsidy || 0),
-        gstRate: Number(product.gstRate || 0),
-        currency: product.currency || "INR",
-        status: product.status !== false,
-      });
+      })),
     });
   });
 
@@ -120,7 +114,6 @@ export default function Pricing() {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [monthlyBill, setMonthlyBill] = useState(5000);
 
   // Compute tabs dynamically based on items populated by the backend
   const categoryTabs = useMemo(() => {
@@ -191,47 +184,11 @@ export default function Pricing() {
 
   const currentData = pricingData[category] || [];
 
-  // Solar sizing calculator
-  const solarEstimate = useMemo(() => {
-    const electricityRate = 7.5;
-    const monthlyUnits = monthlyBill / electricityRate;
-    const generationPerKw = 110;
-    const calculatedSize = monthlyUnits / generationPerKw;
-
-    const matchingSystem = Object.values(pricingData)
-      .flat()
-      .filter((item) => Number.isFinite(Number(item.dc)))
-      .sort(
-        (left, right) =>
-          Math.abs(Number(left.dc) - calculatedSize) -
-          Math.abs(Number(right.dc) - calculatedSize)
-      )[0];
-
-    const systemSize = matchingSystem
-      ? Number(matchingSystem.dc)
-      : calculatedSize;
-    const estimatedCost = matchingSystem?.price || 0;
-    const subsidy = matchingSystem?.subsidy || 0;
-
-    const monthlySavings = Math.min(
-      Math.round(monthlyUnits * electricityRate),
-      monthlyBill
-    );
-
-    const netInvestment = Math.max(estimatedCost - subsidy, 0);
-
-    return {
-      systemSize: systemSize.toFixed(2),
-      subsidy,
-      monthlySavings,
-      estimatedCost,
-      netInvestment,
-    };
-  }, [monthlyBill, pricingData]);
-
   // Filters
   const structures = useMemo(() => {
-    const values = currentData.map((item) => item.structure).filter(Boolean);
+    const values = currentData.flatMap((item) =>
+      item.structures.map((structureOption) => structureOption.type)
+    );
     return ["All", ...Array.from(new Set(values))];
   }, [currentData]);
 
@@ -251,10 +208,13 @@ export default function Pricing() {
         String(item.dc).toLowerCase().includes(query) ||
         String(item.inverter).toLowerCase().includes(query) ||
         item.product?.toLowerCase().includes(query) ||
-        item.structure?.toLowerCase().includes(query);
+        item.structures.some((structureOption) =>
+          structureOption.type.toLowerCase().includes(query)
+        );
 
       const matchesStructure =
-        structure === "All" || item.structure === structure;
+        structure === "All" ||
+        item.structures.some((structureOption) => structureOption.type === structure);
 
       const matchesPhase =
         phase === "All" || String(item.phase) === phase;
@@ -272,6 +232,7 @@ export default function Pricing() {
 
   const activeCategoryMeta = getCategoryMetadata(category);
   const isHybridCategory = category.toLowerCase().includes("hybrid");
+  const selectedStructure = selectedItem?.selectedStructure;
 
   const scrollToCatalog = () => {
     const element = document.getElementById("catalog");
@@ -294,25 +255,6 @@ export default function Pricing() {
         .font-display { font-family: ${DISPLAY_FONT}; }
         .scrollbar-none::-webkit-scrollbar { display: none; }
         .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
-        input[type="range"]::-webkit-slider-thumb {
-          appearance: none;
-          width: 18px;
-          height: 18px;
-          border-radius: 9999px;
-          background: ${PRIMARY};
-          border: 3px solid white;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.25);
-          cursor: pointer;
-        }
-        input[type="range"]::-moz-range-thumb {
-          width: 18px;
-          height: 18px;
-          border-radius: 9999px;
-          background: ${PRIMARY};
-          border: 3px solid white;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.25);
-          cursor: pointer;
-        }
       `}</style>
 
       {/* HERO SECTION */}
@@ -373,149 +315,29 @@ export default function Pricing() {
               </div>
             </motion.div>
 
-            {/* SOLAR CALCULATOR */}
+            {/* CATALOG SUMMARY */}
             <motion.div
               initial={{ opacity: 0, x: 35, y: 15 }}
               animate={{ opacity: 1, x: 0, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
               className="relative mx-auto w-full max-w-[430px] lg:ml-auto"
             >
-              <div className="pointer-events-none absolute -inset-8 rounded-[3rem] bg-sky-500/15 blur-3xl" />
-              <div className="relative overflow-hidden rounded-[28px] border border-white/15 bg-white/[0.075] p-5 shadow-2xl shadow-black/40 backdrop-blur-2xl sm:p-6">
-                <div className="relative flex items-start justify-between gap-4">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="h-2 w-2 rounded-full bg-emerald-400" />
-                      <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-sky-300">
-                        Live estimate
-                      </span>
-                    </div>
-
-                    <h3 className="mt-2 text-xl font-bold tracking-tight text-white">
-                      Solar Calculator
-                    </h3>
-                    <p className="mt-1 text-xs text-slate-400">
-                      Estimate your rooftop solar requirement
-                    </p>
-                  </div>
-
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-sky-400/20 bg-sky-400/10 text-sky-300">
-                    <Sun size={21} />
-                  </div>
-                </div>
-
-                <div className="relative mt-7">
-                  <div className="flex items-end justify-between">
-                    <div>
-                      <p className="text-[11px] font-medium text-slate-400">
-                        Monthly electricity bill
-                      </p>
-                      <div className="mt-1 flex items-baseline gap-1">
-                        <span className="text-3xl font-black text-white">
-                          {money(monthlyBill)}
-                        </span>
-                        <span className="text-[10px] text-slate-500">/ month</span>
-                      </div>
-                    </div>
-                    <span className="rounded-full border border-sky-400/20 bg-sky-400/10 px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-sky-300">
-                      Adjust
-                    </span>
-                  </div>
-
-                  <div className="mt-5">
-                    <input
-                      type="range"
-                      min="1000"
-                      max="30000"
-                      step="500"
-                      value={monthlyBill}
-                      onChange={(e) => setMonthlyBill(Number(e.target.value))}
-                      className="h-1.5 w-full cursor-pointer appearance-none rounded-full bg-white/10"
-                    />
-                    <div className="mt-2 flex justify-between text-[9px] font-medium text-slate-500">
-                      <span>₹1,000</span>
-                      <span>₹30,000</span>
-                    </div>
-                  </div>
-                </div>
-
-                <motion.div
-                  key={solarEstimate.systemSize}
-                  initial={{ opacity: 0.5, scale: 0.98 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="mt-6 rounded-2xl border border-sky-400/15 bg-gradient-to-br from-sky-400/10 to-white/[0.03] p-4"
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-sky-300">
-                        Recommended system
-                      </p>
-                      <div className="mt-1 flex items-baseline gap-1.5">
-                        <span className="text-3xl font-black text-white">
-                          {solarEstimate.systemSize}
-                        </span>
-                        <span className="text-sm font-semibold text-slate-400">
-                          kWp
-                        </span>
-                      </div>
-                    </div>
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-400/10 text-sky-300">
-                      <Zap size={22} />
-                    </div>
-                  </div>
-                  <div className="mt-3 h-px bg-white/10" />
-                  <p className="mt-3 text-[10px] leading-relaxed text-slate-400">
-                    Based on estimated consumption and standard panel sizing.
-                  </p>
-                </motion.div>
-
-                <div className="mt-3 grid grid-cols-2 gap-3">
-                  <div className="rounded-2xl border border-white/10 bg-black/15 p-4">
-                    <p className="text-[9px] font-bold uppercase tracking-wider text-slate-500">
-                      Est. subsidy
-                    </p>
-                    <p className="mt-2 text-lg font-black text-white">
-                      {money(solarEstimate.subsidy)}
-                    </p>
-                    <div className="mt-1 flex items-center gap-1.5">
-                      <CheckCircle2 size={11} className="text-emerald-400" />
-                      <span className="text-[9px] text-emerald-300">Where eligible</span>
-                    </div>
-                  </div>
-
-                  <div className="rounded-2xl border border-white/10 bg-black/15 p-4">
-                    <p className="text-[9px] font-bold uppercase tracking-wider text-slate-500">
-                      Monthly savings
-                    </p>
-                    <p className="mt-2 text-lg font-black text-white">
-                      {money(solarEstimate.monthlySavings)}
-                    </p>
-                    <p className="mt-1 text-[9px] text-emerald-300">Estimated offset</p>
-                  </div>
-                </div>
-
-                <div className="mt-3 flex items-center justify-between rounded-2xl border border-emerald-400/10 bg-emerald-400/[0.045] p-4">
-                  <div>
-                    <p className="text-[9px] font-bold uppercase tracking-wider text-slate-500">
-                      Estimated net investment
-                    </p>
-                    <p className="mt-1 text-xl font-black text-white">
-                      {money(solarEstimate.netInvestment)}
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-[9px] text-slate-500">System cost</p>
-                    <p className="mt-1 text-xs font-bold text-slate-300">
-                      {money(solarEstimate.estimatedCost)}
-                    </p>
-                  </div>
-                </div>
-
+              <div className="relative overflow-hidden rounded-[28px] border border-white/15 bg-white/[0.075] p-6 shadow-2xl shadow-black/40 backdrop-blur-2xl sm:p-8">
+                <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-sky-300">
+                  Current catalog
+                </p>
+                <h3 className="mt-3 text-2xl font-bold tracking-tight text-white">
+                  Choose an actual solar system
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-slate-300">
+                  Browse live configurations from our catalog, compare structure
+                  options, and select the system that fits your project.
+                </p>
                 <button
                   onClick={scrollToCatalog}
-                  className="mt-5 flex w-full items-center justify-center gap-2 rounded-full bg-[#0284c7] py-3.5 text-[10px] font-bold uppercase tracking-[0.12em] text-white shadow-lg shadow-sky-900/40 transition hover:bg-[#0369a1]"
+                  className="mt-7 flex w-full items-center justify-center gap-2 rounded-full bg-[#0284c7] py-3.5 text-xs font-bold uppercase tracking-[0.1em] text-white shadow-lg shadow-sky-900/40 transition hover:bg-[#0369a1]"
                 >
-                  Explore matching systems
+                  Browse the catalog
                   <ArrowRight size={14} />
                 </button>
               </div>
@@ -701,7 +523,7 @@ export default function Pricing() {
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                   {filteredData.map((item, index) => (
                     <motion.article
-                      key={`${item.id}-${item.structure}-${index}`}
+                      key={`${item.id}-${index}`}
                       initial={{ opacity: 0, y: 30 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.06, duration: 0.35 }}
@@ -773,10 +595,10 @@ export default function Pricing() {
                             />
                             <div className="min-w-0">
                               <p className="text-[10px] font-semibold uppercase text-slate-400">
-                                Mounting Structure
+                                Structure Options
                               </p>
-                              <p className="truncate font-bold text-slate-800">
-                                {item.structure}
+                              <p className="font-bold text-slate-800">
+                                {item.structures.length} available
                               </p>
                             </div>
                           </div>
@@ -799,50 +621,61 @@ export default function Pricing() {
                           )}
                         </div>
 
-                        <div className="p-4">
-                          <div className="flex items-center justify-between text-xs text-slate-400">
-                            <span>List Price (MRP)</span>
-                            <span className="font-mono line-through">
-                              {money(item.max)}
-                            </span>
-                          </div>
+                        <div className="space-y-3 p-4">
+                          {item.structures.map((structureOption) => {
+                            const netPrice = Math.max(
+                              structureOption.price - structureOption.subsidy,
+                              0
+                            );
 
-                          <div className="mt-2 flex items-baseline justify-between gap-3">
-                            <div>
-                              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                                Offer Price
-                              </span>
-                              <p className="text-2xl font-black tracking-tight text-slate-900">
-                                {money(item.price)}
-                              </p>
-                            </div>
+                            return (
+                              <div
+                                key={structureOption.id}
+                                className="rounded-2xl border border-slate-200 bg-slate-50 p-3"
+                              >
+                                <div className="flex items-start justify-between gap-3">
+                                  <div>
+                                    <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                                      {structureOption.type}
+                                    </p>
+                                    <p className="mt-1 text-lg font-black text-slate-900">
+                                      {money(structureOption.price)}
+                                    </p>
+                                    <p className="text-[10px] text-slate-500">
+                                      Offer price
+                                    </p>
+                                  </div>
+                                  <button
+                                    onClick={() =>
+                                      setSelectedItem({
+                                        ...item,
+                                        selectedStructure: structureOption,
+                                      })
+                                    }
+                                    className="shrink-0 rounded-full bg-[#0284c7] px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm transition hover:bg-[#0369a1]"
+                                  >
+                                    View details
+                                  </button>
+                                </div>
 
-                            {item.offer > 0 && (
-                              <span className="rounded-md bg-emerald-50 px-2 py-1 text-[11px] font-bold text-emerald-700">
-                                Save {money(item.offer)}
-                              </span>
-                            )}
-                          </div>
-
-                          {item.subsidy > 0 && (
-                            <div className="mt-3 flex items-center justify-between rounded-xl bg-emerald-50/70 px-3 py-2 text-xs font-semibold text-emerald-800">
-                              <span>Central Govt Subsidy</span>
-                              <span className="font-bold text-emerald-700">
-                                {money(item.subsidy)}
-                              </span>
-                            </div>
-                          )}
+                                <div className="mt-3 grid grid-cols-2 gap-2 text-[11px]">
+                                  <div className="rounded-xl bg-white px-2.5 py-2">
+                                    <p className="text-slate-400">Subsidy</p>
+                                    <p className="mt-0.5 font-bold text-emerald-700">
+                                      {money(structureOption.subsidy)}
+                                    </p>
+                                  </div>
+                                  <div className="rounded-xl bg-white px-2.5 py-2">
+                                    <p className="text-slate-400">Net price</p>
+                                    <p className="mt-0.5 font-bold text-sky-800">
+                                      {money(netPrice)}
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })}
                         </div>
-                      </div>
-
-                      <div className="border-t border-slate-100 bg-slate-50/70 p-4">
-                        <button
-                          onClick={() => setSelectedItem(item)}
-                          className="flex w-full items-center justify-center gap-1.5 rounded-full bg-[#0284c7] py-3 text-xs font-bold uppercase tracking-wider text-white shadow-lg shadow-sky-200 transition hover:bg-[#0369a1] active:scale-95"
-                        >
-                          View Full Specifications
-                          <ArrowRight size={14} />
-                        </button>
                       </div>
                     </motion.article>
                   ))}
@@ -892,7 +725,7 @@ export default function Pricing() {
                     {selectedItem.product}
                   </h3>
                   <p className="mt-0.5 text-xs text-slate-300">
-                    {selectedItem.modules} Modules · {selectedItem.dc} kWp
+                    {selectedItem.modules} Modules · {selectedItem.dc} kWp · {selectedStructure?.type}
                   </p>
                 </div>
 
@@ -942,7 +775,7 @@ export default function Pricing() {
                 )}
                 <ModalItem
                   label="Mounting Structure"
-                  value={selectedItem.structure}
+                  value={selectedStructure?.type}
                   colSpan={selectedItem.battery !== null ? 1 : 2}
                 />
                 <ModalItem
@@ -956,18 +789,9 @@ export default function Pricing() {
                   <div className="flex items-center justify-between text-xs text-slate-500">
                     <span>Base MRP</span>
                     <span className="font-mono text-slate-400 line-through">
-                      {money(selectedItem.max)}
+                      {money(selectedStructure?.max)}
                     </span>
                   </div>
-
-                  {selectedItem.offer > 0 && (
-                    <div className="mt-2 flex items-center justify-between text-xs font-semibold text-emerald-600">
-                      <span>Special Offer</span>
-                      <span className="font-mono">
-                        -{money(selectedItem.offer)}
-                      </span>
-                    </div>
-                  )}
 
                   <div className="mt-4 border-t border-slate-200 pt-3">
                     <div className="flex items-end justify-between">
@@ -976,20 +800,20 @@ export default function Pricing() {
                           Offer Price
                         </span>
                         <p className="text-2xl font-black text-slate-900">
-                          {money(selectedItem.price)}
+                          {money(selectedStructure?.price)}
                         </p>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {selectedItem.subsidy > 0 && (
+                {selectedStructure?.subsidy > 0 && (
                   <div className="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50/50 p-4">
                     <span className="text-[10px] font-bold uppercase text-emerald-700">
-                      Estimated Central DBT Subsidy
+                      Central Govt Subsidy
                     </span>
                     <p className="mt-0.5 text-xl font-extrabold text-emerald-800">
-                      {money(selectedItem.subsidy)}
+                      {money(selectedStructure.subsidy)}
                     </p>
                     <p className="mt-1 text-[11px] text-emerald-700/80">
                       Subsidy eligibility and final amount are subject to applicable
@@ -998,16 +822,16 @@ export default function Pricing() {
                   </div>
                 )}
 
-                {selectedItem.subsidy > 0 && (
+                {selectedStructure?.subsidy > 0 && (
                   <div className="mt-4 rounded-2xl border border-sky-200 bg-sky-50 p-4">
                     <div className="flex items-center justify-between">
                       <span className="text-[10px] font-bold uppercase tracking-wider text-sky-700">
-                        Approx. Cost After Subsidy
+                        Net Price
                       </span>
                       <span className="text-lg font-black text-sky-900">
                         {money(
                           Math.max(
-                            selectedItem.price - selectedItem.subsidy,
+                            selectedStructure.price - selectedStructure.subsidy,
                             0
                           )
                         )}

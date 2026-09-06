@@ -5,7 +5,7 @@ export default function WhatsAppButton() {
   const phoneNumber = "7012694985";
 
   const message = encodeURIComponent(
-    "Hello Pristine Energy, I am interested in your solar solutions."
+    "Hello Pristine Horizon, I am interested in your solar solutions."
   );
 
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
@@ -15,7 +15,7 @@ export default function WhatsAppButton() {
       href={whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Contact Pristine Energy on WhatsApp"
+      aria-label="Contact Pristine Horizon on WhatsApp"
       className="
         fixed
         bottom-5

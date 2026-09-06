@@ -289,8 +289,8 @@ export default function Contact() {
       formData.inverterType === "String Inverter"
         ? RESIDENTIAL_STRING
         : formData.inverterType === "Micro Inverter"
-        ? RESIDENTIAL_MICRO
-        : [];
+          ? RESIDENTIAL_MICRO
+          : [];
 
     return (
       systems.find(
@@ -311,8 +311,8 @@ export default function Contact() {
     formData.inverterType === "String Inverter"
       ? RESIDENTIAL_STRING
       : formData.inverterType === "Micro Inverter"
-      ? RESIDENTIAL_MICRO
-      : [];
+        ? RESIDENTIAL_MICRO
+        : [];
 
   const capacities = [
     ...new Set(availableSystems.map((item) => item.capacity)),
@@ -388,18 +388,17 @@ Inverter Type: ${formData.inverterType}
 Capacity: ${formData.capacity}
 Structure: ${formData.structure}
 ${formData.phase ? `Phase: ${formData.phase}` : ""}
-${
-  selectedSystem
-    ? `Modules: ${selectedSystem.modules}
+${selectedSystem
+          ? `Modules: ${selectedSystem.modules}
 Offer Price: ${selectedSystem.price}
 Applicable Subsidy: ${selectedSystem.subsidy}`
-    : ""
-}
+          : ""
+        }
 `
         : "";
 
     const whatsappMessage = `
-Hello Pristine Energy,
+Hello Pristine Horizon,
 
 I would like to enquire about a solar solution.
 
@@ -553,7 +552,7 @@ Thank you.
               backdrop-blur
             "
           >
-            Contact Pristine Energy
+            Contact Pristine Horizon
           </span>
 
           <h1

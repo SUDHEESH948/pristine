@@ -75,7 +75,7 @@ export default function About() {
             transition={{ duration: 0.6 }}
           >
             <span className="inline-flex rounded-full bg-sky-100 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-sky-700">
-              About Pristine Energy
+              About Pristine Horizon
             </span>
 
             <h2 className="mt-5 text-3xl font-bold leading-tight tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
@@ -203,8 +203,8 @@ export default function About() {
                 Partnered with India's No. 1 Solar Rooftop Company
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                In association with <strong>Pristine Horizon (Team TPS Kerala)</strong>, 
-                we bring Tata Power's integrated manufacturing, high reliability, and 
+                In association with <strong>Pristine Horizon (Team TPS Kerala)</strong>,
+                we bring Tata Power's integrated manufacturing, high reliability, and
                 exclusive TPS promotional offers directly to your premises.
               </p>
             </div>
@@ -271,7 +271,7 @@ export default function About() {
             </div>
           </div>
 
-          
+
         </motion.div>
       </div>
     </section>
