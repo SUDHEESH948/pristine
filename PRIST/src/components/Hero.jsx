@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import { Volume2, VolumeX } from "lucide-react";
 
 import heroVideo from "../assets/Add_this_vido_to_house_to_solo.mp4";
 
@@ -60,6 +61,7 @@ const TEXT_SLIDES = [
 
 export default function Hero() {
   const [currentText, setCurrentText] = useState(0);
+  const [isVideoMuted, setIsVideoMuted] = useState(true);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -85,7 +87,7 @@ export default function Hero() {
 
           <video
             autoPlay
-            muted
+            muted={isVideoMuted}
             loop
             playsInline
             preload="auto"
@@ -94,6 +96,15 @@ export default function Hero() {
             <source src={heroVideo} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
+
+          <button
+            type="button"
+            onClick={() => setIsVideoMuted((muted) => !muted)}
+            aria-label={isVideoMuted ? "Turn video sound on" : "Mute video sound"}
+            className="absolute right-4 top-4 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-black/40 text-white backdrop-blur-md transition hover:bg-black/60 focus:outline-none focus:ring-2 focus:ring-sky-300"
+          >
+            {isVideoMuted ? <VolumeX size={19} /> : <Volume2 size={19} />}
+          </button>
 
           {/* GRADIENT OVERLAYS */}
 
