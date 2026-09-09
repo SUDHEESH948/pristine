@@ -235,17 +235,7 @@ export default function Navbar() {
                       );
                     })}
 
-                    {/* DIRECT CALL HELPLINE */}
-                    <motion.li variants={itemVariants} className="pt-2">
-                      <a
-                        href="tel:7012694985"
-                        className="flex items-center justify-center gap-2 rounded-xl border border-sky-200 bg-sky-50/70 py-2.5 text-xs font-bold text-[#004B87] transition hover:bg-sky-100"
-                      >
-                        <PhoneCall size={14} />
-                        Tata Solar Helpdesk: 7012 694 985
-                      </a>
-                    </motion.li>
-
+                  
                     {/* CONTACT CTA BUTTON */}
                     <motion.li variants={itemVariants} className="pb-1 pt-1">
                       <Link
