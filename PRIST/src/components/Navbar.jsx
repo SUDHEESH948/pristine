@@ -125,13 +125,7 @@ export default function Navbar() {
 
             {/* DESKTOP CTA & HELPLINE */}
             <div className="flex items-center gap-3">
-              <a
-                href="tel:7012694985"
-                className="hidden items-center gap-1.5 text-xs font-bold text-slate-700 transition hover:text-[#004B87] xl:flex"
-              >
-                <PhoneCall size={13} className="text-[#004B87]" />
-                <span>7012 694 985</span>
-              </a>
+              
 
               <Link
                 to="/contact"
