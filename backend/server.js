@@ -8,7 +8,7 @@ const connectDB = require("./config/db");
 
 const solarProductRoutes = require("./routes/solarProductRoutes");
 const authRoutes = require("./routes/authRoutes");
-
+const galleryRoutes = require("./routes/galleryRoutes");
 const {
   createDefaultUser,
 } = require("./controllers/authController");
@@ -66,7 +66,7 @@ app.use(
     optionsSuccessStatus: 204,
   })
 );
-
+app.use("/api/gallery", galleryRoutes);
 // ============================================================
 // BODY PARSER
 // ============================================================
