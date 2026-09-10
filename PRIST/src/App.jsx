@@ -16,8 +16,8 @@ import Pricing from "./pages/Pricing";
 
 import Login from "./pages/seller/Login";
 import Solarprice from "./pages/seller/Solarprice";
-import Dashbord from "./pages/seller/Dashbord";
-
+import Dashbord from "./pages/seller/dashbord";
+import Gallery from "./pages/seller/seller_gallery";
 // =========================================================
 // PUBLIC WEBSITE LAYOUT
 // =========================================================
@@ -58,6 +58,7 @@ function SellerLayout() {
         <Route path="/login" element={<Login />} />
         <Route path="/solarprice" element={<Solarprice />} />
         <Route path="/Dashboard" element={<Dashbord />} />
+        <Route path="/Gallery" element={< Gallery/>} />
       </Routes>
     </>
   );
@@ -103,11 +104,11 @@ function App() {
         path="/Dashbord"
         element={<Login />}
       />
-
       <Route
-        path="/dashboard"
-        element={<Dashbord />}
+        path="/seller_gallery"
+        element={<Gallery/>}
       />
+
 
     </Routes>
   );

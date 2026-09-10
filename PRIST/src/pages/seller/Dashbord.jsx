@@ -646,6 +646,14 @@ export default function SolarSellerDashboard() {
                                 <Plus size={15} />
                                 Add Product
                             </button>
+                            <button
+                                type="button"
+                                onClick={() => navigate("/seller_gallery")}
+                                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-sky-600 px-5 py-3 text-xs font-bold text-white shadow-lg shadow-sky-600/20 transition hover:bg-sky-700 active:scale-[0.98] sm:w-auto"
+                            >
+                                <Plus size={15} />
+                                Add gallery
+                            </button>
 
                             <button
                                 type="button"
