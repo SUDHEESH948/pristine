@@ -456,7 +456,7 @@ export default function Footer() {
 
               <li>
                 <a
-                  href="mailto:hello@pristineenergys.in"
+                  href="mailto:pristinehorizon97@gmail.com"
                   className="
                     group
                     flex
@@ -491,7 +491,7 @@ export default function Footer() {
                     </svg>
                   </span>
 
-                  hello@pristineenergys.in
+                  pristinehorizon97@gmail.com
                 </a>
               </li>
 

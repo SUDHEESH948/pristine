@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, PhoneCall, ShieldCheck } from "lucide-react";
+import { Menu, X, ShieldCheck } from "lucide-react";
 
 import logo from "../assets/logo.png";
 
@@ -14,7 +14,6 @@ const NAV_LINKS = [
   { label: "Pricing", href: "/pricing" },
 ];
 
-const TATA_NAVY = "#004B87";
 const BRAND_SKY = "#0284c7";
 
 export default function Navbar() {
@@ -91,11 +90,14 @@ export default function Navbar() {
               {/* Vertical divider */}
               <div className="h-7 w-[1px] bg-slate-200" />
 
-              {/* Tata Power Solar Partner Badge */}
-              <div className="flex items-center gap-1.5 rounded-full border border-sky-100 bg-sky-50/70 px-2.5 py-1 text-slate-800">
-                <ShieldCheck size={14} className="text-[#004B87]" />
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#004B87]">
-                  Authorised Channel Partner | <span className="text-sky-700">Tata Power Solar</span>
+              {/* Tata Power Solar Partner Badge (Enlarged) */}
+              <div className="flex items-center gap-2 rounded-full border border-sky-100 bg-sky-50/80 px-3.5 py-1.5 text-slate-800">
+                <ShieldCheck size={18} className="text-[#004B87] shrink-0" />
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600">
+                  Authorised Channel Partner |{" "}
+                  <strong className="text-sm font-black tracking-tight text-[#004B87] xl:text-[15px]">
+                    TATA POWER SOLAR
+                  </strong>
                 </span>
               </div>
             </div>
@@ -123,10 +125,8 @@ export default function Navbar() {
               })}
             </nav>
 
-            {/* DESKTOP CTA & HELPLINE */}
+            {/* DESKTOP CTA */}
             <div className="flex items-center gap-3">
-              
-
               <Link
                 to="/contact"
                 className="group inline-flex shrink-0 items-center justify-center rounded-full bg-[#004B87] px-5 py-2.5 text-[13px] font-semibold text-white shadow-[0_6px_18px_rgba(0,75,135,0.25)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#003865] hover:shadow-[0_8px_24px_rgba(0,75,135,0.35)] active:scale-95"
@@ -150,14 +150,15 @@ export default function Navbar() {
                 <img
                   src={logo}
                   alt="Pristine Horizon Logo"
-                  className="h-8 w-8 shrink-0 rounded-full object-cover"
+                  className="h-9 w-9 shrink-0 rounded-full object-cover"
                 />
-                <div className="flex flex-col leading-none">
+                <div className="flex flex-col leading-tight">
                   <span className="whitespace-nowrap text-xs font-black tracking-tight text-slate-900">
                     PRISTINE <span className="text-[#004B87]">HORIZON</span>
                   </span>
-                  <span className="text-[7.5px] font-bold tracking-tight text-sky-800">
-                    Authorised Partner • Tata Power Solar
+                  <span className="text-[11px] font-black tracking-tight text-[#004B87]">
+                    TATA POWER SOLAR{" "}
+                    <span className="text-[8px] font-medium text-slate-500">Partner</span>
                   </span>
                 </div>
               </Link>
@@ -208,11 +209,18 @@ export default function Navbar() {
                   className="overflow-hidden"
                 >
                   <ul className="mt-2 flex flex-col gap-1 border-t border-slate-100 pt-3 text-left">
-                    {/* Dealer Accreditation Strip on Mobile */}
+                    {/* Accreditation Strip on Mobile (Enlarged TATA POWER SOLAR) */}
                     <motion.li variants={itemVariants} className="px-2 pb-1">
-                      <div className="flex items-center gap-1.5 rounded-lg bg-sky-50 px-3 py-1.5 text-[11px] font-semibold text-[#004B87]">
-                        <ShieldCheck size={14} className="shrink-0" />
-                        <span>Tata Power Solar Authorised Channel Partner</span>
+                      <div className="flex flex-col gap-0.5 rounded-xl bg-sky-50/90 p-2.5 text-[#004B87] border border-sky-100">
+                        <div className="flex items-center gap-1.5">
+                          <ShieldCheck size={15} className="shrink-0 text-[#004B87]" />
+                          <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">
+                            Authorised Channel Partner
+                          </span>
+                        </div>
+                        <span className="text-base font-black tracking-tight text-[#004B87]">
+                          TATA POWER SOLAR
+                        </span>
                       </div>
                     </motion.li>
 
@@ -235,7 +243,6 @@ export default function Navbar() {
                       );
                     })}
 
-                  
                     {/* CONTACT CTA BUTTON */}
                     <motion.li variants={itemVariants} className="pb-1 pt-1">
                       <Link
