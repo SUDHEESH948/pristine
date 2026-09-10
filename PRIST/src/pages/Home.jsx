@@ -3,6 +3,7 @@ import Benefit from "../components/OurImpact";
 import Aboute from "../components/WhyPristine";
 import Value from "../components/Values";
 import Gallery from "../components/gallery";
+import Location from "../components/Location";
 function Home() {
   return (
     <main className="min-h-screen overflow-hidden bg-[#071a36] text-white">
@@ -23,6 +24,9 @@ function Home() {
 
       <section className="premium-section">
         <Value />
+      </section>
+      <section className="premium-section">
+        <Location />
       </section>
     </main>
   );

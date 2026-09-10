@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import {
   X,
   ShieldCheck,
@@ -93,20 +94,20 @@ const Gallery = () => {
   // STATE
   // ===================================================
   const [selectedItem, setSelectedItem] = useState(null);
-
   const [currentVideo, setCurrentVideo] = useState(0);
-
   const [isMuted, setIsMuted] = useState(true);
-
   const [backendImages, setBackendImages] = useState([]);
-
   const [backendVideos, setBackendVideos] = useState([]);
-
   const [isGalleryLoading, setIsGalleryLoading] = useState(true);
-
   const [galleryError, setGalleryError] = useState("");
+  const [mounted, setMounted] = useState(false);
 
   const videoRef = useRef(null);
+
+  // Set mounted flag for SSR safety
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // ===================================================
   // FETCH BACKEND GALLERY
@@ -128,7 +129,6 @@ const Gallery = () => {
         }
 
         const result = await response.json();
-
         const galleryData = Array.isArray(result?.data)
           ? result.data
           : [];
@@ -190,10 +190,6 @@ const Gallery = () => {
           "Unable to load latest gallery items. Showing available gallery content."
         );
 
-        // ===============================================
-        // IMPORTANT:
-        // DUMMY DATA STILL WORKS IF BACKEND FAILS
-        // ===============================================
         setBackendImages([]);
         setBackendVideos([]);
       } finally {
@@ -206,13 +202,11 @@ const Gallery = () => {
 
   // ===================================================
   // COMBINE DUMMY + BACKEND IMAGES
-  // DUMMY DATA IS NOT REMOVED
   // ===================================================
   const imageItems = [...dummyImageItems, ...backendImages];
 
   // ===================================================
   // COMBINE DUMMY + BACKEND VIDEOS
-  // DUMMY DATA IS NOT REMOVED
   // ===================================================
   const videos = [...dummyVideos, ...backendVideos];
 
@@ -253,7 +247,6 @@ const Gallery = () => {
         if (!isMuted) {
           setIsMuted(true);
           videoElement.muted = true;
-
           videoElement.play().catch(() => {});
         }
       });
@@ -261,41 +254,29 @@ const Gallery = () => {
   }, [currentVideo, isMuted, videos.length]);
 
   // ===================================================
-  // VIDEO ENDED
+  // VIDEO HANDLERS
   // ===================================================
   const handleVideoEnded = () => {
     setCurrentVideo((prev) => (prev + 1) % videos.length);
   };
 
-  // ===================================================
-  // TOGGLE MUTE
-  // ===================================================
   const toggleMute = () => {
     setIsMuted((prev) => !prev);
   };
 
-  // ===================================================
-  // CONTINUOUS IMAGE ITEMS
-  // ===================================================
+  // Continuous image items for marquee loop
   const continuousItems = [...imageItems, ...imageItems];
 
-  // ===================================================
-  // RENDER
-  // ===================================================
   return (
     <section
       id="gallery"
       className="relative overflow-hidden bg-[#f8fbfe] px-4 py-14 sm:px-6 sm:py-18 md:px-8 lg:px-12 lg:py-24 xl:px-16"
     >
-      {/* =================================================
-          KEYFRAMES
-      ================================================= */}
       <style>{`
         @keyframes continuousScroll {
           0% {
             transform: translateX(0);
           }
-
           100% {
             transform: translateX(-50%);
           }
@@ -312,24 +293,16 @@ const Gallery = () => {
         }
       `}</style>
 
-      {/* =================================================
-          BACKGROUND GLOWS
-      ================================================= */}
+      {/* BACKGROUND GLOWS */}
       <div className="pointer-events-none absolute -left-20 top-10 h-72 w-72 rounded-full bg-[#004B87]/10 blur-3xl sm:-left-32 sm:top-20 sm:h-96 sm:w-96" />
-
       <div className="pointer-events-none absolute -right-20 bottom-10 h-72 w-72 rounded-full bg-[#004B87]/10 blur-3xl sm:-right-32 sm:bottom-20 sm:h-96 sm:w-96" />
 
       <div className="relative mx-auto max-w-7xl">
-
-        {/* =================================================
-            HEADER
-        ================================================= */}
+        {/* HEADER */}
         <div className="mb-10 flex flex-col justify-between gap-6 sm:mb-12 lg:flex-row lg:items-end">
           <div className="max-w-2xl">
-
             <div className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-sky-200 bg-sky-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#004B87]">
               <ShieldCheck size={14} />
-
               Authorised Tata Power Solar Installations
             </div>
 
@@ -350,10 +323,7 @@ const Gallery = () => {
             <div className="mt-3 flex items-center gap-2 text-xs text-slate-400">
               {isGalleryLoading ? (
                 <>
-                  <Loader2
-                    size={13}
-                    className="animate-spin"
-                  />
+                  <Loader2 size={13} className="animate-spin" />
                   Loading latest gallery...
                 </>
               ) : (
@@ -380,11 +350,7 @@ const Gallery = () => {
 
           <div className="w-full shrink-0 rounded-2xl border border-sky-100 bg-white p-5 shadow-sm sm:w-auto sm:px-6">
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400">
-              <Award
-                size={15}
-                className="text-[#004B87]"
-              />
-
+              <Award size={15} className="text-[#004B87]" />
               Dealership Guarantee
             </div>
 
@@ -394,13 +360,9 @@ const Gallery = () => {
           </div>
         </div>
 
-        {/* =================================================
-            VIDEO REEL PLAYER
-        ================================================= */}
+        {/* VIDEO REEL PLAYER */}
         <div className="mb-14 flex flex-col items-center justify-center">
-
-          <div className="relative aspect-[9/16] w-full max-w-[420px] max-h-[700px] overflow-hidden rounded-3xl border border-slate-800 bg-black shadow-2xl shadow-slate-950/40">
-
+          <div className="relative aspect-[9/16] w-full max-w-[600px] max-h-[700px] overflow-hidden rounded-3xl border border-slate-800 bg-black shadow-2xl shadow-slate-950/40">
             {videos.length > 0 && (
               <video
                 ref={videoRef}
@@ -412,14 +374,13 @@ const Gallery = () => {
                 controls={false}
                 preload="metadata"
                 onEnded={handleVideoEnded}
-                className="h-full w-full rounded-3xl object-cover"
+                className="h-full w-300 rounded-3xl object-cover"
               />
             )}
 
             {/* TOP LIVE BADGE */}
             <div className="pointer-events-none absolute left-4 top-4 z-20 flex items-center gap-2 rounded-full border border-white/20 bg-black/50 px-3 py-1 backdrop-blur-md">
               <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
-
               <span className="text-[10px] font-bold uppercase tracking-wider text-white">
                 Live Site Reel • Kerala
               </span>
@@ -439,17 +400,9 @@ const Gallery = () => {
               type="button"
               onClick={toggleMute}
               className="absolute right-4 top-4 z-20 flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-black/50 text-white backdrop-blur-md transition-all hover:bg-black/75"
-              aria-label={
-                isMuted
-                  ? "Unmute video"
-                  : "Mute video"
-              }
+              aria-label={isMuted ? "Unmute video" : "Mute video"}
             >
-              {isMuted ? (
-                <VolumeX size={16} />
-              ) : (
-                <Volume2 size={16} />
-              )}
+              {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
             </button>
 
             {/* GRADIENT */}
@@ -457,14 +410,12 @@ const Gallery = () => {
 
             {/* VIDEO CAPTION */}
             <div className="pointer-events-none absolute bottom-5 left-0 right-0 z-20 flex flex-col items-center px-4 text-center">
-
               <p className="mb-3 text-xs font-semibold text-white drop-shadow-md">
                 {videos[currentVideo]?.caption}
               </p>
 
               {/* VIDEO NAVIGATION */}
               <div className="pointer-events-auto flex max-w-[90%] flex-wrap items-center justify-center gap-2">
-
                 {videos.map((video, index) => (
                   <button
                     key={video.id}
@@ -478,22 +429,17 @@ const Gallery = () => {
                     }`}
                   />
                 ))}
-
               </div>
             </div>
           </div>
         </div>
 
-        {/* =================================================
-            IMAGE SECTION
-        ================================================= */}
+        {/* IMAGE SECTION */}
         <div className="relative">
-
           <div className="mb-6">
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#004B87]">
               Proven Track Record
             </p>
-
             <h3 className="mt-1 text-xl font-bold text-slate-900 sm:text-2xl">
               Recent Commissioned Sites
             </h3>
@@ -501,9 +447,7 @@ const Gallery = () => {
 
           {/* IMAGE MARQUEE */}
           <div className="relative w-full overflow-hidden">
-
             <div className="continuous-scroll-track gap-4 py-2 sm:gap-6">
-
               {continuousItems.map((item, idx) => (
                 <div
                   key={`${item.id}-${idx}`}
@@ -511,39 +455,30 @@ const Gallery = () => {
                   role="button"
                   tabIndex={0}
                   onKeyDown={(e) => {
-                    if (
-                      e.key === "Enter" ||
-                      e.key === " "
-                    ) {
+                    if (e.key === "Enter" || e.key === " ") {
                       e.preventDefault();
                       setSelectedItem(item);
                     }
                   }}
                   className="group relative h-[280px] w-[300px] shrink-0 cursor-pointer overflow-hidden rounded-2xl border border-sky-100 bg-slate-900 shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-[#004B87]/40 hover:shadow-xl sm:h-[340px] sm:w-[380px] sm:rounded-3xl md:w-[420px]"
                 >
-                  {/* IMAGE */}
                   <img
                     src={item.src}
                     alt={item.title}
                     loading="lazy"
                     className="absolute inset-0 h-full w-full object-cover transition duration-700 ease-out group-hover:scale-105"
                     onError={(e) => {
-                      e.currentTarget.style.display =
-                        "none";
+                      e.currentTarget.style.display = "none";
                     }}
                   />
 
-                  {/* BACKEND BADGE */}
-                  {item.isBackend && (
+                  {item.isBackend ? (
                     <div className="absolute right-4 top-4 z-10">
                       <span className="rounded-full border border-emerald-300/30 bg-emerald-500/80 px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-white backdrop-blur-md">
                         Latest Upload
                       </span>
                     </div>
-                  )}
-
-                  {/* DEFAULT BADGE */}
-                  {!item.isBackend && (
+                  ) : (
                     <div className="absolute left-4 top-4 z-10">
                       <span className="rounded-full border border-white/20 bg-black/60 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-sky-200 backdrop-blur-md">
                         Tata Certified Array
@@ -551,12 +486,9 @@ const Gallery = () => {
                     </div>
                   )}
 
-                  {/* GRADIENT */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
 
-                  {/* CONTENT */}
                   <div className="absolute bottom-0 left-0 right-0 z-10 p-5 text-white sm:p-6">
-
                     <span className="text-[10px] font-bold uppercase tracking-wider text-sky-300 sm:text-xs">
                       {item.category}
                     </span>
@@ -573,66 +505,64 @@ const Gallery = () => {
                   </div>
                 </div>
               ))}
-
             </div>
           </div>
         </div>
       </div>
 
       {/* =================================================
-          IMAGE LIGHTBOX
+          IMAGE LIGHTBOX (PORTAL AT BODY ROOT)
       ================================================= */}
-      {selectedItem && (
-        <div
-          className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/90 p-4 backdrop-blur-md sm:p-6 md:p-8"
-          onClick={() => setSelectedItem(null)}
-          role="dialog"
-          aria-modal="true"
-        >
-          {/* CLOSE */}
-          <button
-            type="button"
-            onClick={() => setSelectedItem(null)}
-            className="fixed right-4 top-4 z-[100000] flex h-11 w-11 items-center justify-center rounded-full bg-white/20 text-white shadow-xl backdrop-blur-md transition-all duration-200 hover:bg-white hover:text-gray-900 sm:right-6 sm:top-6 sm:h-12 sm:w-12"
-            aria-label="Close modal"
-          >
-            <X size={24} />
-          </button>
-
+      {selectedItem &&
+        mounted &&
+        createPortal(
           <div
-            className="relative flex h-full max-h-[85vh] w-auto max-w-[95vw] flex-col items-center justify-center overflow-hidden rounded-2xl bg-black shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 z-[999999] flex items-center justify-center bg-black/90 p-4 backdrop-blur-md sm:p-6 md:p-8"
+            onClick={() => setSelectedItem(null)}
+            role="dialog"
+            aria-modal="true"
           >
-            {/* IMAGE */}
-            <img
-              src={selectedItem.src}
-              alt={selectedItem.title}
-              className="h-full w-auto max-h-[75vh] max-w-full rounded-2xl object-contain"
-            />
+            {/* CLOSE BUTTON */}
+            <button
+              type="button"
+              onClick={() => setSelectedItem(null)}
+              className="fixed right-4 top-4 z-[1000000] flex h-11 w-11 items-center justify-center rounded-full bg-white/20 text-white shadow-xl backdrop-blur-md transition-all duration-200 hover:bg-white hover:text-gray-900 sm:right-6 sm:top-6 sm:h-12 sm:w-12"
+              aria-label="Close modal"
+            >
+              <X size={24} />
+            </button>
 
-            {/* DETAILS */}
-            <div className="w-full bg-slate-900/95 p-3 text-center text-white">
+            {/* MODAL CARD */}
+            <div
+              className="relative flex max-h-[85vh] max-w-4xl flex-col items-center justify-center overflow-hidden rounded-2xl bg-black shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={selectedItem.src}
+                alt={selectedItem.title}
+                className="max-h-[70vh] w-auto max-w-full rounded-t-2xl object-contain"
+              />
 
-              <p className="text-sm font-bold">
-                {selectedItem.title}
-              </p>
-
-              <p className="text-xs text-sky-400">
-                {selectedItem.specs
-                  ? `${selectedItem.specs} • `
-                  : ""}
-                {selectedItem.category}
-              </p>
-
-              {selectedItem.description && (
-                <p className="mt-1 text-xs text-slate-300">
-                  {selectedItem.description}
+              <div className="w-full bg-slate-900/95 p-4 text-center text-white">
+                <p className="text-sm font-bold sm:text-base">
+                  {selectedItem.title}
                 </p>
-              )}
+
+                <p className="mt-0.5 text-xs text-sky-400 sm:text-sm">
+                  {selectedItem.specs ? `${selectedItem.specs} • ` : ""}
+                  {selectedItem.category}
+                </p>
+
+                {selectedItem.description && (
+                  <p className="mt-1.5 text-xs text-slate-300">
+                    {selectedItem.description}
+                  </p>
+                )}
+              </div>
             </div>
-          </div>
-        </div>
-      )}
+          </div>,
+          document.body
+        )}
     </section>
   );
 };

@@ -81,7 +81,7 @@ export default function Navbar() {
                       HORIZON
                     </span>
                   </span>
-                  <span className="mt-0.5 text-[7px] font-bold tracking-[2px] text-slate-400 xl:text-[8px]">
+                  <span className="mt-0.5 text-[10px] font-bold tracking-[2px] text-[#004B87] xl:text-[11px]">
                     SOLAR SOLUTIONS
                   </span>
                 </div>
@@ -156,9 +156,11 @@ export default function Navbar() {
                   <span className="whitespace-nowrap text-xs font-black tracking-tight text-slate-900">
                     PRISTINE <span className="text-[#004B87]">HORIZON</span>
                   </span>
-                  <span className="text-[11px] font-black tracking-tight text-[#004B87]">
+                  <span className="text-[20px] font-black tracking-tight text-[#004B87]">
                     TATA POWER SOLAR{" "}
-                    <span className="text-[8px] font-medium text-slate-500">Partner</span>
+                    <span className="text-[17px] font-semibold text-[#004B87]">
+                      Partner
+                    </span>
                   </span>
                 </div>
               </Link>
@@ -218,9 +220,9 @@ export default function Navbar() {
                             Authorised Channel Partner
                           </span>
                         </div>
-                        <span className="text-base font-black tracking-tight text-[#004B87]">
-                          TATA POWER SOLAR
-                        </span>
+                     <span className="text-base sm:text-lg md:text-xl font-black tracking-tight text-[#004B87]">
+                        TATA POWER SOLAR
+                      </span>
                       </div>
                     </motion.li>
 
